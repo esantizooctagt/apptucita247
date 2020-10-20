@@ -1,0 +1,28 @@
+<ion-header mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" [routerLink]="['/tabs/tab1']">
+        <ion-icon slot="icon-only" src="assets/svg/back-tc.svg" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-title color="primary" class="title-pages title-pages-w-back ion-text-uppercase" translate>CATEGORIAS</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding >
+  <ion-list>
+    <ion-item *ngFor="let item of categos" [id]="item.CategoryId" lines="full" (click)="onCategory(item.CategoryId, item.Name)" [routerLink]="['/categorias-detalle']">
+      <ion-img slot="start" [src]="global.BucketPath+item.Imagen" class="icon-cat"></ion-img>
+      <ion-label>
+        <h2>{{item.Name}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tu Cita 24/7</title>
+
+    <base href="/" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="Content-Security-Policy" content="default-src data: gap://* file://* https://ssl.gstatic.com *; img-src 'self' * data:; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-eval' 'unsafe-inline' *; connect-src 'self' * ws://* wss://*;">
+
+    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdQ6vAlbIi3u_KdiMv8KILsjYExJLDUGU"></script>
+
+    <script>
+      document.addEventListener("paste", function(e) {
+      // if the target is a text input
+      if (e.target.type === "text") {
+      var data = e.clipboardData.getData('Text');
+      // split clipboard text into single characters
+      data = data.split('');
+      // find all other text inputs
+      [].forEach.call(document.querySelectorAll("input[type=text]"), (node, index) => {
+          // And set input value to the relative character
+          node.value = data[index];
+        });
+      }
+    });
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

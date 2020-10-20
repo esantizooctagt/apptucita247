@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-left" size="12">
+        <ion-img class="logo" src="./assets/svg/logo-tc.svg"> </ion-img>
+      </ion-col>
+      <ion-col class="ion-text-center" size="12">
+        <h3 class="titulo-paso" translate>PASO_3</h3>
+        <p class="texto-paso" translate>PASO_3_INFO</p>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-label position="stacked" translate>CORREO_</ion-label>
+          <ion-input [(ngModel)]="email"  placeholder="" type="email" inputmode="number"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" *ngIf="invalidEmail == '1'">
+          <ion-label position="stacked" class="error-text" translate>CORREO_INVALIDO</ion-label>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button #very color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click)="SendCode()" translate>
+          ENVIAR_CODIGO_EMAIL
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

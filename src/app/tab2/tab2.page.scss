@@ -1,0 +1,55 @@
+.title-card-date{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.card-date {
+  padding: 15px 15px 0px 15px;
+  color: #000000;
+  .title-place-com {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .title-place-suc {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .date{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .icon-meta{
+    width: 25px;
+    height: 30px;
+  }
+
+  .messages{
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    position: absolute;
+    color: #ffffff;
+    top: 2px;
+    right: -7px;
+  }
+}
+
+.button-citas{
+  z-index: 1001;
+}

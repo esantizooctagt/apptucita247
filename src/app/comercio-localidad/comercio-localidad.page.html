@@ -1,0 +1,130 @@
+<ion-content>
+  <!-- <ng-container *ngIf="liveData$ | async"></ng-container> -->
+  <ion-toolbar *ngIf="location.Imagen" [style.--background]="'url(' + global.BucketPath + location.Imagen + ') no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="!location.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ng-container *ngIf="Favorite$ | async"></ng-container>
+  <ng-container *ngIf="Availabity$ | async"></ng-container>
+  <ng-container *ngIf="Provider$ | async"></ng-container>
+  <ng-container *ngIf="Services$ | async"></ng-container>
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row class="ion-padding ion-no-margin">
+      <ion-col size="10">
+        <ion-text>
+          <h3 class="titulo-comercio">{{location.Name}}</h3>
+          <h5 class="location-name">{{LocName}}</h5>
+        </ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-icon class="favorites-icon" color="primary" (click)="onFavorite()" [ngClass]="{'favorite-on': fav === 1, 'favorite-off': fav === 0}" src="./assets/svg/no-favorites-tc.svg"></ion-icon>
+      </ion-col>
+      <ion-col size="12">
+        <ion-text>
+          <p class="texto-comercio">{{location.Location.Address + ', ' + City}}</p>
+        </ion-text>
+      </ion-col>
+      <ion-col size="7">
+        <p class="label2-detalle-comercio" translate>NUMERO_DE_PERSONAS</p>
+      </ion-col>
+      <ion-col size="5" class="ion-text-right ion-margin-top">
+        <ion-icon class="icon-controls" src="./assets/svg/plus-tc.svg" (click)="guests=guests+1"></ion-icon>
+        <ion-label class="ion-padding numero-visitas">{{guests}}</ion-label>
+        <ion-icon class="icon-controls" src="./assets/svg/minus-tc.svg"
+          (click)="(guests > 1 ? guests=guests-1 : guests)"></ion-icon>
+      </ion-col>
+      <ion-col size="6">
+        <p class="label2-detalle-comercio" translate>EN_NOMBRE_DE</p>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input [(ngModel)]="onbehalf" class="onbehalf-txt"></ion-input>
+      </ion-col>
+      <ion-col size="12" *ngIf="hideDoor == 0">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>PUERTA</ion-label>
+          <ion-select [(ngModel)]="doorSel" class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+            <ion-select-option *ngFor="let row of doors">{{row}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>SERVICIOS_ESPECIALES</ion-label>
+          <ion-select [(ngModel)]="disability" class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+            <ion-select-option value="" translate>NONE</ion-select-option>
+            <ion-select-option value="1" translate>SENIOR</ion-select-option>
+            <ion-select-option value="3" translate>CON_DISCAPACIDAD</ion-select-option>
+            <ion-select-option value="2" translate>EMBARAZADA</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" *ngIf="hideProvider == 0 && provName == ''">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>PROVEEDOR_SERVICIO</ion-label>
+          <ion-select [(ngModel)]="provider" #item class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectProvider(item.value)">
+            <ion-select-option *ngFor="let row of providers" [value]="row.ProviderId">{{row.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col class="12" *ngIf="hideProvider == 0 && provName != ''">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>PROVEEDOR_SERVICIO</ion-label>
+          <ion-label class="label-default">{{provName}}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" *ngIf="hideService == 0 && servName == ''">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
+          <ion-select [(ngModel)]="serviceId" #serv class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectService(serv.value)">
+            <ion-select-option *ngFor="let row of services" [value]="row.ServiceId">{{row.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col class="12" *ngIf="hideService == 1 && servName != '' && hideProvider == 0">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
+          <ion-label class="label-default">{{servName}}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" class="ion-margin-top">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-icon class="icon-input-date" src="./assets/svg/calendar5-tc.svg" slot="start"></ion-icon>
+          <ion-datetime [max]="maxDate" [min]="minDate" [disabled]="provider == ''" placeholder="{{seleccione}}" displayFormat="MMM DD YYYY" [(ngModel)]="dateAppo" (ionChange)="changeDate($event)" cancelText="{{cerrar}}" doneText="{{seleccionar}}"></ion-datetime>
+        </ion-item>
+        <ng-container *ngIf="providerId === ''">
+          <ion-label class="noResult-comercio" translate>SEL_PROVIDER</ion-label>
+        </ng-container>
+        <ng-container *ngIf="serviceId === '' && providerId != ''">
+          <ion-label class="noResult-comercio" translate>SEL_SERVICE</ion-label>
+        </ng-container>
+        <ion-item lines="none" class="ion-no-padding" *ngIf="noResult == 0 && providerId != '' && serviceId != ''">
+          <ion-icon class="icon-input-date" src="./assets/svg/clock-tc.svg" slot="start"></ion-icon>
+          <ion-select [disabled]="provider == ''" placeholder="{{seleccione}}" [(ngModel)]="hourAppo" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+            <ion-select-option *ngFor="let hour of hoursData">{{hour.Hour}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="ion-no-padding" lines="none" *ngIf="noResult == 1">
+          <ion-label class="noResult-comercio" translate>NO_RESULT</ion-label>
+        </ion-item>
+      </ion-col>
+      <ng-container *ngIf="NewAppointment$ | async"></ng-container>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-button class="ion-no-margin" color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click) = "saveAppointment()" translate>TU_CITA</ion-button>
+      </ion-col>
+      <ion-col size="12" class="center-text">
+        <ion-label class="label2-detalle-comercio" translate>OPCION</ion-label>
+      </ion-col>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-button class="ion-no-margin" color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click) = "saveOnHold()" translate>EN_ESPERA</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,38 @@
+/*ion-content{
+  --background: #fff url('../../assets/svg/background-inicio.svg') no-repeat center center / cover;
+}
+*/
+
+
+.logo{
+  height: 70px;
+  margin: auto;
+  display: inline-block;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.titulo-paso{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 30px;
+  color: #34A8FC;
+  margin-top: 50px;
+}
+
+.texto-paso{
+  margin-top: 30px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+}
+
+.error-text{
+  font-size: 13px;
+  color: red;
+  padding-left: 15px;
+  height: 20px;
+}

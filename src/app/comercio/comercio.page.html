@@ -1,0 +1,57 @@
+<ion-content>
+  <ng-container *ngIf="Business$ | async as bus">
+  <ion-toolbar *ngIf="bus.Imagen" class="toolbar-header" [style.--background]="'url(' + global.BucketPath + bus.Imagen + ') no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="!bus.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+    <ion-grid class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-padding ion-no-margin">
+        <ion-col size="12">
+          <ion-text>
+            <h3 class="titulo-comercio">{{bus.Name}}</h3>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text>
+            <p class="texto-comercio">{{bus.ShortDescription}}</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-toolbar mode="md">
+            <ion-segment [(ngModel)]="type" value="lista" (ionChange)="segmentChanged($event)">
+              <ion-segment-button value="lista" translate>LISTA</ion-segment-button>
+              <ion-segment-button value="mapa" translate>MAPA</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+        </ion-col>
+        <ion-col style="height: 100%" size="12" [ngSwitch]="type">
+          <div style="height: 300px" *ngSwitchCase="'mapa'">
+            <div style="height: 100%; width: 100%" id="map_canvas"></div>
+          </div>
+          <ion-list *ngSwitchCase="'lista'">
+            <ng-container *ngFor="let item of bus.Locations">
+              <ion-item mode="md" lines="none" class="card-item" (click)="onParams(item, bus)" [routerLink]="['/comercio-localidad']" routerDirection="forward">
+                <ion-img slot="start" src="./assets/svg/locTuCita.svg"></ion-img>
+                <ion-label>
+                  <h2>{{item.Name}}</h2>
+                  <p>{{item.Address}}</p>
+                </ion-label>
+                <ion-img slot="end" src="./assets/svg/chevron-right-tc.svg"></ion-img>
+              </ion-item>
+            </ng-container>
+        </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,75 @@
+.card-date {
+  padding: 15px 15px 15px 15px;
+  color: #000000;
+    .title-place-com {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+        margin: 0;
+    }
+
+    .title-place-suc {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #000000;
+        margin: 0;
+    }
+
+    .date{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .icon-meta{
+        width: 25px;
+        height: 30px;
+    }
+
+    .messages{
+        width: 13px;
+        height: 13px;
+        border-radius: 100%;
+        background: red;
+        position: absolute;
+        color: #ffffff;
+        top: 4px;
+        right: -4px;
+    }
+
+    .messages:after{
+        content:'*';
+        position: absolute;
+        color: white;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        top:2px;
+        right:2px;
+    }
+}
+
+.haz-tu-cita-btn{
+    height: 80px;
+}
+.title-bold{
+    font-weight: 500;
+}
+.title-message{
+    padding-left:15px;
+}
+.center-text{
+    text-align: center;
+}
+.label2-detalle-comercio{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+  }

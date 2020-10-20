@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title color="primary" class="title-pages ion-text-uppercase" translate>
+      MIS_CITAS
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" color="light">
+  <ion-grid>
+    <ion-row>
+      <ng-container *ngIf="Appos$ | async"></ng-container>
+      <ng-container *ngIf="CancelAppo$ | async"></ng-container>
+      <ng-container *ngIf="display == 1">
+        <ion-col size="12" *ngFor="let row of results">
+          <ion-text color="primary">
+            <h2 class="title-card-date ion-text-uppercase">{{row.DateAppo | date:'MMM d, y'}}</h2>
+          </ion-text>
+          <ion-card class="card-date" *ngFor="let appo of row.Values">
+            <ion-grid>
+              <ion-row (click)="sendParams(appo)" [routerLink]="['/cita']">
+                <ion-col size="8">
+                  <ion-text>
+                    <h3 class="title-place-com">{{appo.NameBusiness}}</h3>
+                  </ion-text>
+                </ion-col>
+                <ion-col size="4" class="ion-text-end">
+                  <ion-icon *ngIf="appo.Disability == 1" class="icon-meta" src="assets/svg/elder-tc.svg"></ion-icon>
+                  <ion-icon *ngIf="appo.Disability == 3" class="icon-meta" src="assets/svg/handicap-tc.svg"></ion-icon>
+                  <ion-icon *ngIf="appo.Disability == 2" class="icon-meta" src="assets/svg/pregnant-tc.svg"></ion-icon>
+                  <ion-icon class="icon-meta" src="assets/svg/human-tc.svg"></ion-icon>
+                  <ion-text>
+                    x {{appo.PeopleQty}}
+                  </ion-text>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-text>
+                    <h4 class="title-place-suc">{{appo.Name}}</h4>
+                    <span class="date">{{appo.Address}}</span>
+                    <h4 class="title-place-suc">{{(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+':00 PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':00 PM' : appo.DateAppo.substring(11, 13)+':00 AM'))}}</h4>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12" class="ion-text-end">
+                  <!-- <ion-button fill="clear" size="small" *ngIf="appo.Status == 2 && appo.Ready == 0" (click)="onNotify(appo)">
+                    <ion-icon slot="icon-only" src="assets/svg/calendar3-tc.svg"></ion-icon>
+                  </ion-button> -->
+                  <ion-button *ngIf="connection == 1" class="button-citas" fill="clear" size="small" (click)="sendParams(appo)"
+                    [routerLink]="['/mensajes']">
+                    <ion-icon slot="icon-only" src="assets/svg/sms-tc.svg"></ion-icon>
+                    <span class="messages" *ngIf="appo.UnRead == 'U'">
+                      <ion-icon src="./assets/svg/notificacion-tc.svg"></ion-icon>
+                    </span>
+                  </ion-button>
+                  <ion-button *ngIf="connection == 1" fill="clear" size="small" (click)="onCancel(appo)">
+                    <ion-icon slot="icon-only" src="assets/svg/close-tc.svg"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="clear" size="small" (click)="sendParams(appo)" [routerLink]="['/cita']">
+                    <ion-icon slot="icon-only" src="assets/svg/expand-tc.svg"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+          <hr class="divisor" />
+        </ion-col>
+      </ng-container>
+      <ng-container *ngIf="display == 0">
+        <ion-col>
+          <p color="medium" class="ion-text-center ion-padding" translate>APPOS_EMPTY</p>
+        </ion-col>
+      </ng-container>
+      <ng-container *ngIf="display == -1">
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+</ion-content>

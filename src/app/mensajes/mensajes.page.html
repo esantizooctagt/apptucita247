@@ -1,0 +1,73 @@
+<ion-header mode="md" class="header-1">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" [routerLink]="['/tabs/tab2']">
+        <ion-icon slot="icon-only" src="assets/svg/back-tc.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-title color="primary" class="title-pages title-pages-w-back">{{appoObj.DateAppo}}</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-header mode="md">
+  <ion-grid class="ion-no-padding">
+    <ion-row class="card-date">
+      <ion-col size="8">
+        <ion-text>
+          <h3 class="title-place-com">{{appoObj.Name}}</h3>
+        </ion-text>
+      </ion-col>
+      <ion-col size="4" class="ion-text-end">
+        <ion-icon class="icon-meta" *ngIf="appoObj.Disability == 1" src="assets/svg/elder-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" *ngIf="appoObj.Disability == 3" src="assets/svg/handicap-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" *ngIf="appoObj.Disability == 2" src="assets/svg/pregnant-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" src="assets/svg/human-tc.svg"></ion-icon>
+        <ion-text>
+          x {{appoObj.Qty}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="12">
+        <h4 class="title-place-suc">{{appoObj.Location}}</h4>
+        <span class="date">{{appoObj.Time}}</span>
+      </ion-col>
+
+    </ion-row>
+    <hr class="divisor" />
+  </ion-grid>
+</ion-header>
+
+<ion-content no-padding>
+  <ion-grid forceOverscroll="true" class="content-mensajes">
+    <ion-row>
+      <ng-container *ngIf="Messages$ | async"></ng-container>
+      <ng-container *ngFor="let item of messages">
+        <ion-col *ngIf="item.H != undefined" size="10" class="burbuja">
+          <h3 class="titulo">{{item.T}}</h3>
+          <p class="mesajes">{{item.H}}</p>
+        </ion-col>
+        <ion-col *ngIf="item.U != undefined" size="10" class="burbuja par" push="2">
+          <h3 class="titulo">{{item.T}}</h3>
+          <p class="mensajes">{{item.U}}</p>
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label position="stacked" translate>MENSAJE</ion-label>
+      <ion-input type="text" [(ngModel)]="txtMessage"></ion-input>
+    </ion-item>
+    <ng-container *ngIf="SendMessage$ | async"></ng-container>
+    <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click)="onMessage()" translate>
+      ENVIAR_MENSAJE
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

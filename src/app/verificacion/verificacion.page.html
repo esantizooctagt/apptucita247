@@ -1,0 +1,81 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-left" size="12">
+        <ion-img class="logo" src="./assets/svg/logo-tc.svg"> </ion-img>
+      </ion-col>
+      <ion-col class="ion-text-center" size="12" *ngIf="path == '_'">
+        <h3 class="titulo-paso" translate>PASO_2</h3>
+        <p class="texto-paso" translate>PASO_2_INFO</p>
+      </ion-col>
+      <ion-col class="ion-text-center" size="12" *ngIf="path == '1'">
+        <h3 class="titulo-paso" translate>PASO_4</h3>
+        <p class="texto-paso" translate>PASO_4_INFO</p>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-row class="otp-box">
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" autofocus="true" name="a" #a (keyup)="moveFocus($event,b,'')"  (paste)="pasteUrl($event.clipboardData.getData('text/plain'))" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" name="b" #b (keyup)="moveFocus($event,c,a)" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" name="c" #c (keyup)="moveFocus($event,d,b)" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" name="d" #d (keyup)="moveFocus($event,e,c)" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" name="e" #e (keyup)="moveFocus($event,f,d)" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-input class="ion-text-center" name="f" #f (keyup)="moveFocus($event,'',e)" type="tel" placeholder="-" maxlength="1">
+                </ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!-- <div class="contenedor-mascara"> -->
+          <!-- <ion-input class="input-code" pattern="^[0-9]$" autofocus="true" maxlength="6" minlength="6" placeholder="------"
+            formControlName="VerifCode" type="tel" inputmode="numeric" (keypress)="onKeyPress($event)" required></ion-input> -->
+          <!-- (ionChange)="changeCode(this.inputVerify)" -->
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" *ngIf="path == '_'">
+        <ion-button #very color="primary" expand="block" class="ion-text-uppercase" (click)="CodeValidate()"
+          translate>
+          VALIDAR_CODIGO
+        </ion-button>
+        <ion-button color="primary" fill="outline" expand="block" type="button" (click)="ReVerifyPhoneNumber()">
+          <ion-text translate>REENVIAR_SMS</ion-text>
+        </ion-button>
+      </ion-col>
+      <ion-col size="12" *ngIf="path == '1'">
+        <ion-button #very color="primary" expand="block" class="ion-text-uppercase" (click)="CodeValidate()"
+          translate>
+          VALIDAR_CODIGO
+        </ion-button>
+        <ion-button color="primary" fill="outline" expand="block" type="button" (click)="ReVerifyEmail()">
+          <ion-text translate>REENVIAR_CODIGO</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,46 @@
+/* COMERCIOS FAVORITOS */
+
+.header-card-featured-com{
+  padding: 0px !important;
+  text-align: left;
+}
+.img-business{
+  height: 280px;
+}
+.header-card-featured-com{
+  .card-title{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000;
+    margin-top: 7px;
+    margin-left: 7px;
+  }
+  .card-subtitle{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000;
+    margin: 0px;
+    margin-left: 7px;
+    margin-bottom: 7px;
+  }
+  .card-subtitle-2{
+    color: #FF4F00;
+    font-weight: 500;
+  }
+}
+
+.card-com-featured{
+  margin: 0px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.ion-item{
+  --ion-background-color:transparent;
+}
+.list-card{
+  padding: 5px;
+}

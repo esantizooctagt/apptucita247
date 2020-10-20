@@ -1,0 +1,161 @@
+ion-toolbar{
+  height: 280px;
+}
+
+ion-grid{
+  background: #F4F4F4;
+}
+
+ion-row{
+  background: #ffffff;
+}
+
+.titulo-comercio{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  margin:0;
+}
+
+.location-name{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 17px;
+  color: #000000;
+  margin:0;
+}
+
+.texto-comercio{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-top: 2px;
+}
+
+.label-localidad{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+}
+
+.favorites-icon{
+  zoom: 1.5;
+}
+
+.label2-detalle-comercio{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.label-default{
+  text-align: right;
+}
+
+.noResult-comercio{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  color: red;
+}
+
+.numero-visitas{
+  font-size: 16px;
+}
+
+.icon-controls{
+  zoom: 1;
+}
+.icon-input-date{
+  zoom: 0.7;
+}
+
+.haz-tu-cita-btn{
+  height: 80px;
+}
+
+.title-direccion{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  margin:0;
+}
+
+.text-direccion{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  margin:0;
+  margin-bottom: 15px;
+}
+
+.waze,
+.gm{
+  padding: 10px 0px 10px 42px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #898989;
+  text-transform: uppercase;
+}
+
+.gm{
+  padding: 10px 0px 10px 32px;
+}
+
+.toolbar-header-02{
+  height: 210px;
+}
+
+.waze{
+  background-image: url('../../assets/icon/waze.png');
+  background-repeat: no-repeat;
+}
+
+.gm{
+  background-image: url('../../assets/icon/google-maps.png');
+  background-repeat: no-repeat;
+}
+.favorite-on{
+  fill: #ff4f00;
+}
+.favorite-off{
+  fill: #fff;
+}
+.right-align{
+  text-align: right;
+}
+.onbehalf-txt{
+  border-bottom: 1px solid #ff4f00;
+}
+.no-display{
+  display: none;
+}
+ion-item{
+  --inner-padding-end: 0px;
+}
+.item-native{
+  padding: 0px;
+}
+.center-text{
+  text-align: center;
+  padding:0px;
+}
+.picker-opts{
+  max-width: 75px !important;
+}

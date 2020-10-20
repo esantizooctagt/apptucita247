@@ -1,0 +1,43 @@
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col class="ion-text-left" size="12">
+      <ion-img class="logo" src="./assets/svg/logo-tc.svg"> </ion-img>
+    </ion-col>
+    <ion-col class="ion-text-center" size="12">
+      <h3 class="titulo-paso" translate>REGISTRO</h3>
+      <p class="texto-paso" translate>INGRESE_INFO_SOLICITADA</p>
+    </ion-col>
+    <ion-col size="12">
+      <ion-item lines="none">
+        <ion-label position="stacked" translate>NOMBRE_</ion-label>
+        <ion-input [(ngModel)]="name"  placeholder="{{requerido}}" type="text" inputmode="text"></ion-input>
+        <ion-label position="stacked" *ngIf="nameNull == '1'" class="error-text" translate>NOMBRE_NULO</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="stacked" translate>CORREO_</ion-label>
+        <ion-input [(ngModel)]="email"  placeholder="{{requerido}}" type="email" inputmode="email"></ion-input>
+        <ion-label position="stacked" *ngIf="emailNull == '1'" class="error-text" translate>CORREO_NULO</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="stacked" translate>FECHA_NACIMIENTO_</ion-label>
+        <ion-datetime [(ngModel)]="birthDate"  displayFormat="YYYY-MMM-DD"></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12">
+      <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click)="RegisterNewUser()" translate>
+        REGISTRAR
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
+<!--
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click)="RegisterNewUser()">
+      Registrar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+-->

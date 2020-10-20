@@ -1,0 +1,24 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-left" size="12">
+        <ion-img class="logo" src="./assets/svg/logo-tc.svg"> </ion-img>
+      </ion-col>
+      <ion-col class="ion-text-center" size="12">
+        <h3 class="titulo-paso" translate>PASO_1</h3>
+        <p class="texto-paso" translate>PASO_1_INFO<br><span translate>PASO_1_INFO_2</span></p>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <!-- appPhonenum -->
+          <ion-input class="input-telefono" appPhonenum maxlength="17" autofocus="true"  [formControl]="phoneNumber" placeholder="+1 (___) ___-____" type="tel"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button color="primary" expand="block" class="ion-text-uppercase" (click)="verifyPhoneNumber()" translate>
+          ENVIAR_CODIGO
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

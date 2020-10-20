@@ -1,0 +1,117 @@
+.title-modules{
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin:0px;
+}
+.title-category{
+  font-size: 11PX;
+  font-weight: 300;
+  margin:0px;
+  // color: #fff;
+  color: #989898;
+  position: absolute;
+  top:90%;
+  left:50%;
+  padding-top: 5px;
+  transform: translate(-50%, -50%);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%;
+  text-align: center;
+  padding:0px 3px;
+}
+.img-cat-home{
+  position: relative;
+  height: 70px;
+}
+.img-destacada{
+  height: 105px;
+  width: 100%;
+}
+.img-cat-home:after{
+  content:'';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  // background:rgba(0,0,0,0.4);
+  top:0;
+  left:0;
+}
+.box-cat{
+  outline: 1px solid #989898;
+  outline-offset: -3px;
+  // margin-left: 2px;
+  height: 105px;
+}
+.main-cat{
+  margin: 0;
+}
+.col-main-cat{
+  padding-left:2px;
+  padding-right: 2px;
+}
+.icon-cat{
+  height: 24px;
+  width: 24px;
+}
+.search-style{
+  padding: 0;
+}
+.where-style{
+  padding: 0;
+}
+
+/* COMERCIOS DESTACADOS */
+.header-card-featured-com{
+  padding: 0px !important;
+  text-align: left;
+}
+
+.ads-slide{
+  padding-top: 12px;
+}
+
+.label-wrap{
+  position:relative;
+  top:0px;
+}
+
+.header-card-featured-com{
+  .card-title{
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    margin-top: 7px;
+    margin-left: 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .card-subtitle{
+    font-size: 11px;
+    font-weight: 300;
+    color: #000;
+    margin: 0px;
+    margin-left: 7px;
+    margin-bottom: 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-transform: uppercase;
+  }
+}
+.card-com-featured{
+  margin: 0px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.09);
+}
+.text-tags{
+  font-size: 13px;
+}

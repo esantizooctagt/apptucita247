@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-chip *ngIf="global.Where != ''" class="chip-filter">
+            <ion-label class="label-wrap">{{global.WhereLabel}}</ion-label>
+            <ion-icon src="./assets/svg/quitar-tc.svg" *ngIf="global.Where != ''" (click)="global.Where=''"></ion-icon>
+          </ion-chip>
+          <ion-button *ngIf="global.Where == ''" mode="ios" expand="block" color="light" [routerLink]="['/donde']" translate>DONDE</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-chip *ngIf="global.When!= ''" class="chip-filter">
+            <ion-label class="label-wrap">{{global.When}}</ion-label>
+            <ion-icon src="./assets/svg/quitar-tc.svg"  (click)="removeDate()"></ion-icon>
+          </ion-chip>
+          <ion-button *ngIf="global.When == ''" mode="ios" expand="block" color="light" [routerLink]="['/donde']" disabled="true" translate>CUANDO</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+      <ion-item lines="full">
+        <ion-label color="primary" position="fixed" translate>FECHA</ion-label>
+        <ion-datetime [(ngModel)]="dateWhen" [max]="maxDate" [min]="minDate" displayFormat="MMM DD YYYY" pickerFormat="YYYY-MMM-DD" (ionChange)="setWhere()" cancelText="{{cerrar}}" doneText="{{fijarFecha}}"></ion-datetime>
+        <ion-icon src="./assets/svg/calendar4-tc.svg" slot="end"></ion-icon>
+      </ion-item>
+      <!--<ion-button color="primary" expand="block" (click)="setWhere()" disabled="{{dateWhenStatus}}" >
+        <ion-text translate>FIJAR_FECHA</ion-text>
+      </ion-button>-->
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase"  [routerLink]="['/tabs/tab1']" translate>
+      VOLVER
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

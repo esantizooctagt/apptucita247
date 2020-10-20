@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title color="primary" class="title-pages ion-text-uppercase" translate>
+      MI_PERFIL
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-items-center" size="12">
+        <!-- <div class="cont-img-profile">
+          <ion-img class="img-profile" src="assets/svg/user-profile-tc.svg"></ion-img>
+          <ion-img class="img-action-profile" src="assets/svg/edit-photo-tc.svg"></ion-img>
+        </div> -->
+        <ng-container *ngIf="imgAvatar$ | async"></ng-container>
+          <div class="image-center">
+              <!-- circle User Profile Image -->
+              <img *ngIf="avatar; else isIcon" class="profile-pic" [src]="avatar">
+              <ion-img *ngIf="avatar" class="img-action-pic" src="assets/svg/edit-photo-tc.svg" (click)="onClick()"></ion-img>          
+              <ng-template #isIcon>
+                  <!-- Default Image -->
+                  <ion-img class="img-profile" src="assets/svg/user-profile-tc.svg"></ion-img>
+                  <ion-img class="img-action-profile" src="assets/svg/edit-photo-tc.svg" (click)="onClick()"></ion-img>
+              </ng-template>
+              <input id="fileUpload" name="fileUpload" type="file" accept="image/*" style="display:none;" />
+          </div>
+      </ion-col>
+      <ion-col size="12">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item>
+            <ion-label position="stacked" translate>NOMBRE <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required type="text" [(ngModel)]="name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked" translate>TELEFONO <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required disabled type="text">{{mobile | phone}}</ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked" translate>CORREO</ion-label>
+            <ion-input required type="text" [(ngModel)]="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked" translate>FECHA_NACIMIENTO</ion-label>
+            <ion-datetime displayFormat="YYYY-MMM-DD" [(ngModel)]="DOB"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label translate>GENERO</ion-label>
+            <ion-select placeholder="{{seleccione}}" [(ngModel)]="gender">
+              <ion-select-option value="F" translate>FEMENINO</ion-select-option>
+              <ion-select-option value="M" translate>MASCULINO</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label translate>COMUNICACION</ion-label>
+            <ion-select placeholder="{{seleccione}}" [(ngModel)]="preferences">
+              <ion-select-option value="1" translate>SMS</ion-select-option>
+              <ion-select-option value="2" translate>CORREO</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label translate>SERVICIOS_ESPECIALES</ion-label>
+            <ion-select placeholder="{{seleccione}}" [(ngModel)]="disability">
+              <ion-select-option value="1" translate>SENIOR</ion-select-option>
+              <ion-select-option value="3" translate>CON_DISCAPACIDAD</ion-select-option>
+              <ion-select-option value="2" translate>EMBARAZADA</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+        <ng-container *ngIf="Profile$ | async"></ng-container>
+        <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase" (click) = "onSubmit()" translate>GUARDAR</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,66 @@
+<ion-header mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" [routerLink]="['/tabs/tab2']">
+        <ion-icon slot="icon-only" src="assets/svg/back-tc.svg" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-title color="primary" class="title-pages title-pages-w-back ion-text-uppercase">{{appo.DateAppo | date:'MMM d, y'}}</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="card-date">
+
+      <ion-col size="8">
+        <ion-text>
+          <h3 class="title-place-com">{{appo.Name}}</h3>
+        </ion-text>
+      </ion-col>
+      <ion-col size="4" class="ion-text-end">
+        <ion-icon class="icon-meta" *ngIf="appo.Disability == 1" src="assets/svg/elder-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" *ngIf="appo.Disability == 3" src="assets/svg/handicap-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" *ngIf="appo.Disability == 2" src="assets/svg/pregnant-tc.svg"></ion-icon>
+        <ion-icon class="icon-meta" src="assets/svg/human-tc.svg"></ion-icon>
+        <ion-text>
+          x {{appo.Qty}}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <hr class="divisor"/>
+      <ion-row class="card-date">
+      <ion-col size="12">
+        <ion-text>
+          <span class="date">{{appo.Location}}</span>
+          <h5 class="title-place-suc"><span translate>PUERTA_</span> {{appo.Door}}</h5>
+          <h5 class="title-place-suc"><span translate>HORA_</span> {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) }}</h5>
+        </ion-text>
+        <ion-text class="">
+          <h4 class="title-door">{{appo.UserName}}</h4>
+          <span class="date"><span translate>EN_NOMBRE_DE</span>: {{(appo.OnBehalf == 0 ? 'No': 'Yes')}}</span>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <hr class="divisor"/>
+    <ion-row>
+      <ion-col>
+        <ngx-qrcode class="qrcode"
+          [elementType]="elementType" 
+          [value] = "appo.QRCode"
+          [width]="256"
+          qrc-class = "qrcode"
+          errorCorrectionLevel = "L">
+        </ngx-qrcode>
+        <ion-text class="">
+          <h2 class="qrcode">{{appo.QRCode}}</h2>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

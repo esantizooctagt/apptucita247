@@ -1,0 +1,104 @@
+ion-header{
+  background: white !important;
+}
+
+.title-card-date{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.card-date {
+  padding: 15px 15px 15px 15px;
+  color: #000000;
+  .title-place-com {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .title-place-suc {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .date{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .icon-meta{
+    width: 25px;
+    height: 30px;
+  }
+
+  .messages{
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    background: red;
+    position: absolute;
+    color: #ffffff;
+    top: 4px;
+    right: -4px;
+  }
+
+  .messages:after{
+    content:'*';
+    position: absolute;
+    color: white;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    top:2px;
+    right:2px;
+  }
+}
+
+.divisor{
+  margin: 0px;
+}
+
+.burbuja{
+  background: #D7D7D7;
+  border-radius: 4px;
+  margin: 5px 0px;
+  padding: 8px;
+  .titulo{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+    margin:0px;
+    margin-bottom: 6px;
+  }
+  .mensajes{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    margin: 0px;
+  }
+}
+
+.burbuja.par{
+  background: #EEEEEE;
+}
+
+.content-mensajes{
+  background: #F9F7F7;
+  padding:10px;
+}

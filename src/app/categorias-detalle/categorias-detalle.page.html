@@ -1,0 +1,49 @@
+<ion-header mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" [routerLink]="['/']">
+        <ion-icon slot="icon-only" src="assets/svg/back-tc.svg" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-title color="primary" class="title-pages title-pages-w-back ion-text-uppercase">{{categoryName}}</ion-title>
+        </ion-col>
+        <ion-col size="6">
+          <ion-chip *ngIf="subcategoryId != '_'" class="chip-filter">
+            <ion-label class="label-wrap">{{subcategoryTxt}}</ion-label>
+            <ion-icon src="./assets/svg/quitar-tc.svg" (click)="removeSubCategory();"></ion-icon>
+          </ion-chip>
+          <ion-button *ngIf="subcategoryId == '_'"  mode="ios"  expand="block" color="light" (click)="presentActionSheet()" translate>ESPECIALIDAD</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card *ngFor="let item of (Business); trackBy: trackById" class="card-com-featured" [routerLink]="['/comercio', item.Business_Id]" [id]="item.Business_Id">
+          <ion-card-header class="header-card-featured-com">
+            <ion-img class="img-business" *ngIf="item.Imagen" src="{{global.BucketPath+item.Imagen}}"></ion-img>
+            <ion-img *ngIf="!item.Imagen" src="./assets/svg/haz-tu-cita.svg"></ion-img>
+            <ion-card-title class="card-title">
+              {{item.Name}}
+            </ion-card-title>
+            <ion-card-subtitle mode="md" class="card-subtitle">{{item.ShortDescription}}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+        <ng-container *ngIf="resultset == 0">
+          <p color="medium" class="ion-text-center ion-padding" translate>SIN_DATA</p>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-infinite-scroll threshold="45%" (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-grid>
+</ion-content>
