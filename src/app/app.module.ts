@@ -26,13 +26,6 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
-// import { FilePath } from '@ionic-native/file-path/ngx';
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
- 
-// const config: SocketIoConfig = { url: 'wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com', options: {path: '/prod', transports: ['websocket', 'polling']} };
-
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -43,7 +36,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
-    // SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
