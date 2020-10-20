@@ -16,12 +16,12 @@
         <ng-container *ngIf="imgAvatar$ | async"></ng-container>
           <div class="image-center">
               <!-- circle User Profile Image -->
-              <img *ngIf="avatar; else isIcon" class="profile-pic" [src]="avatar">
-              <ion-img *ngIf="avatar" class="img-action-pic" src="assets/svg/edit-photo-tc.svg" (click)="onClick()"></ion-img>          
+              <img *ngIf="images.path != '' || avatar != ''; else isIcon" class="profile-pic" [src]="newImage">
+              <ion-img *ngIf="images.path != '' || avatar != ''" class="img-action-pic" src="assets/svg/edit-photo-tc.svg" (click)="selectImage()"></ion-img>          
               <ng-template #isIcon>
                   <!-- Default Image -->
                   <ion-img class="img-profile" src="assets/svg/user-profile-tc.svg"></ion-img>
-                  <ion-img class="img-action-profile" src="assets/svg/edit-photo-tc.svg" (click)="onClick()"></ion-img>
+                  <ion-img class="img-action-profile" src="assets/svg/edit-photo-tc.svg" (click)="selectImage()"></ion-img>
               </ng-template>
               <input id="fileUpload" name="fileUpload" type="file" accept="image/*" style="display:none;" />
           </div>

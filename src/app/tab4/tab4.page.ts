@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GlobalService } from '../services/global.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { File, FileEntry } from '@ionic-native/File/ngx';
+import { HttpClient } from '@angular/common/http';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Storage } from '@ionic/storage';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
+const STORAGE_KEY = 'tucita247_profile';
 
 @Component({
   selector: 'app-tab4',
@@ -25,6 +33,7 @@ export class Tab4Page implements OnInit {
   preferences: string = '';
   disability: string = '';
   avatar: string = '';
+  newImage: string = '';
 
   seleccione: string;
 
@@ -32,6 +41,11 @@ export class Tab4Page implements OnInit {
   fileString: any;
   displayForm: boolean=true;
 
+  images: any = {
+    name: '',
+    path: '',
+    filePath: ''
+  };
   readonly imgPath = this.global.BucketPath;
 
   constructor(
@@ -39,7 +53,17 @@ export class Tab4Page implements OnInit {
     public global: GlobalService,
     public toast: ToastController,
     private loading: LoadingService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private camera: Camera, private file: File, 
+    private http: HttpClient, 
+    private webview: WebView,
+    private actionSheetController: ActionSheetController, 
+    private toastController: ToastController,
+    private storage: Storage, 
+    private plt: Platform, 
+    private loadingController: LoadingController,
+    private ref: ChangeDetectorRef, 
+    private filePath: FilePath
   ) {}
 
   avatarForm = this.fb.group({
@@ -59,6 +83,10 @@ export class Tab4Page implements OnInit {
     this.preferences = this.Customer.Preferences;
     this.disability = this.Customer.Disability;
     this.avatar = this.Customer.Avatar;
+    // this.newImage = this.avatar;
+    this.plt.ready().then(() => {
+      this.loadStoredImages();
+    });
     this.translateTerms();
   }
 
@@ -98,63 +126,188 @@ export class Tab4Page implements OnInit {
     );
   }
 
-  dataURItoBlob(dataURI, dataType) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
+  loadStoredImages() {
+    this.storage.get(STORAGE_KEY).then(data => {
+      console.log("load data");
+      console.log(data);
+      if (data) {
+        this.images = JSON.parse(data);
+        this.newImage = this.images.path;
+      }
+    });
+  }
+
+  // dataURItoBlob(dataURI, dataType) {
+  //   const byteString = window.atob(dataURI);
+  //   const arrayBuffer = new ArrayBuffer(byteString.length);
+  //   const int8Array = new Uint8Array(arrayBuffer);
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     int8Array[i] = byteString.charCodeAt(i);
+  //   }
+  //   const blob = new Blob([int8Array], { type: dataType });    
+  //   return blob;
+  // }
+  
+  // loadCropImage($event){
+  //   this.fileString = $event;
+  // }
+
+  // onClick(){
+  //   const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+  //   fileUpload.onchange = () => {
+  //     const file = fileUpload.files[0];
+  //     if (file === undefined) {return;}
+  //     this.fileName = file['name'];
+  //     if (file['type'] != "image/png" && file['type'] != "image/jpg" && file['type'] != "image/jpeg") { 
+  //       // this.openDialog($localize`:@@shared.userpopup:`, $localize`:@@profile.fileextension:`, false, true, false);
+  //       return; 
+  //     }
+      
+  //     const reader: FileReader = new FileReader();
+  //     reader.onload = (event: Event) => {
+  //       let dimX = 75;
+  //       let dimY = 75;
+  //       if (file['size'] > 60000){
+  //         // this.openDialog($localize`:@@shared.userpopup:`, $localize`:@@profile.filemaximun:`, false, true, false);
+  //         return;
+  //       }
+  //       this.fileString = reader.result;
+  //       this.onSubmitAvatar();
+  //     }
+  //     reader.readAsDataURL(fileUpload.files[0]);
+  //   };
+  //   fileUpload.click();
+  // }
+  pathForImage(img) {
+    if (img === null) {
+      return '';
+    } else {
+      let converted = this.webview.convertFileSrc(img);
+      return converted;
     }
-    const blob = new Blob([int8Array], { type: dataType });    
-    return blob;
+  }
+
+  async presentToast(text) {
+    const toast = await this.toastController.create({
+      message: text,
+      position: 'bottom',
+      duration: 3000
+    });
+    toast.present();
+  }
+
+  async selectImage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Select Image source",
+      buttons: [{
+        text: 'Load from Library',
+        handler: () => {
+          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+      {
+        text: 'Use Camera',
+        handler: () => {
+          this.takePicture(this.camera.PictureSourceType.CAMERA);
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }]
+    });
+    await actionSheet.present();
+  }
+ 
+  takePicture(sourceType: PictureSourceType) {
+    var options: CameraOptions = {
+      quality: 100,
+      sourceType: sourceType,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    };
+ 
+    this.camera.getPicture(options).then(imagePath => {
+      if (this.plt.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        this.filePath.resolveNativePath(imagePath)
+          .then(filePath => {
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
+      } else {
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+      }
+    });
+  }
+
+  createFileName() {
+    // var newFileName = this.Customer.CustomerId + ".jpg";
+    var d = new Date(),
+        n = d.getTime(),
+        newFileName = n + ".jpg";
+    return newFileName;
   }
   
-  loadCropImage($event){
-    this.fileString = $event;
+  copyFileToLocalDir(namePath, currentName, newFileName) {
+    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
+      this.updateStoredImages(newFileName);
+    }, error => {
+      this.presentToast('Error while storing file.');
+    });
+  }
+  
+  updateStoredImages(name) {
+    this.storage.get(STORAGE_KEY).then(images => {
+      this.storage.remove(STORAGE_KEY);
+
+      let filePath = this.file.dataDirectory + name;
+      let resPath = this.pathForImage(filePath);
+
+      let newEntry = {
+        name: name,
+        path: resPath,
+        filePath: filePath
+      };
+      this.images = newEntry;
+      this.newImage = resPath;
+      this.storage.set(STORAGE_KEY, JSON.stringify(this.images));
+      // this.startUpload(newEntry);
+      this.ref.detectChanges();
+    });
   }
 
-  onClick(){
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-    fileUpload.onchange = () => {
-      const file = fileUpload.files[0];
-      if (file === undefined) {return;}
-      this.fileName = file['name'];
-      if (file['type'] != "image/png" && file['type'] != "image/jpg" && file['type'] != "image/jpeg") { 
-        // this.openDialog($localize`:@@shared.userpopup:`, $localize`:@@profile.fileextension:`, false, true, false);
-        return; 
-      }
-      
-      const reader: FileReader = new FileReader();
-      reader.onload = (event: Event) => {
-        let dimX = 75;
-        let dimY = 75;
-        if (file['size'] > 60000){
-          // this.openDialog($localize`:@@shared.userpopup:`, $localize`:@@profile.filemaximun:`, false, true, false);
-          return;
-        }
-        this.fileString = reader.result;
-        this.onSubmitAvatar();
-      }
-      reader.readAsDataURL(fileUpload.files[0]);
+  startUpload(imgEntry) {
+    this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
+      .then(entry => {
+        ( < FileEntry > entry).file(file => this.readFile(file))
+      })
+      .catch(err => {
+        this.presentToast('Error while reading file.');
+      });
+  }
+ 
+  readFile(file: any) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const formData = new FormData();
+      const imgBlob = new Blob([reader.result], {
+        type: file.type
+      });
+      formData.append('Image', imgBlob, file.name);
+      this.onSubmitAvatar(formData);
     };
-    fileUpload.click();
+    reader.readAsArrayBuffer(file);
   }
 
-  onSubmitAvatar() {
-    const formData: FormData = new FormData();
-    // var spinnerRef = this.spinnerService.start($localize`:@@profile.loadprof:`);
-    formData.append('Image', this.fileString);
-    let type: string ='';
-    if (this.fileString.toString().indexOf('data:image/') >= 0){
-      type = this.fileString.toString().substring(11,15);
-    }
-    if (type === 'jpeg' || type === 'jpg;'){
-      type = '.jpg';
-    }
-    if (type === 'png;'){
-      type = '.png';
-    }
-
+  async onSubmitAvatar(formData: FormData) {
+    const loading = await this.loadingController.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    console.log(formData);
     this.imgAvatar$ = this.global.UploadAvatar(this.Customer.CustomerId, this.mobile, formData).pipe(
       tap(response =>  {
         let dataForm = {
@@ -167,9 +320,10 @@ export class Tab4Page implements OnInit {
           Name: this.name,
           Preferences: this.preferences,
           Status: this.Customer.Status,
-          Avatar: this.imgPath+'/mobile/customer/'+this.Customer.CustomerId+type
+          Avatar: this.imgPath+'/mobile/customer/'+this.Customer.CustomerId+'.jpg'
         }
         // this.avatar = this.imgPath+'/mobile/customer/'+this.Customer.CustomerId+type;
+        this.presentToast('File upload complete.');
         this.avatar = this.fileString;
         this.global.SetSessionInfo(dataForm);
           // this.spinnerService.stop(spinnerRef);
@@ -183,6 +337,7 @@ export class Tab4Page implements OnInit {
       catchError(err => { 
         // this.spinnerService.stop(spinnerRef);
         // this.openDialog($localize`:@@shared.error:`, err.Message, false, true, false);
+        this.presentToast('File upload failed.');
         return throwError(err || err.message);
       })
     );

@@ -25,6 +25,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Camera,
     File,
     WebView,
+    FilePath,
     Deeplinks
   ],
   bootstrap: [AppComponent]
