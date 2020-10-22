@@ -322,7 +322,7 @@ export class Tab4Page implements OnInit {
         }
         // this.avatar = this.imgPath+'/mobile/customer/'+this.Customer.CustomerId+type;
         this.presentToast('File upload complete.');
-        this.avatar = this.fileString;
+        // this.avatar = this.fileString;
         this.global.SetSessionInfo(dataForm);
           // this.spinnerService.stop(spinnerRef);
           // this.profileForm.patchValue({'Avatar': this.businessId+'/img/avatars/'+this.userId+type});
