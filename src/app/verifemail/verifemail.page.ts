@@ -3,6 +3,7 @@ import { GlobalService } from '../services/global.service';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-verifemail',
@@ -18,6 +19,8 @@ export class VerifemailPage implements OnInit {
   invalidEmail: string = '';
   invalidEmailTxt: string = '';
   enviarCodigoEmail: string = '';
+  newAccount: string = '';
+  createAccount: boolean = false;
 
   email: string;
 
@@ -25,11 +28,13 @@ export class VerifemailPage implements OnInit {
     public global: GlobalService,
     private navCtrl: NavController,
     private loading: LoadingService,
+    private route: ActivatedRoute,
     private translate: TranslateService
   ) { }
 
   ngOnInit() {
     // this.translateTerms();
+    this.newAccount = this.route.snapshot.paramMap.get('new') == null ? "0" : "1";
   }
 
   ionViewWillEnter(){
@@ -39,13 +44,17 @@ export class VerifemailPage implements OnInit {
   SendCode(){
     this.invalidEmail = "";
     if (this.email == '') {return;}
-    if (this.email != this.global.Customer.Email) { this.invalidEmail = "1"; return;}
+    if (this.createAccount){ this.newAccount = '1';}
+    if (this.email != this.global.Customer.Email && this.newAccount == '0') { this.invalidEmail = "1"; return;}
     this.loading.presentLoading(this.enviarCodigo);
-    
     this.global.VerifyEmail(this.email).subscribe(content => {
       this.global.VerifcationCode = content['VerificationCode'];
       this.loading.dismissLoading();
-      this.navCtrl.navigateRoot('/verificacion/1/'+this.email);
+      if (this.newAccount == '0'){
+        this.navCtrl.navigateRoot('/verificacion/1/'+this.email);
+      } else {
+        this.navCtrl.navigateRoot('/verificacion/1/'+this.email+'/1');
+      }
     });
   }
 

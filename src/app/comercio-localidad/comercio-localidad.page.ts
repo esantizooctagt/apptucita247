@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MessageService } from '../services/message.service';
+import { ToastController } from '@ionic/angular';
+// import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-comercio-localidad',
@@ -79,6 +80,7 @@ export class ComercioLocalidadPage implements OnInit {
     public datepipe: DatePipe,
     public global: GlobalService,
     private loading: LoadingService,
+    public toastController: ToastController,
     private translate: TranslateService
     // private messageService: MessageService
   ) {}
@@ -247,7 +249,7 @@ export class ComercioLocalidadPage implements OnInit {
     );
   }
 
-  saveAppointment(){
+  async saveAppointment(){
     this.loading.presentLoading(this.guardandoCita);
     let customer = this.global.Customer;
     let hr = "";
@@ -277,6 +279,11 @@ export class ComercioLocalidadPage implements OnInit {
       AppoHour: hr,
       Language: this.global.Language.toLowerCase()
     };
+
+    const toast = await this.toastController.create({
+      message: 'Oops, an error ocur try again',
+      duration: 2000
+    });
     this.NewAppointment$ = this.global.PostAppointment(dataForm).pipe(
       map((res: any)=>{
         if (res.Code == 200){
@@ -285,11 +292,14 @@ export class ComercioLocalidadPage implements OnInit {
           // this.messageService.sendMessage({"action":"sendMessage", "msg": JSON.stringify(res.Appointment)});
           // setTimeout(() =>{
           this.router.navigate(['/tabs/tab2']);
-          this.loading.dismissLoading();
             // this.messageService.close();
           // },1000);
           return res;
         }
+        this.loading.dismissLoading();
+      }),
+      catchError(_ =>{
+        return toast.present();
       })
     );
   }

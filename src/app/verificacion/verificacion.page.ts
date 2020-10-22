@@ -3,7 +3,7 @@ import {GlobalService} from '../services/global.service';
 import {IonInput, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {TranslateService} from "@ngx-translate/core";
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-verificacion',
@@ -27,6 +27,7 @@ export class VerificacionPage implements OnInit {
   codigoVacio: string;
   ingreseCodigo: string;
   reenviadoEmail: string;
+  newAccount: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -35,27 +36,13 @@ export class VerificacionPage implements OnInit {
     public toast: ToastController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    private translate: TranslateService) { 
-      // Listen to paste on the document
-      // document.addEventListener("paste", function(e) {
-      //   // if the target is a text input
-      //   if (e.target.type === "text") {
-      //   var data = e.clipboardData.getData('Text');
-      //   // split clipboard text into single characters
-      //   data = data.split('');
-      //   // find all other text inputs
-      //   [].forEach.call(document.querySelectorAll("input[type=text]"), (node, index) => {
-      //       // And set input value to the relative character
-      //       node.value = data[index];
-      //     });
-      //   }
-      // });
-    }
+    private translate: TranslateService) {}
 
   ngOnInit() {
     // this.translateTerms();
     this.path = this.route.snapshot.paramMap.get('path') == null ? "_" : "1";
     this.email = this.route.snapshot.paramMap.get('email') == null ? "_" : this.route.snapshot.paramMap.get('email');
+    this.newAccount = this.route.snapshot.paramMap.get('new') == null ? "0" : "1";
   }
 
   ionViewWillEnter(){
@@ -124,14 +111,22 @@ export class VerificacionPage implements OnInit {
     if (codigo !== ''){
        if (codigo === this.global.VerifcationCode) {
         if (this.global.Customer.CustomerId !== undefined){
-          if(this.path == "_"){
-            this.navCtrl.navigateRoot('/verifemail');
+          if (this.newAccount == "0"){
+            if(this.path == "_"){
+              this.navCtrl.navigateRoot('/verifemail');
+            } else {
+              this.navCtrl.navigateRoot('/tabs/tab1');
+              this.global.SetSessionInfo(this.global.Customer);
+            }
           } else {
-            this.navCtrl.navigateRoot('/tabs/tab1');
-            this.global.SetSessionInfo(this.global.Customer);
+            this.navCtrl.navigateRoot('/registro/'+this.email);
           }
         }else{
-          this.navCtrl.navigateRoot('/registro');
+          if (this.newAccount == "0"){
+            this.navCtrl.navigateRoot('/verifemail/1');
+          } else {
+            this.navCtrl.navigateRoot('/registro/'+this.email);
+          }
         }
       } else {
         const toast = await this.toast.create({

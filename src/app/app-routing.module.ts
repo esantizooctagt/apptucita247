@@ -44,7 +44,7 @@ const routes: Routes = [
     canActivate: [UserGuard]
   },
   {
-    path: 'registro',
+    path: 'registro/:email',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
@@ -53,6 +53,10 @@ const routes: Routes = [
   },
   {
     path: 'verificacion/:path/:email',
+    loadChildren: () => import('./verificacion/verificacion.module').then( m => m.VerificacionPageModule)
+  },
+  {
+    path: 'verificacion/:path/:email/:new',
     loadChildren: () => import('./verificacion/verificacion.module').then( m => m.VerificacionPageModule)
   },
   {
@@ -71,8 +75,11 @@ const routes: Routes = [
   {
     path: 'verifemail',
     loadChildren: () => import('./verifemail/verifemail.module').then( m => m.VerifemailPageModule)
+  },
+  {
+    path: 'verifemail/:new',
+    loadChildren: () => import('./verifemail/verifemail.module').then( m => m.VerifemailPageModule)
   }
-
 ];
 @NgModule({
   imports: [

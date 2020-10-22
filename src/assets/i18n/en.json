@@ -100,5 +100,6 @@
   "CORREO_NULO": "Invalid email",
   "NO_RESULT": "No bookings available for the selected date",
   "SEL_PROVIDER": "You must select a provider first",
-  "SEL_SERVICE": "You must select a service first"
+  "SEL_SERVICE": "You must select a service first",
+  "ACCOUNT_EXIST": "Phone number already register, do you want to keep it or create a new one"
 }

@@ -79,7 +79,7 @@ export class GlobalService {
       map(results => results)
     );
   }
-  SetNewUser(phoneNumber: any, name: any, email: any, birthDate: any) {
+  SetNewUser(phoneNumber: any, name: any, email: any, birthDate: any, custId: string) {
     let body;
     body = {
       Phone: phoneNumber,
@@ -89,6 +89,7 @@ export class GlobalService {
       Gender: '',
       Preferences: '1',
       Disability: '',
+      CustId: custId,
       PlayerId: this.PlayerId
     };
     return this.http.post(this.ApiURL + 'mobile', body, this.HttpOptions).pipe(

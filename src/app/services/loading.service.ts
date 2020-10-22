@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -18,18 +17,15 @@ export class LoadingService {
     }).then(a => {
       a.present().then(() => {
         if (!this.isLoading) {
-          a.dismiss();
+          a.dismiss().then(() => console.log('abort presenting'));
         }
       });
     });
   }
 
   async dismissLoading(){
-    if (this.isLoading) {
-      this.isLoading = false;
-      return await this.loadingCtrl.dismiss();
-    }
-    return null;
+    this.isLoading = false;
+    return await this.loadingCtrl.dismiss().then(() => console.log('dismissed'));
   }
   
 }

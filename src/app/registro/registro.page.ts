@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
-import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -20,18 +20,19 @@ export class RegistroPage implements OnInit {
   registrandoInformacion: string;
   errorIntenteNuevamente: string;
   registroDeUsuario: string;
-  emailNull: string = "0";
   nameNull: string = "0";
 
   constructor(private global: GlobalService,
               public loadingCtrl: LoadingController,
               public toast: ToastController,
               private navCtrl: NavController,
+              private route: ActivatedRoute,
               private translate: TranslateService,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
     // this.translateTerms();
+    this.email = this.route.snapshot.paramMap.get('email') == null ? "_" : this.route.snapshot.paramMap.get('email');
   }
 
   ionViewWillEnter(){
@@ -39,21 +40,15 @@ export class RegistroPage implements OnInit {
   }
 
   RegisterNewUser() {
-    this.emailNull = "0";
     this.nameNull = "0";
 
-    if (this.email == "" || this.email == undefined) { 
-      this.emailNull = "1"; 
-    }
     if (this.name == "" || this.name == undefined) { 
-      this.nameNull = "1"; 
-    }
-    if (this.emailNull == "1" || this.nameNull == "1"){
       return;
     }
+    let custId = (this.global.Customer.CustomerId == undefined ? '' : this.global.Customer.CustomerId);
     this.presentLoading(this.registrandoInformacion);
     let birthdate = this.datePipe.transform(this.birthDate, 'dd-MM-yyyy');
-    this.global.SetNewUser(this.global.PhoneNumber, this.name, this.email, birthdate).subscribe(content => {
+    this.global.SetNewUser(this.global.PhoneNumber, this.name, this.email, birthdate, custId).subscribe(content => {
       if (content['Code'] === 200) {
           this.global.SetSessionInfo(content['Customer']);
           this.loadingCtrl.dismiss();

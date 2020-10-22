@@ -101,5 +101,6 @@
   "CORREO_NULO": "Email invalido",
   "NO_RESULT": "Sin citas disponibles para ese dia",
   "SEL_PROVIDER": "Debe seleccionar un proveedor primero",
-  "SEL_SERVICE": "Debe seleccionar un servicio primero"
+  "SEL_SERVICE": "Debe seleccionar un servicio primero",
+  "ACCOUNT_EXIST": "Telefono registrado previamente, quiere mantener la cuenta o crear una nueva"
 }

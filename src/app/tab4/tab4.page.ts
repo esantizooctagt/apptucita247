@@ -32,7 +32,7 @@ export class Tab4Page implements OnInit {
   gender: string = '';
   preferences: string = '';
   disability: string = '';
-  avatar: string = '';
+  // avatar: string = '';
   newImage: string = '';
 
   seleccione: string;
@@ -80,9 +80,9 @@ export class Tab4Page implements OnInit {
     this.email = this.Customer.Email;
     this.DOB = (this.Customer.DOB != '' ? this.Customer.DOB.substring(0,4)+'-'+this.Customer.DOB.substring(5,7)+'-'+this.Customer.DOB.substring(8,10) : '');
     this.gender = this.Customer.Gender;
-    this.preferences = this.Customer.Preferences;
-    this.disability = this.Customer.Disability;
-    this.avatar = this.Customer.Avatar;
+    this.preferences = this.Customer.Preferences.toString();
+    this.disability = this.Customer.Disability.toString();
+    // this.avatar = this.Customer.Avatar;
     // this.newImage = this.avatar;
     this.plt.ready().then(() => {
       this.loadStoredImages();
@@ -128,8 +128,6 @@ export class Tab4Page implements OnInit {
 
   loadStoredImages() {
     this.storage.get(STORAGE_KEY).then(data => {
-      console.log("load data");
-      console.log(data);
       if (data) {
         this.images = JSON.parse(data);
         this.newImage = this.images.path;
