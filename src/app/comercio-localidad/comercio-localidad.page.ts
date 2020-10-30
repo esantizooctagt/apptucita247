@@ -30,6 +30,7 @@ export class ComercioLocalidadPage implements OnInit {
   minDate: string = '';
   maxDate: string = '';
   noResult: number = 0;
+  public custPerBooking: number = 1;
 
   services: any[]= [];
   providers: any[] = [];
@@ -345,6 +346,7 @@ export class ComercioLocalidadPage implements OnInit {
             this.hideService = 1;
             this.serviceId = res.Services[0].ServiceId; 
             this.servName = res.Services[0].Name;
+            this.custPerBooking = res.Services[0].CustomerPerBooking;
             this.selectService(this.serviceId);
           }
           this.services = res.Services;
@@ -355,6 +357,11 @@ export class ComercioLocalidadPage implements OnInit {
   }
 
   selectService(event){
+    let data = this.services.findIndex(x=>x.ServiceId == event);
+    if (data >= 0){
+      this.guests = 1;
+      this.custPerBooking = this.services[data].CustomerPerBooking;
+    }
     this.serviceId = event;
     this.getAvailability();
   }

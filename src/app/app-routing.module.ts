@@ -79,7 +79,11 @@ const routes: Routes = [
   {
     path: 'verifemail/:new',
     loadChildren: () => import('./verifemail/verifemail.module').then( m => m.VerifemailPageModule)
+  },  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
   }
+
 ];
 @NgModule({
   imports: [

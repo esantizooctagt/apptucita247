@@ -20,7 +20,7 @@ export class VerifemailPage implements OnInit {
   invalidEmailTxt: string = '';
   enviarCodigoEmail: string = '';
   newAccount: string = '';
-  createAccount: boolean = false;
+  resultEmail: string = '';
 
   email: string;
 
@@ -33,8 +33,21 @@ export class VerifemailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.translateTerms();
-    this.newAccount = this.route.snapshot.paramMap.get('new') == null ? "0" : "1";
+    this.newAccount = this.route.snapshot.paramMap.get('new') == null ? "1" : this.route.snapshot.paramMap.get('new');
+    if (this.newAccount == '2'){
+      var email = this.global.Customer.Email;
+      var textEmail = email.split('@');
+      var dotCom = textEmail[1].split('.');
+      var firstPart = '';
+
+      firstPart = textEmail[0].substring(0,2).padEnd(textEmail[0].length, 'x');
+      if (dotCom[0].length >= 3) {
+          var newDot = dotCom[0].substring(dotCom[0].length-3,dotCom[0].length).padStart(dotCom[0].length, 'x');
+          this.resultEmail = firstPart+'@'+newDot+'.'+dotCom[1];
+      } else {
+          this.resultEmail = firstPart+'@'+dotCom[0]+'.'+dotCom[1];
+      }
+    }
   }
 
   ionViewWillEnter(){
@@ -44,13 +57,12 @@ export class VerifemailPage implements OnInit {
   SendCode(){
     this.invalidEmail = "";
     if (this.email == '') {return;}
-    if (this.createAccount){ this.newAccount = '1';}
-    if (this.email != this.global.Customer.Email && this.newAccount == '0') { this.invalidEmail = "1"; return;}
+    if (this.email != this.global.Customer.Email && this.newAccount == '2') { this.invalidEmail = "1"; return;}
     this.loading.presentLoading(this.enviarCodigo);
     this.global.VerifyEmail(this.email).subscribe(content => {
       this.global.VerifcationCode = content['VerificationCode'];
       this.loading.dismissLoading();
-      if (this.newAccount == '0'){
+      if (this.newAccount == '2'){
         this.navCtrl.navigateRoot('/verificacion/1/'+this.email);
       } else {
         this.navCtrl.navigateRoot('/verificacion/1/'+this.email+'/1');

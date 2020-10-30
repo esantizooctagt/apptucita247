@@ -1,0 +1,30 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-left" size="12">
+        <ion-img class="logo" src="./assets/svg/logo-tc.svg"> </ion-img>
+      </ion-col>
+      <ion-col class="ion-text-center" size="12">
+        <h3 class="titulo-paso" translate>PASO_3</h3>
+        <p class="texto-paso" translate>PASO_3_INFO_ACC</p>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-checkbox mode="ios" [(ngModel)]="keepAccount" (ionChange)="selectCheckBox(keepAccount, 'keepAccount')" slot="start"></ion-checkbox>
+          <ion-label class="text-account" (click)="selectCheckBox(keepAccount, 'keepAccount')" translate>PASO_3_MANTENER</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-checkbox mode="ios" [(ngModel)]="createAccount" (ionChange)="selectCheckBox(createAccount, 'createAccount')" slot="start"></ion-checkbox>
+          <ion-label class="text-account" (click)="selectCheckBox(createAccount, 'createAccount')" translate>PASO_3_NUEVA</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button #very color="primary" expand="block" class="ion-text-uppercase" (click)="nextStep()" translate>
+          CONTINUE
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

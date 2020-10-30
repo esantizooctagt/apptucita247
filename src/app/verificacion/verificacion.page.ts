@@ -113,7 +113,7 @@ export class VerificacionPage implements OnInit {
         if (this.global.Customer.CustomerId !== undefined){
           if (this.newAccount == "0"){
             if(this.path == "_"){
-              this.navCtrl.navigateRoot('/verifemail');
+              this.navCtrl.navigateRoot('/account');
             } else {
               this.navCtrl.navigateRoot('/tabs/tab1');
               this.global.SetSessionInfo(this.global.Customer);

@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { VerifemailPageRoutingModule } from './verifemail-routing.module';
-import { VerifemailPage } from './verifemail.page';
+import { AccountPageRoutingModule } from './account-routing.module';
+import { AccountPage } from './account.page';
 
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,8 +27,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       }
     }),
-    VerifemailPageRoutingModule
+    AccountPageRoutingModule
   ],
-  declarations: [VerifemailPage]
+  declarations: [AccountPage]
 })
-export class VerifemailPageModule {}
+export class AccountPageModule {}

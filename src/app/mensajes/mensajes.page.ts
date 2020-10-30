@@ -58,15 +58,16 @@ export class MensajesPage implements OnInit {
     const datepipe: DatePipe = new DatePipe('en-US');
     var now = new Date();
 
+    let dataMess = {
+      "U": this.txtMessage,
+      "T": this.datepipe.transform(now, 'dd MMMM, h:mm a')
+    }
+    this.messages.push(dataMess);
+    this.txtMessage = "";
+    
     this.SendMessage$ = this.global.SendMessage(this.appointmentId, this.txtMessage).pipe(
       map(async (res: any) => {
         if (res.Code == 200){
-          let dataMess = {
-            "U": this.txtMessage,
-            "T": this.datepipe.transform(now, 'dd MMMM, h:mm a')
-          }
-          this.messages.push(dataMess);
-          this.txtMessage = "";
           return res;
         } else {
           const msg = await this.toast.create({

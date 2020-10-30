@@ -36,7 +36,7 @@
         <p class="label2-detalle-comercio" translate>NUMERO_DE_PERSONAS</p>
       </ion-col>
       <ion-col size="5" class="ion-text-right ion-margin-top">
-        <ion-icon class="icon-controls" src="./assets/svg/plus-tc.svg" (click)="guests=guests+1"></ion-icon>
+        <ion-icon class="icon-controls" src="./assets/svg/plus-tc.svg" (click)="(guests+1 > custPerBooking ? custPerBooking : guests=guests+1)"></ion-icon>
         <ion-label class="ion-padding numero-visitas">{{guests}}</ion-label>
         <ion-icon class="icon-controls" src="./assets/svg/minus-tc.svg"
           (click)="(guests > 1 ? guests=guests-1 : guests)"></ion-icon>
