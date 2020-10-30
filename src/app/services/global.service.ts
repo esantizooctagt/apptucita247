@@ -90,8 +90,10 @@ export class GlobalService {
       Preferences: '1',
       Disability: '',
       CustId: custId,
-      PlayerId: this.PlayerId
+      PlayerId: this.PlayerId,
+      Language: (this.Language == '' ? 'en' : this.Language)
     };
+    console.log(body);
     return this.http.post(this.ApiURL + 'mobile', body, this.HttpOptions).pipe(
       map(results => results)
     );

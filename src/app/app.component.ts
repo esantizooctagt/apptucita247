@@ -65,7 +65,6 @@ export class AppComponent {
 
   setupLanguage(){
     if (window.Intl && typeof window.Intl === 'object') {
-      console.log('Get language');
       if (navigator.language.toLowerCase().substring(0,2) == 'en'){
         this.global.Language = 'en';
       } else {
@@ -74,19 +73,6 @@ export class AppComponent {
     } else {
       this.global.Language = 'en';
     }
-    // this.globalization.getPreferredLanguage()
-    //     .then(res => {
-    //       let language = res.value;
-    //       if (language.toLowerCase().substring(0,2) == 'en'){
-    //         language = 'en';
-    //       } else {
-    //         language = 'es';
-    //       }
-    //       this.global.Language = language;
-    //     })
-    //     .catch(e => {
-    //       this.global.Language = 'en';
-    //     });
   }
 
   setupOneSignal(){

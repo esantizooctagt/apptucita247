@@ -53,10 +53,6 @@ export class RegistroPage implements OnInit {
           this.global.SetSessionInfo(content['Customer']);
           this.loadingCtrl.dismiss();
           this.navCtrl.navigateRoot('/tabs/tab1');
-          // this.global.VerifcationCode = content['VerifcationCode'];
-          // this.global.Customer = content['Customer'];
-          // this.loadingCtrl.dismiss();
-          // this.navCtrl.navigateRoot('/verificacion');
       } else {
         this.errMessage();
       }
