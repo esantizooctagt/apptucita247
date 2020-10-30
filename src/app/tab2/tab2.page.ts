@@ -65,7 +65,7 @@ export class Tab2Page implements OnInit {
               Values: res.Appointments.filter(i => i.DateAppo.substring(0, 10) === g)
             }
           ));
-          this.results.sort((a, b) => (a.DateAppo < b.DateAppo ? -1 : 1));
+          this.results.sort((a, b) => (a.DateAppo > b.DateAppo ? -1 : 1));
           this.global.SetSessionCitas(this.results);
           this.connection = 1;
           this.loading.dismissLoading();

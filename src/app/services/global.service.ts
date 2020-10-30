@@ -188,8 +188,8 @@ export class GlobalService {
       map(results => results)
     );
   }
-  GetSearchData(searchData: string, city: string, sector: string) {
-    return this.http.get(this.ApiURL + 'mobile/search/' + searchData + '/' + city + '/' + sector).pipe(
+  GetSearchData(searchData: string, city: string, sector: string, when: string) {
+    return this.http.get(this.ApiURL + 'mobile/search/' + searchData + '/' + city + '/' + sector + '/' + when).pipe(
       map(results => results)
     );
   }

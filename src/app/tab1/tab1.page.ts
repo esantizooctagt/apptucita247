@@ -93,10 +93,16 @@ export class Tab1Page implements OnInit {
     if (sector != '' && sector != '_'){
       sector = sector.replace('SECTOR#', '');
     }
+    let valWhen;
+    if (this.global.When == null || this.global.When == ''){
+      valWhen = '_'
+    } else {
+      valWhen = this.global.When;
+    }
     if (search != ''){
-      this.result$ = this.global.GetSearchData(search, city, sector).pipe(
+      this.result$ = this.global.GetSearchData(search, city, sector, valWhen).pipe(
         map((res: any) => {
-          return res.hits.hit;
+          return res;
         }),
         catchError(err => {
           return 'Error !!!';
