@@ -79,6 +79,8 @@ export class AppComponent {
         this.global.SetLanguage(user.Mobile, user.CustomerId, this.global.Language)
           .subscribe((content: any) => {
             if (content.Code == 200){
+              user.Language = this.global.Language;
+              window.localStorage.customer = JSON.stringify(user);
               console.log("change language");
             }
           });
