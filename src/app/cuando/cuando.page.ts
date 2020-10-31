@@ -39,7 +39,7 @@ export class CuandoPage implements OnInit {
   }
 
   setWhere(){
-    this.global.When = this.datePipe.transform(this.dateWhen, 'dd-MM-yyyy');
+    this.global.When = this.datePipe.transform(this.dateWhen, 'yyyy-MM-dd');
   }
   removeDate(){
     this.global.When = '';

@@ -43,13 +43,9 @@ export class Tab1Page implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.isSearchBarOpened = 0;
-    this.translateTerms();
-    // this.loadData();
   }
 
   ionViewWillEnter(){
-    console.log("ingresa para traduccion");
     this.isSearchBarOpened = 0;
     this.translateTerms();
     this.loadData();
@@ -85,7 +81,6 @@ export class Tab1Page implements OnInit {
     this.dataSearch = search;
 
     let city = (this.global.Where == null || this.global.Where == '' ? '_' : this.global.Where.split(',')[0]);
-    // tslint:disable-next-line:max-line-length
     let sector = (this.global.Where == null || this.global.Where == '' ? '_' : (this.global.Where.split(',')[1] == '' ? '_' : this.global.Where.split(',')[1]));
     if (city != '' && city != '_') {
       city =  city.replace('CITY#', '');
@@ -145,9 +140,6 @@ export class Tab1Page implements OnInit {
   }
 
   onCancel(event){
-    // console.log(event);
-    // console.log(this.isSearchBarOpened);
     this.isSearchBarOpened = 0;
-    // console.log(this.isSearchBarOpened);
   }
 }

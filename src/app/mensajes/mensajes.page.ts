@@ -57,15 +57,17 @@ export class MensajesPage implements OnInit {
   onMessage(){
     const datepipe: DatePipe = new DatePipe('en-US');
     var now = new Date();
+    var messageData: string = '';
 
     let dataMess = {
       "U": this.txtMessage,
       "T": this.datepipe.transform(now, 'dd MMMM, h:mm a')
     }
     this.messages.push(dataMess);
+    messageData = this.txtMessage;
     this.txtMessage = "";
     
-    this.SendMessage$ = this.global.SendMessage(this.appointmentId, this.txtMessage).pipe(
+    this.SendMessage$ = this.global.SendMessage(this.appointmentId, messageData).pipe(
       map(async (res: any) => {
         if (res.Code == 200){
           return res;
@@ -76,6 +78,7 @@ export class MensajesPage implements OnInit {
             position: 'bottom',
             duration: 2000,
           });
+          this.messages.splice(-1);
           msg.present();
         }
       })

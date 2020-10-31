@@ -62,10 +62,11 @@ export class Tab2Page implements OnInit {
           groups.forEach(g =>
             this.results.push({
               DateAppo: this.datepipe.transform(g, 'MMM d, y'),
+              FullDate: this.datepipe.transform(g, 'y-M-dd'),
               Values: res.Appointments.filter(i => i.DateAppo.substring(0, 10) === g)
             }
           ));
-          this.results.sort((a, b) => (a.DateAppo > b.DateAppo ? -1 : 1));
+          this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
           this.global.SetSessionCitas(this.results);
           this.connection = 1;
           this.loading.dismissLoading();

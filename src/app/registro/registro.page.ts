@@ -48,6 +48,7 @@ export class RegistroPage implements OnInit {
     let custId = (this.global.Customer.CustomerId == undefined ? '' : this.global.Customer.CustomerId);
     this.presentLoading(this.registrandoInformacion);
     let birthdate = this.datePipe.transform(this.birthDate, 'dd-MM-yyyy');
+    if (birthdate == null || birthdate == undefined) { birthdate = '';}
     this.global.SetNewUser(this.global.PhoneNumber, this.name, this.email, birthdate, custId).subscribe(content => {
       if (content['Code'] === 200) {
           this.global.SetSessionInfo(content['Customer']);

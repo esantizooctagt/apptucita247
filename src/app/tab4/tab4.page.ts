@@ -91,8 +91,7 @@ export class Tab4Page implements OnInit {
   }
 
   onSubmit(){
-    if (this.DOB.length < 10 && this.DOB != 'None--' && this.DOB != '') {return;}
-    let dobShort = (this.DOB != 'None--' ? '' : this.DOB.substring(0,4) + '-' + this.DOB.substring(5,7) + '-' + this.DOB.substring(8,10));  
+    let dobShort = (this.DOB != '' ? this.DOB.substring(0,4) + '-' + this.DOB.substring(5,7) + '-' + this.DOB.substring(8,10) : '');
     this.loading.presentLoading('Cargando Información...');
     this.Profile$ = this.global.UpdateProfile(this.name, this.gender, this.email, dobShort, this.preferences, this.disability).pipe(
       map(async (res: any) => {

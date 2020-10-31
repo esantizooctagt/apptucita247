@@ -6,7 +6,6 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-// import { createTextMaskInputElement } from 'text-mask-core';
 import {GlobalService} from '../services/global.service';
 import {LoadingService} from '../services/loading.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -37,7 +36,6 @@ export class TelefonoPage implements OnInit {
     private translate: TranslateService) { }
   
   ngOnInit() {
-    // this.translateTerms();
   }
 
   ionViewWillEnter(){
@@ -46,10 +44,14 @@ export class TelefonoPage implements OnInit {
 
   verifyPhoneNumber(){
     this.loading.presentLoading(this.enviandoSMS);
-    let phoneNumber;
-    phoneNumber = '1'+this.phoneNumber.value.replace( /\D+/g, '');
-    // phoneNumber = this.phoneNumber.value.replace( /\D+/g, '');
-    this.global.VerifyPhone(phoneNumber).subscribe(content => {
+    let phoneNum: string = '';
+    phoneNum = this.phoneNumber.value.replace( /\D+/g, '');
+    if (phoneNum.length > 10 && phoneNum.substring(0,1) == "1"){
+      phoneNum = phoneNum.substring(1,11);
+    }
+    phoneNum = '1'+phoneNum;
+
+    this.global.VerifyPhone(phoneNum).subscribe(content => {
       this.global.VerifcationCode = content['VerifcationCode'];
       this.global.Customer = content['Customer'];
       this.loading.dismissLoading();
