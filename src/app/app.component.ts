@@ -73,6 +73,17 @@ export class AppComponent {
     } else {
       this.global.Language = 'en';
     }
+    let user = this.global.GetCustomerInfo();
+    if (user != undefined){
+      if (user.Language != this.global.Language){
+        this.global.SetLanguage(user.Mobile, user.CustomerId, this.global.Language)
+          .subscribe((content: any) => {
+            if (content.Code == 200){
+              console.log("change language");
+            }
+          });
+      }
+    }
   }
 
   setupOneSignal(){

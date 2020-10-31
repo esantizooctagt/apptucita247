@@ -48,6 +48,14 @@ export class GlobalService {
     localCitas = JSON.parse(window.localStorage.citas || '[]');
     return localCitas;
   }
+  GetCustomerInfo() {
+    let customerData: any;
+    if (window.localStorage.customer != undefined){
+      customerData = JSON.parse(window.localStorage.customer);
+    }
+    
+    return customerData;
+  }
   GetSessionInfo() {
     let localSession: any;
     localSession = JSON.parse(window.localStorage.customer || '[]');
@@ -93,8 +101,12 @@ export class GlobalService {
       PlayerId: this.PlayerId,
       Language: (this.Language == '' ? 'en' : this.Language)
     };
-    console.log(body);
     return this.http.post(this.ApiURL + 'mobile', body, this.HttpOptions).pipe(
+      map(results => results)
+    );
+  }
+  SetLanguage(mobile: string, customerId: string, language: string){
+    return this.http.put(this.ApiURL + 'mobile/lng/' + mobile + '/' + customerId + '/' + language, '').pipe(
       map(results => results)
     );
   }
