@@ -32,21 +32,21 @@
           <p class="texto-comercio">{{location.Location.Address + ', ' + City}}</p>
         </ion-text>
       </ion-col>
-      <ion-col size="12" *ngIf="hideProvider == 0 && provName == ''">
+      <ion-col size="12" *ngIf="providers.length > 1">
         <ion-item lines="none" class="ion-no-padding">
           <ion-label class="label2-detalle-comercio" translate>PROVEEDOR_SERVICIO</ion-label>
-          <ion-select mode="ios" [(ngModel)]="provider" #item class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectProvider(item.value)">
+          <ion-select mode="ios" [(ngModel)]="providerId" #item class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectProvider(item.value)">
             <ion-select-option *ngFor="let row of providers" [value]="row.ProviderId">{{row.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col class="12" *ngIf="hideProvider == 0 && provName != ''">
+      <ion-col size="12" *ngIf="providers.length == 1">
         <ion-item lines="none" class="ion-no-padding">
           <ion-label class="label2-detalle-comercio" translate>PROVEEDOR_SERVICIO</ion-label>
           <ion-label class="label-default">{{provName}}</ion-label>
         </ion-item>
       </ion-col>
-      <ion-col size="12" *ngIf="hideService == 0 && servName == ''">
+      <ion-col size="12" *ngIf="services.length > 1">
         <ion-item lines="none" class="ion-no-padding">
           <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
           <ion-select mode="ios" [(ngModel)]="serviceId" #serv class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectService(serv.value)">
@@ -54,7 +54,7 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col class="12" *ngIf="hideService == 1 && servName != '' && hideProvider == 0">
+      <ion-col size="12" *ngIf="services.length == 1 && providers.length > 1">
         <ion-item lines="none" class="ion-no-padding">
           <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
           <ion-label class="label-default">{{servName}}</ion-label>
@@ -97,7 +97,7 @@
       <ion-col size="12" class="ion-margin-top">
         <ion-item lines="none" class="ion-no-padding">
           <ion-icon class="icon-input-date" src="./assets/svg/calendar5-tc.svg" slot="start"></ion-icon>
-          <ion-datetime [max]="maxDate" [min]="minDate" [disabled]="provider == ''" placeholder="{{seleccione}}" displayFormat="MMM DD YYYY" [(ngModel)]="dateAppo" (ionChange)="changeDate($event)" cancelText="{{cerrar}}" doneText="{{seleccionar}}"></ion-datetime>
+          <ion-datetime [max]="maxDate" [min]="minDate" [disabled]="providerId == ''" placeholder="{{seleccione}}" displayFormat="MMM DD YYYY" [(ngModel)]="dateAppo" (ionChange)="changeDate($event)" cancelText="{{cerrar}}" doneText="{{seleccionar}}"></ion-datetime>
         </ion-item>
         <ng-container *ngIf="providerId === ''">
           <ion-label class="noResult-comercio" translate>SEL_PROVIDER</ion-label>
@@ -107,7 +107,7 @@
         </ng-container>
         <ion-item lines="none" class="ion-no-padding" *ngIf="noResult == 0 && providerId != '' && serviceId != ''">
           <ion-icon class="icon-input-date" src="./assets/svg/clock-tc.svg" slot="start"></ion-icon>
-          <ion-select mode="ios" [disabled]="provider == ''" placeholder="{{seleccione}}" [(ngModel)]="hourAppo" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+          <ion-select mode="ios" [disabled]="providerId == ''" placeholder="{{seleccione}}" [(ngModel)]="hourAppo" cancelText="{{cerrar}}" okText="{{seleccionar}}">
             <ion-select-option *ngFor="let hour of hoursData">{{hour.Hour}}</ion-select-option>
           </ion-select>
         </ion-item>

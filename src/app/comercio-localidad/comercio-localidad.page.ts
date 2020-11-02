@@ -49,7 +49,6 @@ export class ComercioLocalidadPage implements OnInit {
   Favorite$: Observable<any>;
   Availabity$: Observable<any>;
   NewAppointment$: Observable<any>;
-  provider: any;
   fav: number = 0;
   public guests: number = 1;
 
@@ -126,11 +125,9 @@ export class ComercioLocalidadPage implements OnInit {
       map((res: any) => {
         if (res.Code == 200){
           if (res.Providers.length == 1){
-            this.provider = res.Providers[0].ProviderId;
             this.provName = res.Providers[0].Name;
-            this.providerId = this.provider;
-            // console.log(this.providerId);
-            this.selectProvider(this.provider);
+            this.providerId = res.Providers[0].ProviderId;
+            this.selectProvider(this.providerId);
           } 
           this.providers = res.Providers;
           return res.Providers;
@@ -182,7 +179,7 @@ export class ComercioLocalidadPage implements OnInit {
     
     if (this.providerId == '' || this.serviceId == ''){ return; }
     this.loading.presentLoading(this.cargando);
-    this.Availabity$ = this.global.GetAvailabity(this.businessId, this.locationId, this.provider, this.serviceId, newDate).pipe(
+    this.Availabity$ = this.global.GetAvailabity(this.businessId, this.locationId, this.providerId, this.serviceId, newDate).pipe(
       map((res: any) => {
         if (res.Code == 200){
           this.loading.dismissLoading();
@@ -278,7 +275,11 @@ export class ComercioLocalidadPage implements OnInit {
       CustomerId: customer.CustomerId,
       AppoDate: this.datepipe.transform(this.dateAppo, 'MM-dd-yyyy'),
       AppoHour: hr,
-      Language: this.global.Language.toLowerCase()
+      Language: this.global.Language.toLowerCase(),
+      CountProv: this.providers.length,
+      CountServ: this.services.length,
+      ProvName: this.provName,
+      ServName: this.servName
     };
 
     const toast = await this.toastController.create({
@@ -336,11 +337,16 @@ export class ComercioLocalidadPage implements OnInit {
     this.hoursData = [];
     this.hideService = 0;
     this.servName = '';
+    let data = this.providers.findIndex(x=>x.ProviderId == this.providerId);
+    if (data >= 0){
+      this.provName = this.providers[data].Name;
+    }
+
     this.Services$ = this.global.GetServices(this.businessId, this.providerId).pipe(
       map((res: any) => {
         if (res.Code == 200){
           if (res.Services.length == 1){
-            if (this.provider.length == 1){
+            if (this.providers.length == 1){
               this.hideProvider = 1;
             }
             this.hideService = 1;
@@ -361,6 +367,7 @@ export class ComercioLocalidadPage implements OnInit {
     if (data >= 0){
       this.guests = 1;
       this.custPerBooking = this.services[data].CustomerPerBooking;
+      this.servName = this.services[data].Name;
     }
     this.serviceId = event;
     this.getAvailability();

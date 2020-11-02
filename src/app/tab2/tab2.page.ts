@@ -22,6 +22,7 @@ export class Tab2Page implements OnInit {
   results = [];
 
   cargandoMensajes: string;
+  cancelAppo: string;
   
   constructor(
     public global: GlobalService,
@@ -101,12 +102,15 @@ export class Tab2Page implements OnInit {
 
   onCancel(appo: any){
     console.log(appo.DateAppo);
+    this.loading.presentLoading(this.cancelAppo);
     this.CancelAppo$ = this.global.CancelAppointment(appo.AppointmentId, appo.DateAppo).pipe(
       map(async (res: any) => {
         if (res.Code == 200){
+          this.loading.dismissLoading();
           this.loadAppointments();
           return res;
         } else {
+          this.loading.dismissLoading();
           const msg = await this.toast.create({
             header: 'Messages',
             message: 'Something goes wrong, try again',
@@ -142,6 +146,9 @@ export class Tab2Page implements OnInit {
     this.translate.use(this.global.Language);
     this.translate.get('CARGANDO_MSGS').subscribe((res: string) => {
       this.cargandoMensajes = res;
+    });
+    this.translate.get('CANCEL_APPO').subscribe((res: string) => {
+      this.cancelAppo = res;
     });
   }
 }
