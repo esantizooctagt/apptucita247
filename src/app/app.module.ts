@@ -27,19 +27,6 @@ import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-// const config: SocketIoConfig = { url: 'wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com', 
-//   options: { 
-//     path: '/prod', 
-//     reconnection: true, 
-//     reconnectionAttempts: Infinity,
-//     reconnectionDelay: 1000,
-//     reconnectionDelayMax: 5000,
-//     randomizationFactor: 0.5,
-//     query: 'businessId=12345', 
-//     transports: ['websocket']} 
-//   };
-
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -51,7 +38,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
-    // SocketIoModule.forRoot(config),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

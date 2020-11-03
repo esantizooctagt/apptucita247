@@ -38,9 +38,22 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {
     this.Customer = this.global.Customer;
-    this.result$ = this.ws.createObservableSocket('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?businessId=12345').pipe(
-      map((data) => console.log(data))
+    let custId = this.Customer.CustomerId;
+    this.result$ = this.ws.connectWS('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId='+custId).pipe(
+      map((data) => this.syncData(data))
     );
+  }
+
+  syncData(data){
+    if (data.Tipo == 'CANCEL'){
+      console.log("remove from list");
+    }
+    if (data.Tipo == 'APPO'){
+      console.log("add new appo");
+    }
+    if (data.Tipo == 'MESS'){
+      console.log("add new mess");
+    }
   }
 
   ionViewWillEnter(){
