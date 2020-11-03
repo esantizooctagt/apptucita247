@@ -10,6 +10,7 @@
     <ion-row>
       <ng-container *ngIf="Appos$ | async"></ng-container>
       <ng-container *ngIf="CancelAppo$ | async"></ng-container>
+      <ng-container *ngIf="result$ | async"></ng-container>
       <ng-container *ngIf="display == 1">
         <ion-col size="12" *ngFor="let row of results">
           <ion-text color="primary">

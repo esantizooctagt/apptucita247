@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ParamsService } from '../services/params.service';
 import { DatePipe } from '@angular/common';
-import { LoadingService } from "../services/loading.service";
-import {TranslateService} from "@ngx-translate/core";
+import { LoadingService } from '../services/loading.service';
+import { TranslateService } from "@ngx-translate/core";
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-tab2',
@@ -16,6 +17,7 @@ import {TranslateService} from "@ngx-translate/core";
 export class Tab2Page implements OnInit {
   Customer: any;
   Appos$: Observable<any[]>;
+  result$: Observable<any>;
   CancelAppo$: Observable<any>;
   connection: number = 0;
   display: number = -1;
@@ -31,10 +33,14 @@ export class Tab2Page implements OnInit {
     public datepipe: DatePipe,
     public loading: LoadingService,
     private translate: TranslateService,
+    private ws: MessageService
   ) {}
 
   ngOnInit() {
     this.Customer = this.global.Customer;
+    this.result$ = this.ws.createObservableSocket('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?businessId=12345').pipe(
+      map((data) => console.log(data))
+    );
   }
 
   ionViewWillEnter(){

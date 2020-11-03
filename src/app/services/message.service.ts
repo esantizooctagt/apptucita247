@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 // import { Socket } from 'ngx-socket-io';
 // import { EMPTY, Observable, Subject, timer } from 'rxjs';
 // import { catchError, delayWhen, retryWhen, switchAll, tap } from 'rxjs/operators';
@@ -10,12 +11,13 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MessageService {
   // private socket$: WebSocketSubject<any>;
   // private messagesSubject$ = new Subject();
   // public messages$ = this.messagesSubject$.pipe(switchAll(), catchError(e => { throw e }));
- 
-  // constructor() {}
+  ws:WebSocket
+  constructor() {}
 
   // public connect(cfg: { reconnect: boolean } = { reconnect: false }): void {
   //   console.log(this.socket$);
@@ -82,4 +84,20 @@ export class MessageService {
   // getUsers(){
   //   return this.socket.fromEvent('users');
   // }
+
+  createObservableSocket(url:string ):Observable<any>{
+    this.ws = new WebSocket(url);
+    console.log(this.ws);
+    return new Observable<any>(
+      observable =>{
+        this.ws.onmessage = (event)=> {console.log(event.data); observable.next(event.data);};
+        this.ws.onerror = (event)=>observable.error(event);
+        this.ws.onclose = (event)=>observable.complete();
+      }
+    )
+  }
+  sendMessage(message:string){
+    console.log(message);
+    this.ws.send(message);
+  }
 }
