@@ -1,9 +1,11 @@
+<ng-container *ngIf="result$ | async"></ng-container>
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab1">
       <ion-icon src="assets/svg/home-tc.svg"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="tab2">
+    <ion-tab-button tab="tab2" (click)="messages=0">
+      <ion-badge class="badge-messages" *ngIf="messages==1">*</ion-badge>
       <ion-icon src="assets/svg/calendar-tc.svg"></ion-icon>
     </ion-tab-button>
     <ion-tab-button tab="tab3">

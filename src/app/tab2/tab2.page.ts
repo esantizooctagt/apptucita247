@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../services/global.service';
 import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { ParamsService } from '../services/params.service';
 import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from "@ngx-translate/core";
 import { MessageService } from '../services/message.service';
+import { MonitorService } from '../services/monitor.service';
 
 @Component({
   selector: 'app-tab2',
@@ -17,7 +18,6 @@ import { MessageService } from '../services/message.service';
 export class Tab2Page implements OnInit {
   Customer: any;
   Appos$: Observable<any[]>;
-  result$: Observable<any>;
   CancelAppo$: Observable<any>;
   connection: number = 0;
   display: number = -1;
@@ -26,6 +26,23 @@ export class Tab2Page implements OnInit {
   cargandoMensajes: string;
   cancelAppo: string;
   
+  result$ = this.monitorService.syncMessage.pipe(
+    map((message: any) => {
+      this.syncData(message);
+    })
+  );
+
+  // result$ = this.ws.messages$.pipe(
+  //   map((res: any) => {
+  //     this.syncData(res);
+  //   }),
+  //   catchError(error => { throw error }),
+  //   tap({
+  //     error: error => console.log('[Live Table component] Error:', error),
+  //     complete: () => console.log('[Live Table component] Connection Closed')
+  //   })
+  // );
+
   constructor(
     public global: GlobalService,
     private params: ParamsService,
@@ -33,26 +50,77 @@ export class Tab2Page implements OnInit {
     public datepipe: DatePipe,
     public loading: LoadingService,
     private translate: TranslateService,
-    private ws: MessageService
+    // private ws: MessageService,
+    private monitorService: MonitorService
   ) {}
 
   ngOnInit() {
     this.Customer = this.global.Customer;
-    let custId = this.Customer.CustomerId;
-    this.result$ = this.ws.connectWS('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId='+custId).pipe(
-      map((data) => this.syncData(data))
-    );
+    // let custId = this.Customer.CustomerId;
+    // this.ws.connect();
+    // this.result$ = this.ws.connectWS('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId='+custId).pipe(
+    //   map((data) => this.syncData(data))
+    // );
   }
 
   syncData(data){
     if (data.Tipo == 'CANCEL'){
-      console.log("remove from list");
+      this.results.forEach(function (r, i, o){
+        r.Values.forEach(function(element, index, object) {
+          if (element.AppointmentId == data.AppId){
+            object.splice(index, 1);
+          }
+        });
+        if (r.Values.length == 0){
+          o.splice(i, 1);
+        }
+      });
     }
+
     if (data.Tipo == 'APPO'){
-      console.log("add new appo");
+      let entro = 0;
+      let newApp = {
+        AppointmentId: data.AppId,
+        Status: data.Status,
+        Address: data.Address,
+        NameBusiness: data.NameBusiness,
+        PeopleQty: data.Guests,
+        QRCode: data.QRCode,
+        UnRead: data.UnRead,
+        Ready: data.Ready,
+        CustomerId: data.CustomerId,
+        DateAppo: data.DateFull,
+        Disability: data.Disability,
+        Door: data.Door,
+        Name: data.Name,
+        OnBehalf: data.OnBehalf,
+        Phone: data.Phone
+      }
+      this.results.forEach(function (r, i, o){
+        if (r.FullDate == data.DateFull.substring(0,10)){
+          r.Values.push(newApp);
+          entro = 1;
+        }
+      });
+      if (entro == 0) {
+        let res: any[]=[];
+        res.push(newApp);
+        this.results.push({
+          DateAppo: this.datepipe.transform(data.DateFull.substring(0,10), 'MMM d, y'),
+          FullDate: this.datepipe.transform(data.DateFull.substring(0,10), 'y-M-dd'),
+          Values: res
+        });
+      }
+      this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
     }
     if (data.Tipo == 'MESS'){
-      console.log("add new mess");
+      this.results.forEach(function (r, i, o){
+        r.Values.forEach(function(element, index, object) {
+          if (element.AppointmentId == data.AppId){
+            element.UnRead='U';
+          }
+        });
+      });
     }
   }
 
@@ -60,6 +128,8 @@ export class Tab2Page implements OnInit {
     this.Customer = this.global.Customer;
     this.loadAppointments();
     this.translateTerms();
+
+    // this.ws.connect();
   }
 
   loadAppointments(){
@@ -120,7 +190,6 @@ export class Tab2Page implements OnInit {
   }
 
   onCancel(appo: any){
-    console.log(appo.DateAppo);
     this.loading.presentLoading(this.cancelAppo);
     this.CancelAppo$ = this.global.CancelAppointment(appo.AppointmentId, appo.DateAppo).pipe(
       map(async (res: any) => {
