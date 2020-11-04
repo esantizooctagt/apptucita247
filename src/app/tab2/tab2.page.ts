@@ -18,6 +18,7 @@ import { MonitorService } from '../services/monitor.service';
 export class Tab2Page implements OnInit {
   Customer: any;
   Appos$: Observable<any[]>;
+  result$: Observable<any>;
   CancelAppo$: Observable<any>;
   connection: number = 0;
   display: number = -1;
@@ -26,11 +27,11 @@ export class Tab2Page implements OnInit {
   cargandoMensajes: string;
   cancelAppo: string;
   
-  result$ = this.monitorService.syncMessage.pipe(
-    map((message: any) => {
-      this.syncData(message);
-    })
-  );
+  // result$ = this.monitorService.syncMessage.pipe(
+  //   map((message: any) => {
+  //     this.syncData(message);
+  //   })
+  // );
 
   // result$ = this.ws.messages$.pipe(
   //   map((res: any) => {
@@ -65,9 +66,12 @@ export class Tab2Page implements OnInit {
 
   syncData(data){
     if (data.Tipo == 'CANCEL'){
+      console.log(data.AppId);
       this.results.forEach(function (r, i, o){
         r.Values.forEach(function(element, index, object) {
+          console.log(element);
           if (element.AppointmentId == data.AppId){
+            console.log("eliminar");
             object.splice(index, 1);
           }
         });
@@ -130,6 +134,12 @@ export class Tab2Page implements OnInit {
     this.translateTerms();
 
     // this.ws.connect();
+
+    this.result$ = this.monitorService.syncMessage.pipe(
+      map((message: any) => {
+        this.syncData(message);
+      })
+    );
   }
 
   loadAppointments(){
