@@ -263,7 +263,7 @@ export class ComercioLocalidadPage implements OnInit {
     let dataForm = {
       BusinessId: this.businessId,
       LocationId: this.locationId,
-      BusinessName: this.location.Name,
+      BusinessName: (this.location.Name.length > 27 ? this.location.Name.substring(0,27)+'...' : this.location.Name),
       ProviderId: this.providerId,
       ServiceId: this.serviceId,
       Name: (this.onbehalf != '' ? this.onbehalf : customer.Name),
@@ -275,11 +275,7 @@ export class ComercioLocalidadPage implements OnInit {
       CustomerId: customer.CustomerId,
       AppoDate: this.datepipe.transform(this.dateAppo, 'MM-dd-yyyy'),
       AppoHour: hr,
-      Language: this.global.Language.toLowerCase(),
-      CountProv: this.providers.length,
-      CountServ: this.services.length,
-      ProvName: this.provName,
-      ServName: this.servName
+      Language: this.global.Language.toLowerCase()
     };
 
     const toast = await this.toastController.create({
