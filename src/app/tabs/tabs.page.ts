@@ -40,6 +40,7 @@ export class TabsPage implements OnInit {
 
   ionViewWillEnter(){
     this.Customer = this.global.Customer;
+    console.log("ingresa a tabs");
     this.ws.connect();
   }
 }

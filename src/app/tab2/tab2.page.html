@@ -36,8 +36,9 @@
                 <ion-col size="12">
                   <ion-text>
                     <h4 class="title-place-suc">{{appo.Name}}</h4>
-                    <span class="date">{{appo.Address}}</span>
+                    <h4 class="title-place-suc">{{appo.Address}}</h4>
                     <h4 class="title-place-suc">{{(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+':00 PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':00 PM' : appo.DateAppo.substring(11, 13)+':00 AM'))}}</h4>
+                    <h5 *ngIf="appo.Status > 1" [ngClass]="{'completed': appo.Status > 2, 'process': appo.Status === 2}">{{appo.Status == 2 ? textPrecheck : textCompleted}}</h5>
                   </ion-text>
                 </ion-col>
               </ion-row>
@@ -53,7 +54,7 @@
                       <ion-icon src="./assets/svg/notificacion-tc.svg"></ion-icon>
                     </span>
                   </ion-button>
-                  <ion-button *ngIf="connection == 1" fill="clear" size="small" (click)="onCancel(appo)">
+                  <ion-button *ngIf="connection == 1 && appo.Status == 1" fill="clear" size="small" (click)="onCancel(appo)">
                     <ion-icon slot="icon-only" src="assets/svg/close-tc.svg"></ion-icon>
                   </ion-button>
                   <ion-button fill="clear" size="small" (click)="sendParams(appo)" [routerLink]="['/cita']">

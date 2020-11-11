@@ -110,5 +110,9 @@
   "SEL_PROVIDER": "You must select a provider first",
   "SEL_SERVICE": "You must select a service first",
   "ACCOUNT_EXIST": "Phone number already register, do you want to keep it or create a new one",
-  "CANCEL_APPO": "Cancel appointment"
+  "CANCEL_APPO": "Cancel appointment",
+  "MSG_APPO": "Are you sure you want to cancel this booking?",
+  "TITLE_BOOKING": "Citas",
+  "STATUS_PRECHECK": "Pre CheckIn",
+  "STATUS_COMPLETED": "Completed"
 }

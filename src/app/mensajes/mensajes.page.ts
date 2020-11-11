@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ParamsService } from '../services/params.service';
 import {TranslateService} from '@ngx-translate/core';
 import {LoadingService} from '../services/loading.service';
+import { MonitorService } from '../services/monitor.service';
 
 @Component({
   selector: 'app-mensajes',
@@ -16,6 +17,7 @@ import {LoadingService} from '../services/loading.service';
 export class MensajesPage implements OnInit {
   Messages$: Observable<any[]>;
   SendMessage$: Observable<any>;
+  result$: Observable<any>;
   txtMessage: string = '';
   appointmentId: string= '';
   appoObj: any;
@@ -31,6 +33,7 @@ export class MensajesPage implements OnInit {
     public toast: ToastController,
     public datepipe: DatePipe,
     private translate: TranslateService,
+    private monitorService: MonitorService,
     private loading: LoadingService
   ) { }
 
@@ -52,6 +55,25 @@ export class MensajesPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+
+    this.result$ = this.monitorService.syncMessage.pipe(
+      map((message: any) => {
+        console.log(message);
+        this.syncData(message);
+      })
+    );
+  }
+
+  syncData(data){
+    console.log("ingreso a ver");
+    if (data != undefined){
+      if (data.Tipo == 'MESS'){
+        console.log("ingreso message");
+        if (data.AppId == this.appointmentId){
+          this.messages.push(data.Message);
+        }
+      }
+    }
   }
 
   onMessage(){

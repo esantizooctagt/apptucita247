@@ -15,6 +15,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-header mode="md">
+  <ng-container *ngIf="result$ | async"></ng-container>
   <ion-grid class="ion-no-padding">
     <ion-row class="card-date">
       <ion-col size="8">

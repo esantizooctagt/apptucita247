@@ -37,7 +37,9 @@
       <ion-row class="card-date">
       <ion-col size="12">
         <ion-text>
-          <span class="date">{{appo.Location}}</span>
+          <h5 class="title-place-suc">{{appo.Location}}</h5>
+          <h5 class="title-place-suc" *ngIf="appo.ProvName">{{appo.ProvName}}</h5>
+          <h5 class="title-place-suc" *ngIf="appo.ServName">{{appo.ServName}}</h5>
           <h5 class="title-place-suc"><span translate>PUERTA_</span> {{appo.Door}}</h5>
           <h5 class="title-place-suc"><span translate>HORA_</span> {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) }}</h5>
         </ion-text>

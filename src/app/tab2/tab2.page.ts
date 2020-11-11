@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ParamsService } from '../services/params.service';
@@ -25,7 +25,11 @@ export class Tab2Page implements OnInit {
   results = [];
 
   cargandoMensajes: string;
+  deleteAppo: string;
   cancelAppo: string;
+  titleBooking: string;
+  textPrecheck: string;
+  textCompleted: string;
   
   // result$ = this.monitorService.syncMessage.pipe(
   //   map((message: any) => {
@@ -52,7 +56,8 @@ export class Tab2Page implements OnInit {
     public loading: LoadingService,
     private translate: TranslateService,
     // private ws: MessageService,
-    private monitorService: MonitorService
+    private monitorService: MonitorService,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -65,66 +70,68 @@ export class Tab2Page implements OnInit {
   }
 
   syncData(data){
-    if (data.Tipo == 'CANCEL'){
-      console.log(data.AppId);
-      this.results.forEach(function (r, i, o){
-        r.Values.forEach(function(element, index, object) {
-          console.log(element);
-          if (element.AppointmentId == data.AppId){
-            console.log("eliminar");
-            object.splice(index, 1);
+    if (data != undefined){
+      if (data.Tipo == 'CANCEL'){
+        console.log(data.AppId);
+        this.results.forEach(function (r, i, o){
+          r.Values.forEach(function(element, index, object) {
+            console.log(element);
+            if (element.AppointmentId == data.AppId){
+              console.log("eliminar");
+              object.splice(index, 1);
+            }
+          });
+          if (r.Values.length == 0){
+            o.splice(i, 1);
           }
         });
-        if (r.Values.length == 0){
-          o.splice(i, 1);
-        }
-      });
-    }
-
-    if (data.Tipo == 'APPO'){
-      let entro = 0;
-      let newApp = {
-        AppointmentId: data.AppId,
-        Status: data.Status,
-        Address: data.Address,
-        NameBusiness: data.NameBusiness,
-        PeopleQty: data.Guests,
-        QRCode: data.QRCode,
-        UnRead: data.UnRead,
-        Ready: data.Ready,
-        CustomerId: data.CustomerId,
-        DateAppo: data.DateFull,
-        Disability: data.Disability,
-        Door: data.Door,
-        Name: data.Name,
-        OnBehalf: data.OnBehalf,
-        Phone: data.Phone
       }
-      this.results.forEach(function (r, i, o){
-        if (r.FullDate == data.DateFull.substring(0,10)){
-          r.Values.push(newApp);
-          entro = 1;
+  
+      if (data.Tipo == 'APPO'){
+        let entro = 0;
+        let newApp = {
+          AppointmentId: data.AppId,
+          Status: data.Status,
+          Address: data.Address,
+          NameBusiness: data.NameBusiness,
+          PeopleQty: data.Guests,
+          QRCode: data.QRCode,
+          UnRead: data.UnRead,
+          Ready: data.Ready,
+          CustomerId: data.CustomerId,
+          DateAppo: data.DateFull,
+          Disability: data.Disability,
+          Door: data.Door,
+          Name: data.Name,
+          OnBehalf: data.OnBehalf,
+          Phone: data.Phone
         }
-      });
-      if (entro == 0) {
-        let res: any[]=[];
-        res.push(newApp);
-        this.results.push({
-          DateAppo: this.datepipe.transform(data.DateFull.substring(0,10), 'MMM d, y'),
-          FullDate: this.datepipe.transform(data.DateFull.substring(0,10), 'y-M-dd'),
-          Values: res
-        });
-      }
-      this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
-    }
-    if (data.Tipo == 'MESS'){
-      this.results.forEach(function (r, i, o){
-        r.Values.forEach(function(element, index, object) {
-          if (element.AppointmentId == data.AppId){
-            element.UnRead='U';
+        this.results.forEach(function (r, i, o){
+          if (r.FullDate == data.DateFull.substring(0,10)){
+            r.Values.push(newApp);
+            entro = 1;
           }
         });
-      });
+        if (entro == 0) {
+          let res: any[]=[];
+          res.push(newApp);
+          this.results.push({
+            DateAppo: this.datepipe.transform(data.DateFull.substring(0,10), 'MMM d, y'),
+            FullDate: this.datepipe.transform(data.DateFull.substring(0,10), 'y-M-dd'),
+            Values: res
+          });
+        }
+        this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+      }
+      if (data.Tipo == 'MESS'){
+        this.results.forEach(function (r, i, o){
+          r.Values.forEach(function(element, index, object) {
+            if (element.AppointmentId == data.AppId){
+              element.UnRead='U';
+            }
+          });
+        });
+      }
     }
   }
 
@@ -137,18 +144,58 @@ export class Tab2Page implements OnInit {
 
     this.result$ = this.monitorService.syncMessage.pipe(
       map((message: any) => {
+        console.log(message);
         this.syncData(message);
       })
     );
   }
 
+  async onCancel(appo: any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: this.titleBooking,
+      message: this.deleteAppo,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.loading.presentLoading(this.cancelAppo);
+            this.CancelAppo$ = this.global.CancelAppointment(appo.AppointmentId, appo.DateAppo).pipe(
+              map(async (res: any) => {
+                if (res.Code == 200){
+                  this.loading.dismissLoading();
+                  this.loadAppointments();
+                  return res;
+                } else {
+                  this.loading.dismissLoading();
+                  const msg = await this.toast.create({
+                    header: 'Messages',
+                    message: 'Something goes wrong, try again',
+                    position: 'bottom',
+                    duration: 2000,
+                  });
+                  msg.present();
+                }
+              })
+            );
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   loadAppointments(){
     this.loading.presentLoading(this.cargandoMensajes);
     this.connection = 0;
-    this.results = this.global.GetSessionCitas();
-    if (this.results.length > 0){
-      this.display = 1;
-    }
     this.Appos$ = this.global.GetAppointments().pipe(
       map((res: any) => {
         if (res.Code == 200){
@@ -174,6 +221,10 @@ export class Tab2Page implements OnInit {
         }
       }),
       catchError(res =>{
+        this.results = this.global.GetSessionCitas();
+        if (this.results.length > 0){
+          this.display = 1;
+        }
         // this.connection = 0;
         this.loading.dismissLoading();
         // this.results = this.global.GetSessionCitas();
@@ -194,31 +245,11 @@ export class Tab2Page implements OnInit {
       QRCode: appo.QRCode,
       Door: appo.Door,
       UserName: appo.Name,
-      OnBehalf: appo.OnBehalf
+      OnBehalf: appo.OnBehalf,
+      ServName: appo.ServName,
+      ProvName: appo.ProvName
     };
     this.params.setParams(data);
-  }
-
-  onCancel(appo: any){
-    this.loading.presentLoading(this.cancelAppo);
-    this.CancelAppo$ = this.global.CancelAppointment(appo.AppointmentId, appo.DateAppo).pipe(
-      map(async (res: any) => {
-        if (res.Code == 200){
-          this.loading.dismissLoading();
-          this.loadAppointments();
-          return res;
-        } else {
-          this.loading.dismissLoading();
-          const msg = await this.toast.create({
-            header: 'Messages',
-            message: 'Something goes wrong, try again',
-            position: 'bottom',
-            duration: 2000,
-          });
-          msg.present();
-        }
-      })
-    );
   }
 
   onNotify(appo: any){
@@ -247,6 +278,18 @@ export class Tab2Page implements OnInit {
     });
     this.translate.get('CANCEL_APPO').subscribe((res: string) => {
       this.cancelAppo = res;
+    });
+    this.translate.get('MSG_APPO').subscribe((res: string) => {
+      this.deleteAppo = res;
+    });
+    this.translate.get('TITLE_BOOKING').subscribe((res: string) => {
+      this.titleBooking = res;
+    });
+    this.translate.get('STATUS_PRECHECK').subscribe((res: string) => {
+      this.textPrecheck = res;
+    });
+    this.translate.get('STATUS_COMPLETED').subscribe((res: string) => {
+      this.textCompleted = res;
     });
   }
 }

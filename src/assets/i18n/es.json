@@ -111,5 +111,9 @@
   "SEL_PROVIDER": "Debe seleccionar un proveedor primero",
   "SEL_SERVICE": "Debe seleccionar un servicio primero",
   "ACCOUNT_EXIST": "Telefono registrado previamente, quiere mantener la cuenta o crear una nueva",
-  "CANCEL_APPO": "Cancelando cita"
+  "CANCEL_APPO": "Cancelando cita",
+  "MSG_APPO": "Seguro desea cancelar esta cita?",
+  "TITLE_BOOKING": "Citas",
+  "STATUS_PRECHECK": "Pre Ingreso",
+  "STATUS_COMPLETED": "Completado"
 }
