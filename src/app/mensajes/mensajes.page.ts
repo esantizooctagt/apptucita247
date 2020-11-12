@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { ParamsService } from '../services/params.service';
-import {TranslateService} from '@ngx-translate/core';
-import {LoadingService} from '../services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 import { MonitorService } from '../services/monitor.service';
 
 @Component({
@@ -33,20 +32,16 @@ export class MensajesPage implements OnInit {
     public toast: ToastController,
     public datepipe: DatePipe,
     private translate: TranslateService,
-    private monitorService: MonitorService,
-    private loading: LoadingService
+    private monitorService: MonitorService
   ) { }
 
   ngOnInit() {
-    // this.translateTerms();
     this.appoObj = this.params.getParams();
     this.appointmentId = this.appoObj.AppointmentId;
-    this.loading.presentLoading(this.cargandoMensajes);
     this.Messages$ = this.global.GetMessages(this.appointmentId).pipe(
       map((res: any) => {
         if (res.Code == 200){
           this.messages = res.Messages;
-          this.loading.dismissLoading();
           return res.Messages;
         }
       })
@@ -65,10 +60,8 @@ export class MensajesPage implements OnInit {
   }
 
   syncData(data){
-    console.log("ingreso a ver");
     if (data != undefined){
       if (data.Tipo == 'MESS'){
-        console.log("ingreso message");
         if (data.AppId == this.appointmentId){
           this.messages.push(data.Message);
         }

@@ -5,10 +5,18 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" color="light">
+<ng-container *ngIf="Appos$ | async"></ng-container>
+<ion-content [fullscreen]="true" color="light" *ngIf="!cargando">
   <ion-grid>
     <ion-row>
-      <ng-container *ngIf="Appos$ | async"></ng-container>
+      <ion-col size="6">
+        <ion-button mode="ios" expand="block" [color]="newAppo" fill="outline" (click)="loadAppointments(0)">New</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button mode="ios" expand="block" [color]="oldAppo" fill="outline" (click)="loadAppointments(1)">Old</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ng-container *ngIf="CancelAppo$ | async"></ng-container>
       <ng-container *ngIf="result$ | async"></ng-container>
       <ng-container *ngIf="display == 1">
@@ -42,11 +50,8 @@
                   </ion-text>
                 </ion-col>
               </ion-row>
-              <ion-row>
+              <ion-row *ngIf="selectedTab==0">
                 <ion-col size="12" class="ion-text-end">
-                  <!-- <ion-button fill="clear" size="small" *ngIf="appo.Status == 2 && appo.Ready == 0" (click)="onNotify(appo)">
-                    <ion-icon slot="icon-only" src="assets/svg/calendar3-tc.svg"></ion-icon>
-                  </ion-button> -->
                   <ion-button *ngIf="connection == 1" class="button-citas" fill="clear" size="small" (click)="sendParams(appo)"
                     [routerLink]="['/mensajes']">
                     <ion-icon slot="icon-only" src="assets/svg/sms-tc.svg"></ion-icon>
@@ -76,4 +81,159 @@
       </ng-container>
     </ion-row>
   </ion-grid>
+</ion-content>
+<ion-content [fullscreen]="true" color="light" *ngIf="cargando">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h2 class="title-card-date ion-text-uppercase">
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </h2>
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-card class="card-date">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label style="width: 300px;">
+          <h3 class="title-place-com">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h4 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h4>
+          <h5 class="title-place-suc">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h5>
+        </ion-label>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

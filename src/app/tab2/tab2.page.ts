@@ -7,7 +7,6 @@ import { ParamsService } from '../services/params.service';
 import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from "@ngx-translate/core";
-import { MessageService } from '../services/message.service';
 import { MonitorService } from '../services/monitor.service';
 
 @Component({
@@ -23,6 +22,12 @@ export class Tab2Page implements OnInit {
   connection: number = 0;
   display: number = -1;
   results = [];
+  cargando: boolean = true;
+  externalLoad: number = 0;
+  selectedTab: number = 0;
+
+  newAppo: string='';
+  oldAppo: string='';
 
   cargandoMensajes: string;
   deleteAppo: string;
@@ -30,23 +35,6 @@ export class Tab2Page implements OnInit {
   titleBooking: string;
   textPrecheck: string;
   textCompleted: string;
-  
-  // result$ = this.monitorService.syncMessage.pipe(
-  //   map((message: any) => {
-  //     this.syncData(message);
-  //   })
-  // );
-
-  // result$ = this.ws.messages$.pipe(
-  //   map((res: any) => {
-  //     this.syncData(res);
-  //   }),
-  //   catchError(error => { throw error }),
-  //   tap({
-  //     error: error => console.log('[Live Table component] Error:', error),
-  //     complete: () => console.log('[Live Table component] Connection Closed')
-  //   })
-  // );
 
   constructor(
     public global: GlobalService,
@@ -55,18 +43,12 @@ export class Tab2Page implements OnInit {
     public datepipe: DatePipe,
     public loading: LoadingService,
     private translate: TranslateService,
-    // private ws: MessageService,
     private monitorService: MonitorService,
     public alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.Customer = this.global.Customer;
-    // let custId = this.Customer.CustomerId;
-    // this.ws.connect();
-    // this.result$ = this.ws.connectWS('wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId='+custId).pipe(
-    //   map((data) => this.syncData(data))
-    // );
   }
 
   syncData(data){
@@ -136,12 +118,14 @@ export class Tab2Page implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.cargando = true;
     this.Customer = this.global.Customer;
-    this.loadAppointments();
+    this.externalLoad = 1;
+    this.loadAppointments(0);
+    this.externalLoad = 0;
     this.translateTerms();
 
     // this.ws.connect();
-
     this.result$ = this.monitorService.syncMessage.pipe(
       map((message: any) => {
         console.log(message);
@@ -171,7 +155,9 @@ export class Tab2Page implements OnInit {
               map(async (res: any) => {
                 if (res.Code == 200){
                   this.loading.dismissLoading();
-                  this.loadAppointments();
+                  this.externalLoad = 1;
+                  this.loadAppointments(0);
+                  this.externalLoad = 0;
                   return res;
                 } else {
                   this.loading.dismissLoading();
@@ -193,19 +179,33 @@ export class Tab2Page implements OnInit {
     await alert.present();
   }
 
-  loadAppointments(){
-    this.loading.presentLoading(this.cargandoMensajes);
+  loadAppointments(tab){
+    this.selectedTab = tab;
+    if (this.externalLoad == 0){
+      this.cargando = true;
+      if (tab == 0 && this.newAppo == 'primary') {return;}
+      if (tab == 1 && this.oldAppo == 'primary') {return;}
+    }
+
+    if (tab == 0){
+      this.newAppo = 'primary';
+      this.oldAppo = 'secondary';
+    } else {
+      this.newAppo = 'secondary';
+      this.oldAppo = 'primary';
+    }
     this.connection = 0;
-    this.Appos$ = this.global.GetAppointments().pipe(
+    this.results = [];
+    this.Appos$ = this.global.GetAppointments(tab).pipe(
       map((res: any) => {
         if (res.Code == 200){
+          this.cargando = false;
           if (res.Appointments.length == 0){
             this.display = 0;
           } else {
             this.display = 1;
           }
           var groups = new Set(res.Appointments.map(item => item.DateAppo.substring(0, 10)));
-          this.results = [];
           groups.forEach(g =>
             this.results.push({
               DateAppo: this.datepipe.transform(g, 'MMM d, y'),
@@ -216,18 +216,17 @@ export class Tab2Page implements OnInit {
           this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
           this.global.SetSessionCitas(this.results);
           this.connection = 1;
-          this.loading.dismissLoading();
           return res.Appointments;
         }
       }),
       catchError(res =>{
-        this.results = this.global.GetSessionCitas();
-        if (this.results.length > 0){
-          this.display = 1;
+        this.cargando = false;
+        if (tab == 0){
+          this.results = this.global.GetSessionCitas();
+          if (this.results.length > 0){
+            this.display = 1;
+          }
         }
-        // this.connection = 0;
-        this.loading.dismissLoading();
-        // this.results = this.global.GetSessionCitas();
         return this.global.GetSessionCitas();
       })
     );
@@ -256,7 +255,9 @@ export class Tab2Page implements OnInit {
     this.CancelAppo$ = this.global.CommingAppointment(appo.AppointmentId).pipe(
       map(async (res: any) => {
         if (res.Code == 200){
-          this.loadAppointments();
+          this.externalLoad = 1;
+          this.loadAppointments(0);
+          this.externalLoad = 0;
           return res;
         } else {
           const msg = await this.toast.create({

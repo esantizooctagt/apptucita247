@@ -15,7 +15,6 @@ export class TabsPage implements OnInit {
   messages: number = 0;
   result$ = this.ws.messages$.pipe(
     map((res: any) => {
-      console.log("tabs");
       console.log(res);
       if (res.Tipo == 'MESS'){
         this.messages = 1;
@@ -40,7 +39,6 @@ export class TabsPage implements OnInit {
 
   ionViewWillEnter(){
     this.Customer = this.global.Customer;
-    console.log("ingresa a tabs");
     this.ws.connect();
   }
 }

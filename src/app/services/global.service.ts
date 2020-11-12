@@ -130,10 +130,10 @@ export class GlobalService {
       map(results => results)
     );
   }
-  GetAppointments(){
+  GetAppointments(typeAppo: number){
     let customerId;
     customerId = this.Customer.CustomerId;
-    return this.http.get(this.ApiURL + 'mobile/appointments/' + customerId).pipe(
+    return this.http.get(this.ApiURL + 'mobile/appointments/' + customerId + '/' + typeAppo).pipe(
       map(results => results),
       retry(2),
       catchError(this.errorHandler)

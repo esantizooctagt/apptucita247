@@ -20,9 +20,7 @@ export class CitaPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.translateTerms();
     this.appo = this.params.getParams();
-    console.log(this.appo);
   }
 
   ionViewWillEnter(){
