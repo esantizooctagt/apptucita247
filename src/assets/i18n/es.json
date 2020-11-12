@@ -115,5 +115,6 @@
   "MSG_APPO": "Seguro desea cancelar esta cita?",
   "TITLE_BOOKING": "Citas",
   "STATUS_PRECHECK": "Pre Ingreso",
-  "STATUS_COMPLETED": "Completado"
+  "STATUS_COMPLETED": "Completado",
+  "STATUS_CANCEL": "Cancelada"
 }

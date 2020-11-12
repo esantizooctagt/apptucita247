@@ -35,6 +35,7 @@ export class Tab2Page implements OnInit {
   titleBooking: string;
   textPrecheck: string;
   textCompleted: string;
+  textCancel: string;
 
   constructor(
     public global: GlobalService,
@@ -214,7 +215,11 @@ export class Tab2Page implements OnInit {
             }
           ));
           this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
-          this.global.SetSessionCitas(this.results);
+          if (tab == 0){
+            this.global.SetSessionCitas(this.results);
+          } else {
+            this.global.SetSessionCitasOld(this.results);
+          }
           this.connection = 1;
           return res.Appointments;
         }
@@ -223,6 +228,12 @@ export class Tab2Page implements OnInit {
         this.cargando = false;
         if (tab == 0){
           this.results = this.global.GetSessionCitas();
+          if (this.results.length > 0){
+            this.display = 1;
+          }
+        }
+        if (tab == 1){
+          this.results = this.global.GetSessionOldCitas();
           if (this.results.length > 0){
             this.display = 1;
           }
@@ -291,6 +302,9 @@ export class Tab2Page implements OnInit {
     });
     this.translate.get('STATUS_COMPLETED').subscribe((res: string) => {
       this.textCompleted = res;
+    });
+    this.translate.get('STATUS_CANCEL').subscribe((res: string) => {
+      this.textCancel = res;
     });
   }
 }

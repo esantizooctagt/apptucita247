@@ -114,5 +114,6 @@
   "MSG_APPO": "Are you sure you want to cancel this booking?",
   "TITLE_BOOKING": "Citas",
   "STATUS_PRECHECK": "Pre CheckIn",
-  "STATUS_COMPLETED": "Completed"
+  "STATUS_COMPLETED": "Completed",
+  "STATUS_CANCEL": "Cancelled"
 }

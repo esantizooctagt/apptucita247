@@ -43,9 +43,17 @@ export class GlobalService {
   SetSessionCitas(citas: any){
     window.localStorage.citas = JSON.stringify(citas);
   }
+  SetSessionCitasOld(citas: any){
+    window.localStorage.citasold = JSON.stringify(citas);
+  }
   GetSessionCitas(){
     let localCitas: any;
     localCitas = JSON.parse(window.localStorage.citas || '[]');
+    return localCitas;
+  }
+  GetSessionOldCitas(){
+    let localCitas: any;
+    localCitas = JSON.parse(window.localStorage.citasold || '[]');
     return localCitas;
   }
   GetCustomerInfo() {
