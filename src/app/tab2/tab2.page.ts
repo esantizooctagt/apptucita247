@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from "@ngx-translate/core";
 import { MonitorService } from '../services/monitor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -36,6 +37,7 @@ export class Tab2Page implements OnInit {
   textPrecheck: string;
   textCompleted: string;
   textCancel: string;
+  textExpired: string;
 
   constructor(
     public global: GlobalService,
@@ -43,6 +45,7 @@ export class Tab2Page implements OnInit {
     public toast: ToastController,
     public datepipe: DatePipe,
     public loading: LoadingService,
+    private router: Router,
     private translate: TranslateService,
     private monitorService: MonitorService,
     public alertController: AlertController
@@ -214,10 +217,11 @@ export class Tab2Page implements OnInit {
               Values: res.Appointments.filter(i => i.DateAppo.substring(0, 10) === g)
             }
           ));
-          this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
           if (tab == 0){
+            this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
             this.global.SetSessionCitas(this.results);
           } else {
+            this.results.sort((a, b) => (a.FullDate > b.FullDate ? -1 : 1));
             this.global.SetSessionCitasOld(this.results);
           }
           this.connection = 1;
@@ -260,6 +264,27 @@ export class Tab2Page implements OnInit {
       ProvName: appo.ProvName
     };
     this.params.setParams(data);
+  }
+
+  gotoCita(appo: any){
+    if (this.selectedTab==0){return;}
+    let data = {
+      AppointmentId: appo.AppointmentId,
+      Name: appo.NameBusiness,
+      Location: appo.Address,
+      DateAppo: this.datepipe.transform(appo.DateAppo.substring(0,10), 'MMM d, y'),
+      Time: appo.DateAppo.substring(11, 17).replace('-', ':') + (+appo.DateAppo.substring(11, 13) > 12 ? ' PM' : ' AM'),
+      Disability: appo.Disability,
+      Qty: appo.PeopleQty,
+      QRCode: appo.QRCode,
+      Door: appo.Door,
+      UserName: appo.Name,
+      OnBehalf: appo.OnBehalf,
+      ServName: appo.ServName,
+      ProvName: appo.ProvName
+    };
+    this.params.setParams(data);
+    this.router.navigate(['/cita']);
   }
 
   onNotify(appo: any){
@@ -305,6 +330,9 @@ export class Tab2Page implements OnInit {
     });
     this.translate.get('STATUS_CANCEL').subscribe((res: string) => {
       this.textCancel = res;
+    });
+    this.translate.get('STATUS_EXPIRED').subscribe((res: string) => {
+      this.textExpired = res;
     });
   }
 }

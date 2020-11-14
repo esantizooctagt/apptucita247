@@ -90,7 +90,8 @@ export class AppComponent {
 
   setupOneSignal(){
     this.oneSignal.startInit('476a02bb-38ed-43e2-bc7b-1ded4d42597f', '325907828603');
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
     this.oneSignal.handleNotificationReceived().subscribe(() => {
     // do something when notification is received
     });

@@ -115,5 +115,8 @@
   "TITLE_BOOKING": "Citas",
   "STATUS_PRECHECK": "Pre CheckIn",
   "STATUS_COMPLETED": "Completed",
-  "STATUS_CANCEL": "Cancelled"
+  "STATUS_CANCEL": "Cancelled",
+  "VIEJAS_CITAS": "Previous",
+  "NUEVAS_CITAS": "Upcoming",
+  "STATUS_EXPIRED": "Expired"
 }

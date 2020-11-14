@@ -10,10 +10,10 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6">
-        <ion-button mode="ios" expand="block" [color]="newAppo" fill="outline" (click)="loadAppointments(0)">New</ion-button>
+        <ion-button mode="ios" expand="block" [color]="newAppo" fill="outline" (click)="loadAppointments(0)" translate>NUEVAS_CITAS</ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button mode="ios" expand="block" [color]="oldAppo" fill="outline" (click)="loadAppointments(1)">Old</ion-button>
+        <ion-button mode="ios" expand="block" [color]="oldAppo" fill="outline" (click)="loadAppointments(1)" translate>VIEJAS_CITAS</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -26,7 +26,7 @@
           </ion-text>
           <ion-card class="card-date" *ngFor="let appo of row.Values">
             <ion-grid>
-              <ion-row (click)="sendParams(appo)" [routerLink]="['/cita']">
+              <ion-row (click)="gotoCita(appo)">
                 <ion-col size="8">
                   <ion-text>
                     <h3 class="title-place-com">{{appo.NameBusiness}}</h3>
@@ -47,6 +47,7 @@
                     <h4 class="title-place-suc">{{appo.Address}}</h4>
                     <h4 class="title-place-suc">{{(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+':00 PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':00 PM' : appo.DateAppo.substring(11, 13)+':00 AM'))}}</h4>
                     <h5 *ngIf="appo.Status > 1" [ngClass]="{'completed': appo.Status > 2 && appo.Status < 5, 'process': appo.Status === 2, 'cancelappo': appo.Status === 5}">{{appo.Status == 2 ? textPrecheck : (appo.Status == 5 ? textCancel : textCompleted)}}</h5>
+                    <h5 *ngIf="appo.Status == 1 && selectedTab == 1" class="expirada">{{textExpired}}</h5>
                   </ion-text>
                 </ion-col>
               </ion-row>
