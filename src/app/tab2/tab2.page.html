@@ -72,6 +72,12 @@
           </ion-card>
           <hr class="divisor" />
         </ion-col>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ng-container>
       <ng-container *ngIf="display == 0">
         <ion-col>
@@ -84,6 +90,16 @@
   </ion-grid>
 </ion-content>
 <ion-content [fullscreen]="true" color="light" *ngIf="cargando">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button mode="ios" expand="block" [color]="newAppo" fill="outline" (click)="loadAppointments(0)" translate>NUEVAS_CITAS</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button mode="ios" expand="block" [color]="oldAppo" fill="outline" (click)="loadAppointments(1)" translate>VIEJAS_CITAS</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-list>
     <ion-list-header>
       <ion-label>

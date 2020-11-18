@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ParamsService } from '../services/params.service';
@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  
   Customer: any;
   Appos$: Observable<any[]>;
   result$: Observable<any>;
@@ -26,6 +28,7 @@ export class Tab2Page implements OnInit {
   cargando: boolean = true;
   externalLoad: number = 0;
   selectedTab: number = 0;
+  lastItem: string = '_';
 
   newAppo: string='';
   oldAppo: string='';
@@ -184,6 +187,12 @@ export class Tab2Page implements OnInit {
   }
 
   loadAppointments(tab){
+    if (this.selectedTab != tab) { 
+      if (this.infiniteScroll != undefined){
+        this.infiniteScroll.disabled = false;
+      }
+      this.lastItem = ''; 
+    }
     this.selectedTab = tab;
     if (this.externalLoad == 0){
       this.cargando = true;
@@ -200,9 +209,11 @@ export class Tab2Page implements OnInit {
     }
     this.connection = 0;
     this.results = [];
-    this.Appos$ = this.global.GetAppointments(tab).pipe(
+    let lastI = (this.lastItem == '' ? '_' : this.lastItem);
+    this.Appos$ = this.global.GetAppointments(tab, lastI).pipe(
       map((res: any) => {
         if (res.Code == 200){
+          this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
           this.cargando = false;
           if (res.Appointments.length == 0){
             this.display = 0;
@@ -229,6 +240,7 @@ export class Tab2Page implements OnInit {
         }
       }),
       catchError(res =>{
+        this.lastItem = '';
         this.cargando = false;
         if (tab == 0){
           this.results = this.global.GetSessionCitas();
@@ -237,6 +249,64 @@ export class Tab2Page implements OnInit {
           }
         }
         if (tab == 1){
+          this.results = this.global.GetSessionOldCitas();
+          if (this.results.length > 0){
+            this.display = 1;
+          }
+        }
+        return this.global.GetSessionCitas();
+      })
+    );
+  }
+
+  loadData(event){
+    this.connection = 0;
+    let lastI = (this.lastItem == '' ? '_' : this.lastItem);
+    this.Appos$ = this.global.GetAppointments(this.selectedTab, lastI).pipe(
+      map((res: any) => {
+        if (res.Code == 200){
+          event.target.complete();
+          this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
+          console.log("load Data");
+          console.log(this.lastItem);
+          if (this.lastItem == ''){
+            event.target.disabled = true;
+          }
+          this.cargando = false;
+          if (res.Appointments.length == 0){
+            this.display = 0;
+          } else {
+            this.display = 1;
+          }
+          var groups = new Set(res.Appointments.map(item => item.DateAppo.substring(0, 10)));
+          groups.forEach(g =>
+            this.results.push({
+              DateAppo: this.datepipe.transform(g, 'MMM d, y'),
+              FullDate: this.datepipe.transform(g, 'y-M-dd'),
+              Values: res.Appointments.filter(i => i.DateAppo.substring(0, 10) === g)
+            }
+          ));
+          if (this.selectedTab == 0){
+            this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+            this.global.SetSessionCitas(this.results);
+          } else {
+            this.results.sort((a, b) => (a.FullDate > b.FullDate ? -1 : 1));
+            this.global.SetSessionCitasOld(this.results);
+          }
+          this.connection = 1;
+          return res.Appointments;
+        }
+      }),
+      catchError(res =>{
+        this.lastItem = '';
+        this.cargando = false;
+        if (this.selectedTab == 0){
+          this.results = this.global.GetSessionCitas();
+          if (this.results.length > 0){
+            this.display = 1;
+          }
+        }
+        if (this.selectedTab == 1){
           this.results = this.global.GetSessionOldCitas();
           if (this.results.length > 0){
             this.display = 1;

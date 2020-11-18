@@ -138,10 +138,14 @@ export class GlobalService {
       map(results => results)
     );
   }
-  GetAppointments(typeAppo: number){
+  GetAppointments(typeAppo: number, lastItem: string){
     let customerId;
+    let info;
+    info = {
+      lastItem: lastItem
+    }
     customerId = this.Customer.CustomerId;
-    return this.http.get(this.ApiURL + 'mobile/appointments/' + customerId + '/' + typeAppo).pipe(
+    return this.http.put(this.ApiURL + 'mobile/appointments/' + customerId + '/' + typeAppo, info).pipe(
       map(results => results),
       retry(2),
       catchError(this.errorHandler)
