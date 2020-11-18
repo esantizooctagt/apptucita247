@@ -267,8 +267,6 @@ export class Tab2Page implements OnInit {
         if (res.Code == 200){
           event.target.complete();
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
-          console.log("load Data");
-          console.log(this.lastItem);
           if (this.lastItem == ''){
             event.target.disabled = true;
           }
