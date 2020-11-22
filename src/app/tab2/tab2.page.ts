@@ -64,9 +64,7 @@ export class Tab2Page implements OnInit {
         console.log(data.AppId);
         this.results.forEach(function (r, i, o){
           r.Values.forEach(function(element, index, object) {
-            console.log(element);
             if (element.AppointmentId == data.AppId){
-              console.log("eliminar");
               object.splice(index, 1);
             }
           });
@@ -210,10 +208,44 @@ export class Tab2Page implements OnInit {
     this.connection = 0;
     this.results = [];
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
-    this.Appos$ = this.global.GetAppointments(tab, lastI).pipe(
+    let dateAppo = '_'
+    if (this.selectedTab == 1){
+      lastI = (this.global.GetLastItem() == '' ? '_' : this.global.GetLastItem());
+      var actualTime = new Date();
+      actualTime.setDate(actualTime.getDate() -1);
+      let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
+      let prevDate = this.global.GetDatePreviousDate();
+
+      if (prevDate == '' || prevDate == undefined){
+        this.global.SetDatePreviousDate(todayDate);
+      } else {
+        if (prevDate == todayDate && lastI == '_'){
+          this.results = this.global.GetSessionOldCitas();
+          this.cargando = false;
+          this.connection = 1;
+          if (this.results.length > 0){
+            this.display = 1;
+          } else {
+            this.display = 0;
+          }
+          return;
+        }
+        if (prevDate == todayDate && lastI != '_'){
+          this.global.SetDatePreviousDate(todayDate);
+        }
+        if (prevDate < todayDate){
+          dateAppo = todayDate;
+          this.global.SetDatePreviousDate(todayDate);
+        }
+      }
+    }
+    this.Appos$ = this.global.GetAppointments(tab, dateAppo, lastI).pipe(
       map((res: any) => {
         if (res.Code == 200){
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
+          if (this.selectedTab == 1){
+            this.global.SetLastItem(JSON.stringify(res.LastItem));
+          }  
           this.cargando = false;
           if (res.Appointments.length == 0){
             this.display = 0;
@@ -262,11 +294,45 @@ export class Tab2Page implements OnInit {
   loadData(event){
     this.connection = 0;
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
-    this.Appos$ = this.global.GetAppointments(this.selectedTab, lastI).pipe(
+    let dateAppo = '_'
+    if (this.selectedTab == 1){
+      lastI = (this.global.GetLastItem() == '' ? '_' : this.global.GetLastItem());
+      var actualTime = new Date();
+      actualTime.setDate(actualTime.getDate() -1);
+      let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
+      let prevDate = this.global.GetDatePreviousDate();
+
+      if (prevDate == '' || prevDate == undefined){
+        this.global.SetDatePreviousDate(todayDate);
+      } else {
+        if (prevDate == todayDate && lastI == '_'){
+          this.results = this.global.GetSessionOldCitas();
+          this.cargando = false;
+          this.connection = 1;
+          if (this.results.length > 0){
+            this.display = 1;
+          } else {
+            this.display = 0;
+          }
+          return;
+        }
+        if (prevDate == todayDate && lastI != '_'){
+          this.global.SetDatePreviousDate(todayDate);
+        }
+        if (prevDate < todayDate){
+          dateAppo = todayDate;
+          this.global.SetDatePreviousDate(todayDate);
+        }
+      }
+    }
+    this.Appos$ = this.global.GetAppointments(this.selectedTab, dateAppo, lastI).pipe(
       map((res: any) => {
         if (res.Code == 200){
           event.target.complete();
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
+          if (this.selectedTab == 1){
+            this.global.SetLastItem(JSON.stringify(res.LastItem));
+          }  
           if (this.lastItem == ''){
             event.target.disabled = true;
           }

@@ -46,6 +46,9 @@ export class GlobalService {
   SetSessionCitasOld(citas: any){
     window.localStorage.citasold = JSON.stringify(citas);
   }
+  SetDatePreviousDate(date: string){
+    window.localStorage.prevDate = date;
+  }
   GetSessionCitas(){
     let localCitas: any;
     localCitas = JSON.parse(window.localStorage.citas || '[]');
@@ -55,6 +58,19 @@ export class GlobalService {
     let localCitas: any;
     localCitas = JSON.parse(window.localStorage.citasold || '[]');
     return localCitas;
+  }
+  GetDatePreviousDate(){
+    let datePrev: any;
+    datePrev = window.localStorage.prevDate;
+    return datePrev;
+  }
+  GetLastItem(){
+    let lastItem: any;
+    lastItem = JSON.parse(window.localStorage.lastItem);
+    return (lastItem == undefined ? '' : lastItem);
+  }
+  SetLastItem(lastItem: any){
+    window.localStorage.lastItem = JSON.stringify(lastItem);;
   }
   GetCustomerInfo() {
     let customerData: any;
@@ -138,14 +154,14 @@ export class GlobalService {
       map(results => results)
     );
   }
-  GetAppointments(typeAppo: number, lastItem: string){
+  GetAppointments(typeAppo: number, dateAppo: string, lastItem: string){
     let customerId;
     let info;
     info = {
       lastItem: lastItem
     }
     customerId = this.Customer.CustomerId;
-    return this.http.put(this.ApiURL + 'mobile/appointments/' + customerId + '/' + typeAppo, info).pipe(
+    return this.http.put(this.ApiURL + 'mobile/appointments/' + customerId + '/' + typeAppo + '/' + dateAppo, info).pipe(
       map(results => results),
       retry(2),
       catchError(this.errorHandler)

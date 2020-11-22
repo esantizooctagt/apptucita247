@@ -119,5 +119,8 @@
   "STATUS_CANCEL": "Cancelada",
   "VIEJAS_CITAS": "Anteriores",
   "NUEVAS_CITAS": "Próximas",
-  "STATUS_EXPIRED": "Expirada"
+  "STATUS_EXPIRED": "Expirada",
+  "LOCATION": "Localidad",
+  "PROVIDER": "Proveedor",
+  "SERVICE": "Servicio"
 }

@@ -12,6 +12,9 @@ import {TranslateService} from "@ngx-translate/core";
 export class CitaPage implements OnInit {
   appo: any;
   elementType = NgxQrcodeElementTypes.CANVAS;
+  locText: string;
+  provText: string;
+  servText: string;
 
   constructor(
     public global: GlobalService,
@@ -29,6 +32,15 @@ export class CitaPage implements OnInit {
 
   translateTerms() {
     this.translate.use(this.global.Language);
+    this.translate.get('LOCATION').subscribe((res: string) => {
+      this.locText = res;
+    });
+    this.translate.get('PROVIDER').subscribe((res: string) => {
+      this.provText = res;
+    });
+    this.translate.get('SERVICE').subscribe((res: string) => {
+      this.servText = res;
+    });
   }
 
 }

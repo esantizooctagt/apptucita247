@@ -118,5 +118,8 @@
   "STATUS_CANCEL": "Cancelled",
   "VIEJAS_CITAS": "Previous",
   "NUEVAS_CITAS": "Upcoming",
-  "STATUS_EXPIRED": "Expired"
+  "STATUS_EXPIRED": "Expired",
+  "LOCATION": "Location",
+  "PROVIDER": "Provider",
+  "SERVICE": "Service"
 }
