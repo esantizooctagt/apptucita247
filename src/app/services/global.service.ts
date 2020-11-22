@@ -66,11 +66,11 @@ export class GlobalService {
   }
   GetLastItem(){
     let lastItem: any;
-    lastItem = JSON.parse(window.localStorage.lastItem);
+    lastItem = window.localStorage.lastItem;
     return (lastItem == undefined ? '' : lastItem);
   }
   SetLastItem(lastItem: any){
-    window.localStorage.lastItem = JSON.stringify(lastItem);;
+    window.localStorage.lastItem = lastItem;
   }
   GetCustomerInfo() {
     let customerData: any;

@@ -210,7 +210,7 @@ export class Tab2Page implements OnInit {
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
     let dateAppo = '_'
     if (this.selectedTab == 1){
-      lastI = (this.global.GetLastItem() == '' ? '_' : this.global.GetLastItem());
+      lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
       var actualTime = new Date();
       actualTime.setDate(actualTime.getDate() -1);
       let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
@@ -219,8 +219,8 @@ export class Tab2Page implements OnInit {
       if (prevDate == '' || prevDate == undefined){
         this.global.SetDatePreviousDate(todayDate);
       } else {
+        this.results = this.global.GetSessionOldCitas();
         if (prevDate == todayDate && lastI == '_'){
-          this.results = this.global.GetSessionOldCitas();
           this.cargando = false;
           this.connection = 1;
           if (this.results.length > 0){
@@ -244,7 +244,11 @@ export class Tab2Page implements OnInit {
         if (res.Code == 200){
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
           if (this.selectedTab == 1){
-            this.global.SetLastItem(JSON.stringify(res.LastItem));
+            if (res.LastItem != ''){
+              this.global.SetLastItem(JSON.stringify(res.LastItem));
+            } else {
+              this.global.SetLastItem('');
+            }
           }  
           this.cargando = false;
           if (res.Appointments.length == 0){
@@ -296,7 +300,7 @@ export class Tab2Page implements OnInit {
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
     let dateAppo = '_'
     if (this.selectedTab == 1){
-      lastI = (this.global.GetLastItem() == '' ? '_' : this.global.GetLastItem());
+      lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
       var actualTime = new Date();
       actualTime.setDate(actualTime.getDate() -1);
       let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
@@ -331,16 +335,14 @@ export class Tab2Page implements OnInit {
           event.target.complete();
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
           if (this.selectedTab == 1){
-            this.global.SetLastItem(JSON.stringify(res.LastItem));
+            if (res.LastItem != ''){
+              this.global.SetLastItem(JSON.stringify(res.LastItem));
+            } else {
+              this.global.SetLastItem('');
+            }
           }  
           if (this.lastItem == ''){
             event.target.disabled = true;
-          }
-          this.cargando = false;
-          if (res.Appointments.length == 0){
-            this.display = 0;
-          } else {
-            this.display = 1;
           }
           var groups = new Set(res.Appointments.map(item => item.DateAppo.substring(0, 10)));
           groups.forEach(g =>
@@ -356,6 +358,13 @@ export class Tab2Page implements OnInit {
           } else {
             this.results.sort((a, b) => (a.FullDate > b.FullDate ? -1 : 1));
             this.global.SetSessionCitasOld(this.results);
+          }
+
+          this.cargando = false;
+          if (res.Appointments.length == 0){
+            this.display = 0;
+          } else {
+            this.display = 1;
           }
           this.connection = 1;
           return res.Appointments;
