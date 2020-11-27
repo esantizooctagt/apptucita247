@@ -1,12 +1,12 @@
 <ion-content>
   <ng-container *ngIf="Business$ | async as bus">
-  <ion-toolbar *ngIf="bus.Imagen" class="toolbar-header" [style.--background]="'url(' + global.BucketPath + bus.Imagen + ') no-repeat center center / cover'">
+  <ion-toolbar mode="ios" *ngIf="bus.Imagen" class="toolbar-header" [style.--background]="'url(' + global.BucketPath + bus.Imagen + ') no-repeat center center / cover'">
     <ion-buttons slot="start">
       <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
       </ion-back-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="!bus.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
+  <ion-toolbar mode="ios" *ngIf="!bus.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
     <ion-buttons slot="start">
       <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
       </ion-back-button>

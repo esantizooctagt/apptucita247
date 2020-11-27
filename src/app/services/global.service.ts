@@ -203,11 +203,6 @@ export class GlobalService {
       map(results => results)
     );
   }
-  CommingAppointment(appointmentId: string){
-    return this.http.put(this.ApiURL + 'mobile/ready/' + appointmentId, '').pipe(
-      map(results => results)
-    );
-  }
   GetMessages(appointmentId: string){
     return this.http.get(this.ApiURL + 'mobile/messages/' + appointmentId).pipe(
       map(results => results)

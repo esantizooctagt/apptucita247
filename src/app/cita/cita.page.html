@@ -1,4 +1,4 @@
-<ion-header mode="md">
+<ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button color="primary" [routerLink]="['/tabs/tab2']">
@@ -51,15 +51,13 @@
       <ion-row class="card-date">
       <ion-col size="12">
         <ion-text>
-          <h5 class="title-place-suc">{{locText + ': ' + appo.Location}}</h5>
-          <h5 class="title-place-suc" *ngIf="appo.ProvName">{{ provText + ': ' + appo.ProvName}}</h5>
-          <h5 class="title-place-suc" *ngIf="appo.ServName">{{ servText + ': ' + appo.ServName}}</h5>
-          <h5 class="title-place-suc"><span translate>PUERTA_</span> {{appo.Door}}</h5>
-          <h5 class="title-place-suc"><span translate>HORA_</span> {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) }}</h5>
-        </ion-text>
-        <ion-text class="">
-          <h4 class="title-door">{{appo.UserName}}</h4>
-          <span class="date"><span translate>EN_NOMBRE_DE</span>: {{(appo.OnBehalf == 0 ? 'No': 'Yes')}}</span>
+          <h5 class="title-place-suc"><strong>{{locText}}</strong>: {{appo.Location}}</h5>
+          <h5 class="title-place-suc" *ngIf="appo.ProvName"><strong>{{provText}}</strong>: {{appo.ProvName}}</h5>
+          <h5 class="title-place-suc" *ngIf="appo.ServName"><strong>{{servText}}</strong>: {{appo.ServName}}</h5>
+          <h5 class="title-place-suc"><strong translate>PUERTA</strong>: {{appo.Door}}</h5>
+          <h5 class="title-place-suc"><strong translate>HORA</strong>: {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) }}</h5>
+          <h5 class="title-place-suc"><strong translate>NOMBRE</strong>: {{appo.UserName}}</h5>
+          <h5 class="title-place-suc"><strong translate>EN_NOMBRE_DE</strong>: {{(appo.OnBehalf == 0 ? 'No': 'Yes')}}</h5>
         </ion-text>
       </ion-col>
     </ion-row>

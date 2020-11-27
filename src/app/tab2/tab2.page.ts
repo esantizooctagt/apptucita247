@@ -27,7 +27,7 @@ export class Tab2Page implements OnInit {
   results = [];
   cargando: boolean = true;
   externalLoad: number = 0;
-  selectedTab: number = 0;
+  selectedTab: number = -1;
   lastItem: string = '_';
 
   newAppo: string='';
@@ -160,9 +160,7 @@ export class Tab2Page implements OnInit {
               map(async (res: any) => {
                 if (res.Code == 200){
                   this.loading.dismissLoading();
-                  this.externalLoad = 1;
-                  this.loadAppointments(0);
-                  this.externalLoad = 0;
+                  this.removeItem(appo.AppointmentId);
                   return res;
                 } else {
                   this.loading.dismissLoading();
@@ -184,7 +182,24 @@ export class Tab2Page implements OnInit {
     await alert.present();
   }
 
+  removeItem(appId){
+    this.results.forEach(function (r, i, o){
+      r.Values.forEach(function(element, index, object) {
+        if (element.AppointmentId == appId){
+          object.splice(index, 1);
+        }
+      });
+      if (r.Values.length == 0){
+        o.splice(i, 1);
+      }
+    });
+    if (this.results.length == 0){
+      this.display = 0;
+    }
+  }
+
   loadAppointments(tab){
+    if (tab == this.selectedTab && this.externalLoad == 0) { return; }
     if (this.selectedTab != tab) { 
       if (this.infiniteScroll != undefined){
         this.infiniteScroll.disabled = false;
@@ -301,6 +316,12 @@ export class Tab2Page implements OnInit {
     let dateAppo = '_'
     if (this.selectedTab == 1){
       lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
+      if (lastI == '_') {
+        event.target.complete();
+        event.target.disabled = true;
+        this.connection = 1;
+        return;
+      }
       var actualTime = new Date();
       actualTime.setDate(actualTime.getDate() -1);
       let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
@@ -328,6 +349,12 @@ export class Tab2Page implements OnInit {
           this.global.SetDatePreviousDate(todayDate);
         }
       }
+    }
+    if (lastI == '_') {
+      event.target.complete();
+      event.target.disabled = true;
+      this.connection = 1;
+      return;
     }
     this.Appos$ = this.global.GetAppointments(this.selectedTab, dateAppo, lastI).pipe(
       map((res: any) => {
@@ -428,27 +455,6 @@ export class Tab2Page implements OnInit {
     };
     this.params.setParams(data);
     this.router.navigate(['/cita']);
-  }
-
-  onNotify(appo: any){
-    this.CancelAppo$ = this.global.CommingAppointment(appo.AppointmentId).pipe(
-      map(async (res: any) => {
-        if (res.Code == 200){
-          this.externalLoad = 1;
-          this.loadAppointments(0);
-          this.externalLoad = 0;
-          return res;
-        } else {
-          const msg = await this.toast.create({
-            header: 'Messages',
-            message: 'Something goes wrong, try again',
-            position: 'bottom',
-            duration: 2000,
-          });
-          msg.present();
-        }
-      })
-    );
   }
 
   translateTerms() {

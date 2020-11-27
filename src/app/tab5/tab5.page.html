@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" *ngIf="conection == 0">
+<ion-header [translucent]="true" *ngIf="conection == 0" mode="ios">
   <ion-toolbar>
     <ion-title color="primary" class="title-pages ion-text-uppercase" translate>
       CANASTA
@@ -90,7 +90,7 @@
   </ion-grid>
 </ion-content>
 <ion-content *ngIf="conection == 1">
-  <ion-header [translucent]="true">
+  <ion-header [translucent]="true" mode="ios">
       <ion-toolbar>
         <ion-title color="primary" class="title-pages">
           NO INTERNET CONECTION
