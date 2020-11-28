@@ -5,27 +5,53 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" color="light" *ngIf="conection == 0">
+<ng-container *ngIf="Favorites$ | async"></ng-container>
+<ng-container *ngIf="DelFavorite$ | async"></ng-container>
+<ion-content [fullscreen]="true" color="light" *ngIf="conection == 0 && !cargando">
   <ion-grid>
     <ion-row>
       <ion-col>
         <p color="medium" *ngIf="fav == -1" class="ion-text-center ion-padding" translate></p>
         <p color="medium" *ngIf="fav == 0" class="ion-text-center ion-padding" translate>SIN_FAVORITOS</p>
-        <ng-container *ngIf="DelFavorite$ | async"></ng-container>
-        <ion-card *ngFor="let item of Favorites$ | async" class="card-com-featured" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']">
+        <ion-card *ngFor="let item of favorites" class="card-com-featured">
           <ion-card-header class="header-card-featured-com">
-            <ion-img class="img-display" [src]="global.BucketPath+item.Imagen"></ion-img>
+            <ion-img class="img-display" [src]="global.BucketPath+item.Imagen" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']"></ion-img>
             <ion-img class="set-favorite" src="/assets/svg/favorite-circle-tc.svg"
               (click)="DeleteFavorite(item.LocationId)"></ion-img>
-            <ion-card-title class="card-title">
+            <ion-card-title class="card-title" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']">
               {{item.Name}}
               <h5 class="location-name">{{item.Locations.Name}}</h5>
             </ion-card-title>
-            <ion-card-subtitle mode="md" color="primary" class="card-subtitle card-subtitle-2">{{item.Location + ', ' + (lan == 'EN' ? item.Locations.City_ENG : item.Locations.City_ESP)}}
+            <ion-card-subtitle mode="md" color="primary" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']" class="card-subtitle card-subtitle-2">{{item.Location + ', ' + (lan == 'EN' ? item.Locations.City_ENG : item.Locations.City_ESP)}}
             </ion-card-subtitle>
-            <!-- <ion-card-subtitle mode="md" class="card-subtitle">{{item.ShortDescription}}</ion-card-subtitle> -->
           </ion-card-header>
         </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-content [fullscreen]="true" color="light" *ngIf="conection == 0 && cargando">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list style="background:#f4f5f8; padding:0;">
+          <ion-item style="--background:#f4f5f8" lines="none" *ngFor="let item of [1, 2, 3, 4, 5]">
+            <ion-card class="card-com-featured" style="width:100%">
+              <ion-thumbnail slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-thumbnail>
+              <h4>
+                <ion-skeleton-text animated style="width: 60%;font-style: normal;font-weight: bold;font-size: 20px;line-height: 20px;margin-bottom: 2px;margin-left:5px;"></ion-skeleton-text>
+              </h4>
+              <h5>
+                <ion-skeleton-text animated style="width: 40%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;margin-bottom: 2px;margin-left:5px;"></ion-skeleton-text>
+              </h5>
+              <h4>
+                <ion-skeleton-text animated style="width: 80%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;margin-bottom: 2px;margin-left:5px;"></ion-skeleton-text>
+              </h4>
+            </ion-card>
+          </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

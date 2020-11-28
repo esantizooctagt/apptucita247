@@ -123,5 +123,8 @@
   "STATUS_EXPIRED": "Expirada",
   "LOCATION": "Localidad",
   "PROVIDER": "Proveedor",
-  "SERVICE": "Servicio"
+  "SERVICE": "Servicio",
+  "CANCELAR": "Cancelar",
+  "OK": "Aceptar",
+  "ERROR": "Ocurrió un error, intente de nuevo"
 }

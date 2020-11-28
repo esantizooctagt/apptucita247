@@ -41,6 +41,10 @@ export class Tab2Page implements OnInit {
   textCompleted: string;
   textCancel: string;
   textExpired: string;
+  textMess: string;
+  textCancelar: string;
+  textOK: string;
+  textError: string;
 
   constructor(
     public global: GlobalService,
@@ -146,40 +150,44 @@ export class Tab2Page implements OnInit {
       message: this.deleteAppo,
       buttons: [
         {
-          text: 'Cancel',
+          text: this.textCancelar,
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Okay',
+          text: this.textOK,
           handler: () => {
-            this.loading.presentLoading(this.cancelAppo);
-            this.CancelAppo$ = this.global.CancelAppointment(appo.AppointmentId, appo.DateAppo).pipe(
-              map(async (res: any) => {
-                if (res.Code == 200){
-                  this.loading.dismissLoading();
-                  this.removeItem(appo.AppointmentId);
-                  return res;
-                } else {
-                  this.loading.dismissLoading();
-                  const msg = await this.toast.create({
-                    header: 'Messages',
-                    message: 'Something goes wrong, try again',
-                    position: 'bottom',
-                    duration: 2000,
-                  });
-                  msg.present();
-                }
-              })
-            );
+            this.cancelAppointment(appo.AppointmentId, appo.DateAppo);
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  async cancelAppointment(id, date){
+    this.loading.presentLoading(this.cancelAppo);
+    this.CancelAppo$ = await this.global.CancelAppointment(id, date).pipe(
+      map(async (res: any) => {
+        if (res.Code == 200){
+          this.loading.dismissLoading();
+          this.removeItem(id);
+          return res;
+        } else {
+          this.loading.dismissLoading();
+          const msg = await this.toast.create({
+            header: this.textMess,
+            message: this.textError,
+            position: 'bottom',
+            duration: 2000,
+          });
+          msg.present();
+        }
+      })
+    );
   }
 
   removeItem(appId){
@@ -482,6 +490,18 @@ export class Tab2Page implements OnInit {
     });
     this.translate.get('STATUS_EXPIRED').subscribe((res: string) => {
       this.textExpired = res;
+    });
+    this.translate.get('MENSAJE').subscribe((res: string) => {
+      this.textMess = res;
+    });
+    this.translate.get('OK').subscribe((res: string) => {
+      this.textOK = res;
+    });
+    this.translate.get('CANCEL').subscribe((res: string) => {
+      this.textCancelar = res;
+    });
+    this.translate.get('ERROR').subscribe((res: string) => {
+      this.textError = res;
     });
   }
 }

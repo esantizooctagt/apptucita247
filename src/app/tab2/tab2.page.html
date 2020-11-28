@@ -6,6 +6,7 @@
   </ion-toolbar>
 </ion-header>
 <ng-container *ngIf="Appos$ | async"></ng-container>
+<ng-container *ngIf="CancelAppo$ | async"></ng-container>
 <ion-content [fullscreen]="true" color="light" *ngIf="!cargando">
   <ion-grid>
     <ion-row>
@@ -17,7 +18,6 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ng-container *ngIf="CancelAppo$ | async"></ng-container>
       <ng-container *ngIf="result$ | async"></ng-container>
       <ng-container *ngIf="display == 1">
         <ion-col size="12" *ngFor="let row of results">

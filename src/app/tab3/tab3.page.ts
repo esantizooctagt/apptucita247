@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {GlobalService} from '../services/global.service';
-import {map, catchError} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {LoadingService} from '../services/loading.service';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { GlobalService } from '../services/global.service';
+import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { LoadingService } from '../services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 import { ParamsService } from '../services/params.service';
 
 @Component({
@@ -11,12 +11,15 @@ import { ParamsService } from '../services/params.service';
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
+
 export class Tab3Page implements OnInit {
   Favorites$: Observable<any>;
   DelFavorite$: Observable<any>;
   fav = -1;
   conection = 0;
   lan: string = '';
+  cargando: boolean = true;
+  favorites: any[]=[];
 
   cargandoFavorito: string;
   elmininadoFavorito: string;
@@ -48,19 +51,21 @@ export class Tab3Page implements OnInit {
 
   GetFavorites(){
     this.conection = 0;
-    this.loading.presentLoading(this.cargandoFavorito);
+    this.cargando = true;
     this.Favorites$ = this.global.GetFavorites().pipe(
       map((res: any) => {
+        this.cargando = false;
         if (res.length > 0){
           this.fav = 1;
         } else {
           this.fav = 0;
         }
-        this.loading.dismissLoading();
+        this.favorites = res;
         return res;
       }),
       catchError(res => {
         this.conection = 1;
+        this.cargando = false;
         return res;
       })
     );
