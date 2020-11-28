@@ -23,6 +23,7 @@ export class Tab5Page implements OnInit {
   display: number = -1;
   results = [];
   conection = 0;
+  yesStr: string;
 
   cargandoMensajes: string;
 
@@ -43,7 +44,9 @@ export class Tab5Page implements OnInit {
 
   ionViewWillEnter(){
     this.Customer = this.global.Customer;
+    let lang = this.global.Language;
     this.display = -1;
+    this.yesStr = (lang == 'en' ? 'Yes' : 'Si'); 
     this.loadAppointments();
     this.translateTerms();
   }

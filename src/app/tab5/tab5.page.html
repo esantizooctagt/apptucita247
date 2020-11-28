@@ -22,14 +22,24 @@
                 <h4 class="date">{{appo.Address}}</h4>
               </ion-text>
             </ion-col>
-            <ion-col size="12">
+            <ion-col size="12" *ngIf="appo.ProviderName != ''">
+              <ion-text>
+                <span class="date"><span class="title-bold" translate>PROVEEDOR</span>{{': '+appo.ProviderName}}</span>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12" *ngIf="appo.ServiceName != ''">
               <ion-text>
                 <span class="date"><span class="title-bold" translate>SERVICIO</span>{{': '+appo.ServiceName}}</span>
               </ion-text>
             </ion-col>
             <ion-col size="12">
               <ion-text>
-                <span class="date"><span class="title-bold" translate>EN_NOMBRE_DE</span>{{': '+(appo.OnBehalf == 0 ? 'No': 'Yes')}}</span>
+                <span class="date"><span class="title-bold" translate>NOMBRE</span>{{': '+appo.Name}}</span>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text>
+                <span class="date"><span class="title-bold" translate>EN_NOMBRE_DE</span>{{': '+(appo.OnBehalf == 0 ? 'No': yesStr)}}</span>
               </ion-text>
             </ion-col>
             <ion-col size="12">
