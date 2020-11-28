@@ -444,27 +444,6 @@ export class Tab2Page implements OnInit {
     this.params.setParams(data);
   }
 
-  gotoCita(appo: any){
-    if (this.selectedTab==0){return;}
-    let data = {
-      AppointmentId: appo.AppointmentId,
-      Name: appo.NameBusiness,
-      Location: appo.Address,
-      DateAppo: this.datepipe.transform(appo.DateAppo.substring(0,10), 'MMM d, y'),
-      Time: appo.DateAppo.substring(11, 17).replace('-', ':') + (+appo.DateAppo.substring(11, 13) > 12 ? ' PM' : ' AM'),
-      Disability: appo.Disability,
-      Qty: appo.PeopleQty,
-      QRCode: appo.QRCode,
-      Door: appo.Door,
-      UserName: appo.Name,
-      OnBehalf: appo.OnBehalf,
-      ServName: appo.ServName,
-      ProvName: appo.ProvName
-    };
-    this.params.setParams(data);
-    this.router.navigate(['/cita']);
-  }
-
   translateTerms() {
     this.translate.use(this.global.Language);
     this.translate.get('CARGANDO_MSGS').subscribe((res: string) => {

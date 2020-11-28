@@ -5,13 +5,13 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ng-container *ngIf="CancelAppo$ | async"></ng-container>
+<ng-container *ngIf="NewAppointment$ | async"></ng-container>
 <ion-content [fullscreen]="true" *ngIf="conection == 0 && display != 0">
   <ion-grid>
     <ion-row>
       <ng-container *ngIf="display == -1">
       </ng-container>
-      <ng-container *ngIf="CancelAppo$ | async"></ng-container>
-      <ng-container *ngIf="NewAppointment$ | async"></ng-container>
       <ion-text class="title-message" *ngIf="display == 1" translate>TIME_MESSAGE</ion-text>
       <ion-card class="card-date" *ngFor="let appo of Appos$ | async">
         <ion-grid>
