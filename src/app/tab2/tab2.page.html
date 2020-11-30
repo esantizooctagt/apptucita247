@@ -24,8 +24,8 @@
           <ion-text color="primary">
             <h2 class="title-card-date ion-text-uppercase">{{row.DateAppo | date:'MMM d, y'}}</h2>
           </ion-text>
-          <ion-card class="card-date" *ngFor="let appo of row.Values" (click)="sendParams(appo)" [routerLink]="['/cita']">
-            <ion-grid>
+          <ion-card class="card-date" *ngFor="let appo of row.Values" mode="md">
+            <ion-grid (click)="sendParams(appo)" [routerLink]="['/cita']" class="add-margin">
               <ion-row>
                 <ion-col size="8">
                   <ion-text>
@@ -50,27 +50,27 @@
                     <h5 *ngIf="appo.Status == 1 && selectedTab == 1" class="expirada">{{textExpired}}</h5>
                   </ion-text>
                 </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="12" class="ion-text-end">
-                  <ng-container *ngIf="selectedTab==0">
-                    <ion-button *ngIf="connection == 1" class="button-citas" fill="clear" size="small" (click)="sendParams(appo)"
-                      [routerLink]="['/mensajes']">
-                      <ion-icon slot="icon-only" src="assets/svg/sms-tc.svg"></ion-icon>
-                      <span class="messages" *ngIf="appo.UnRead == 'U'">
-                        <ion-icon src="./assets/svg/notificacion-tc.svg"></ion-icon>
-                      </span>
-                    </ion-button>
-                    <ion-button *ngIf="connection == 1 && appo.Status == 1" fill="clear" size="small" (click)="onCancel(appo)">
-                      <ion-icon slot="icon-only" src="assets/svg/close-tc.svg"></ion-icon>
-                    </ion-button>
-                  </ng-container>
-                  <ion-button fill="clear" size="small" (click)="sendParams(appo)" [routerLink]="['/cita']">
-                    <ion-icon slot="icon-only" src="assets/svg/expand-tc.svg"></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
+              </ion-row> 
             </ion-grid>
+            <ion-row>
+              <ion-col size="12" class="ion-text-end">
+                <ng-container *ngIf="selectedTab==0">
+                  <ion-button *ngIf="connection == 1" class="button-citas" fill="clear" size="small" (click)="sendParams(appo)"
+                    [routerLink]="['/mensajes']">
+                    <ion-icon slot="icon-only" src="assets/svg/sms-tc.svg"></ion-icon>
+                    <span class="messages" *ngIf="appo.UnRead == 'U'">
+                      <ion-icon src="./assets/svg/notificacion-tc.svg"></ion-icon>
+                    </span>
+                  </ion-button>
+                  <ion-button *ngIf="connection == 1 && appo.Status == 1" fill="clear" size="small" (click)="onCancel(appo, event$)">
+                    <ion-icon slot="icon-only" src="assets/svg/close-tc.svg"></ion-icon>
+                  </ion-button>
+                </ng-container>
+                <ion-button fill="clear" size="small" (click)="sendParams(appo)" [routerLink]="['/cita']">
+                  <ion-icon slot="icon-only" src="assets/svg/expand-tc.svg"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
           </ion-card>
           <hr class="divisor" />
         </ion-col>
@@ -92,7 +92,7 @@
   </ion-grid>
 </ion-content>
 <ion-content [fullscreen]="true" color="light" *ngIf="cargando">
-  <ion-grid>
+  <ion-grid style="background:#f4f5f8;">
     <ion-row>
       <ion-col size="6">
         <ion-skeleton-text style="width: 100%;font-size: 14px;font-weight: 500;line-height: 3.2;" animated></ion-skeleton-text>
@@ -101,35 +101,44 @@
         <ion-skeleton-text style="width: 100%;font-size: 14px;font-weight: 500;line-height: 3.2;" animated></ion-skeleton-text>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col class="">
+        <ion-text>
+          <h2>
+            <ion-skeleton-text animated style="width: 100%;font-style: normal;font-weight: normal;font-size: 14px;line-height: 17px;text-align: center;margin-left: 0;margin-right: 0;margin-top: 2px;margin-bottom: 2px;"></ion-skeleton-text>
+          </h2>
+        </ion-text>
+        <ion-card class="card-date" mode="md" style="width:335px;" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+          <ion-grid class="add-margin">
+            <ion-row>
+              <ion-col size="8">
+                <h3 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 70%;font-style: normal;font-weight: bold;font-size: 20px;line-height: 24px;margin: 0;"></ion-skeleton-text>
+                </h3>
+              </ion-col>
+              <ion-col size="4" class="ion-text-end">
+                <h3 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 1%;font-style: normal;font-weight: bold;font-size: 20px;line-height: 24px;margin: 0;"></ion-skeleton-text>
+                </h3>
+              </ion-col>
+              <ion-col size="12">
+                <h4 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 70%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
+                </h4>
+                <h4 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 90%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
+                </h4>
+                <h4 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
+                </h4>
+                <h5 style="margin-top: 0;">
+                  <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
+                </h5>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  <ion-list style="background:#f4f5f8; padding:0;">
-    <ion-list-header>
-      <ion-label>
-        <h2>
-          <ion-skeleton-text animated style="width: 90%;font-style: normal;font-weight: normal;font-size: 14px;line-height: 17px;text-align: center;margin-left: 0;margin-right: 0;margin-top: 2px;margin-bottom: 2px;"></ion-skeleton-text>
-        </h2>
-      </ion-label>
-    </ion-list-header>
-    <ion-item style="--background:#f4f5f8" lines="none" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
-      <ion-card class="card-date">
-        <ion-label style="width: 300px;">
-          <h3>
-            <ion-skeleton-text animated style="width: 70%;font-style: normal;font-weight: bold;font-size: 20px;line-height: 24px;margin: 0;"></ion-skeleton-text>
-          </h3>
-          <h4>
-            <ion-skeleton-text animated style="width: 70%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 24px;margin-top: 14px;"></ion-skeleton-text>
-          </h4>
-          <h4>
-            <ion-skeleton-text animated style="width: 80%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 24px;margin-bottom: 3px;"></ion-skeleton-text>
-          </h4>
-          <h4>
-            <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 24px;margin-bottom: 3px;"></ion-skeleton-text>
-          </h4>
-          <h5>
-            <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 24px;margin-bottom: 3px;"></ion-skeleton-text>
-          </h5>
-        </ion-label>
-      </ion-card>
-    </ion-item>
-  </ion-list>
 </ion-content>

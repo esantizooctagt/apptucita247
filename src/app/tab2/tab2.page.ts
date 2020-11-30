@@ -143,7 +143,7 @@ export class Tab2Page implements OnInit {
     );
   }
 
-  async onCancel(appo: any) {
+  async onCancel(appo: any, event) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: this.titleBooking,
@@ -257,6 +257,7 @@ export class Tab2Page implements OnInit {
           this.global.SetDatePreviousDate(todayDate);
         }
         if (prevDate < todayDate){
+          lastI = '_'
           dateAppo = todayDate;
           this.global.SetDatePreviousDate(todayDate);
         }
@@ -381,6 +382,7 @@ export class Tab2Page implements OnInit {
           }
           var groups = new Set(res.Appointments.map(item => item.DateAppo.substring(0, 10)));
           groups.forEach(g =>
+            
             this.results.push({
               DateAppo: this.datepipe.transform(g, 'MMM d, y'),
               FullDate: this.datepipe.transform(g, 'y-M-dd'),

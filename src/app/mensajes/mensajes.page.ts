@@ -14,6 +14,7 @@ import { MonitorService } from '../services/monitor.service';
   styleUrls: ['./mensajes.page.scss'],
 })
 export class MensajesPage implements OnInit {
+  
   Messages$: Observable<any[]>;
   SendMessage$: Observable<any>;
   result$: Observable<any>;

@@ -40,7 +40,7 @@
     <hr class="divisor" />
   </ion-grid>
 </ion-header>
-<ion-content no-padding>
+<ion-content no-padding [scrollEvents]="true">
   <ion-grid forceOverscroll="true" class="content-mensajes">
     <ion-row>
       <ng-container *ngIf="Messages$ | async"></ng-container>
