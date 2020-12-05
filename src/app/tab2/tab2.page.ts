@@ -281,7 +281,7 @@ export class Tab2Page implements OnInit {
     );
   }
 
-  async onCancel(appo: any, event) {
+  async onCancel(appo: any) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: this.titleBooking,

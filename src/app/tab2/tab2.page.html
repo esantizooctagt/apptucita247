@@ -62,7 +62,7 @@
                       <ion-icon src="./assets/svg/notificacion-tc.svg"></ion-icon>
                     </span>
                   </ion-button>
-                  <ion-button *ngIf="connection == 1 && appo.Status == 1" fill="clear" size="small" (click)="onCancel(appo, event$)">
+                  <ion-button *ngIf="connection == 1 && appo.Status == 1" fill="clear" size="small" (click)="onCancel(appo)">
                     <ion-icon slot="icon-only" src="assets/svg/close-tc.svg"></ion-icon>
                   </ion-button>
                 </ng-container>
