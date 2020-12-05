@@ -126,5 +126,6 @@
   "SERVICE": "Service",
   "CANCELAR": "Cancel",
   "OK": "OK",
-  "ERROR": "Something goes wrong, try again"
+  "ERROR": "Something goes wrong, try again",
+  "CHECKOUTPROC": "Checkout Pending"
 }

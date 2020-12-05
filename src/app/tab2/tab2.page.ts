@@ -45,6 +45,7 @@ export class Tab2Page implements OnInit {
   textCancelar: string;
   textOK: string;
   textError: string;
+  textCheckOut: string;
 
   constructor(
     public global: GlobalService,
@@ -78,6 +79,142 @@ export class Tab2Page implements OnInit {
         });
       }
   
+      if (data.Tipo == 'REVERSE' && this.selectedTab == 0){
+        this.results.forEach(function (r, i, o){
+          r.Values.forEach(function(element, index, object) {
+            if (element.AppointmentId == data.AppId){
+              element.Status = 1;
+            }
+          });
+        });
+      }
+
+      if (data.Tipo == 'MOVE' && this.selectedTab == 0){
+        if (data.To == 'PRECHECK'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (element.AppointmentId == data.AppId){
+                element.Status = 2;
+              }
+            });
+          });
+        }
+        if (data.To == 'CHECKIN'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (data.ManualCheckIn == 1){
+                if (element.AppointmentId == data.AppId){
+                  object.splice(index, 1);
+                }
+              } else {
+                if (element.AppointmentId == data.AppId){
+                  element.Status = 3;
+                }
+              }
+            });
+            if (r.Values.length == 0){
+              o.splice(i, 1);
+            }
+          });
+        }
+        if (data.To == 'CHECKOUT'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (element.AppointmentId == data.AppId){
+                object.splice(index, 1);
+              }
+            });
+            if (r.Values.length == 0){
+              o.splice(i, 1);
+            }
+          });
+        }
+        if (data.To == 'EXPIRED'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (element.AppointmentId == data.AppId){
+                object.splice(index, 1);
+              }
+            });
+            if (r.Values.length == 0){
+              o.splice(i, 1);
+            }
+          });
+        }
+      }
+
+      if (data.Tipo == 'MOVE' && this.selectedTab == 1){
+        let exists = 0;
+        let crea = 1;
+        if (data.To == 'CHECKIN'){
+          if (data.ManualCheckIn == 0){
+            crea = 0;
+          } else {
+            this.results.forEach(function (r, i, o){
+              r.Values.forEach(function(element, index, object) {
+                if (element.AppointmentId == data.AppId){
+                  exists = 1;
+                }
+              });
+            });
+          }
+        }
+        if (data.To == 'CHECKOUT'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (element.AppointmentId == data.AppId){
+                exists = 1;
+              }
+            });
+          });
+        }
+        if (data.To == 'EXPIRED'){
+          this.results.forEach(function (r, i, o){
+            r.Values.forEach(function(element, index, object) {
+              if (element.AppointmentId == data.AppId){
+                exists = 1;
+              }
+            });
+          });
+        }
+        if (exists == 0 && crea == 1){
+          let entro = 0;
+          let newApp = {
+            AppointmentId: data.AppId,
+            Status: data.Status,
+            Address: data.Address,
+            NameBusiness: data.NameBusiness,
+            PeopleQty: data.Guests,
+            QRCode: data.QRCode,
+            UnRead: data.UnRead,
+            Ready: data.Ready,
+            CustomerId: data.CustomerId,
+            DateAppo: data.DateFull,
+            Disability: data.Disability,
+            Door: data.Door,
+            Name: data.Name,
+            OnBehalf: data.OnBehalf,
+            Phone: data.Phone
+          }
+          this.results.forEach(function (r, i, o){
+            if (r.FullDate == data.DateFull.substring(0,10)){
+              r.Values.push(newApp);
+              entro = 1;
+            }
+          });
+          if (entro == 0) {
+            let res: any[]=[];
+            res.push(newApp);
+            this.results.push({
+              DateAppo: this.datepipe.transform(data.DateFull.substring(0,10), 'MMM d, y'),
+              FullDate: this.datepipe.transform(data.DateFull.substring(0,10), 'y-M-dd'),
+              Values: res
+            });
+          }
+          this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+        }
+      }
+
       if (data.Tipo == 'APPO'){
         let entro = 0;
         let newApp = {
@@ -114,6 +251,7 @@ export class Tab2Page implements OnInit {
         }
         this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
       }
+
       if (data.Tipo == 'MESS'){
         this.results.forEach(function (r, i, o){
           r.Values.forEach(function(element, index, object) {
@@ -232,48 +370,48 @@ export class Tab2Page implements OnInit {
     this.results = [];
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
     let dateAppo = '_'
-    if (this.selectedTab == 1){
-      lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
-      var actualTime = new Date();
-      actualTime.setDate(actualTime.getDate() -1);
-      let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
-      let prevDate = this.global.GetDatePreviousDate();
+    // if (this.selectedTab == 1){
+    //   lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
+    //   var actualTime = new Date();
+    //   actualTime.setDate(actualTime.getDate() -1);
+    //   let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
+    //   let prevDate = this.global.GetDatePreviousDate();
 
-      if (prevDate == '' || prevDate == undefined){
-        this.global.SetDatePreviousDate(todayDate);
-      } else {
-        this.results = this.global.GetSessionOldCitas();
-        if (prevDate == todayDate && lastI == '_'){
-          this.cargando = false;
-          this.connection = 1;
-          if (this.results.length > 0){
-            this.display = 1;
-          } else {
-            this.display = 0;
-          }
-          return;
-        }
-        if (prevDate == todayDate && lastI != '_'){
-          this.global.SetDatePreviousDate(todayDate);
-        }
-        if (prevDate < todayDate){
-          lastI = '_'
-          dateAppo = todayDate;
-          this.global.SetDatePreviousDate(todayDate);
-        }
-      }
-    }
+    //   if (prevDate == '' || prevDate == undefined){
+    //     this.global.SetDatePreviousDate(todayDate);
+    //   } else {
+    //     this.results = this.global.GetSessionOldCitas();
+    //     if (prevDate == todayDate && lastI == '_'){
+    //       this.cargando = false;
+    //       this.connection = 1;
+    //       if (this.results.length > 0){
+    //         this.display = 1;
+    //       } else {
+    //         this.display = 0;
+    //       }
+    //       return;
+    //     }
+    //     if (prevDate == todayDate && lastI != '_'){
+    //       this.global.SetDatePreviousDate(todayDate);
+    //     }
+    //     if (prevDate < todayDate){
+    //       lastI = '_'
+    //       dateAppo = todayDate;
+    //       this.global.SetDatePreviousDate(todayDate);
+    //     }
+    //   }
+    // }
     this.Appos$ = this.global.GetAppointments(tab, dateAppo, lastI).pipe(
       map((res: any) => {
         if (res.Code == 200){
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
-          if (this.selectedTab == 1){
-            if (res.LastItem != ''){
-              this.global.SetLastItem(JSON.stringify(res.LastItem));
-            } else {
-              this.global.SetLastItem('');
-            }
-          }  
+          // if (this.selectedTab == 1){
+          //   if (res.LastItem != ''){
+          //     this.global.SetLastItem(JSON.stringify(res.LastItem));
+          //   } else {
+          //     this.global.SetLastItem('');
+          //   }
+          // }  
           this.cargando = false;
           if (res.Appointments.length == 0){
             this.display = 0;
@@ -323,42 +461,42 @@ export class Tab2Page implements OnInit {
     this.connection = 0;
     let lastI = (this.lastItem == '' ? '_' : this.lastItem);
     let dateAppo = '_'
-    if (this.selectedTab == 1){
-      lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
-      if (lastI == '_') {
-        event.target.complete();
-        event.target.disabled = true;
-        this.connection = 1;
-        return;
-      }
-      var actualTime = new Date();
-      actualTime.setDate(actualTime.getDate() -1);
-      let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
-      let prevDate = this.global.GetDatePreviousDate();
+    // if (this.selectedTab == 1){
+    //   lastI = (this.global.GetLastItem() == '' ? '_' : JSON.stringify(JSON.parse(this.global.GetLastItem())));
+    //   if (lastI == '_') {
+    //     event.target.complete();
+    //     event.target.disabled = true;
+    //     this.connection = 1;
+    //     return;
+    //   }
+    //   var actualTime = new Date();
+    //   actualTime.setDate(actualTime.getDate() -1);
+    //   let todayDate = actualTime.getFullYear()+'-'+(actualTime.getMonth()+1).toString().padStart(2,'0')+'-'+actualTime.getDate().toString().padStart(2,'0');
+    //   let prevDate = this.global.GetDatePreviousDate();
 
-      if (prevDate == '' || prevDate == undefined){
-        this.global.SetDatePreviousDate(todayDate);
-      } else {
-        if (prevDate == todayDate && lastI == '_'){
-          this.results = this.global.GetSessionOldCitas();
-          this.cargando = false;
-          this.connection = 1;
-          if (this.results.length > 0){
-            this.display = 1;
-          } else {
-            this.display = 0;
-          }
-          return;
-        }
-        if (prevDate == todayDate && lastI != '_'){
-          this.global.SetDatePreviousDate(todayDate);
-        }
-        if (prevDate < todayDate){
-          dateAppo = todayDate;
-          this.global.SetDatePreviousDate(todayDate);
-        }
-      }
-    }
+    //   if (prevDate == '' || prevDate == undefined){
+    //     this.global.SetDatePreviousDate(todayDate);
+    //   } else {
+    //     if (prevDate == todayDate && lastI == '_'){
+    //       this.results = this.global.GetSessionOldCitas();
+    //       this.cargando = false;
+    //       this.connection = 1;
+    //       if (this.results.length > 0){
+    //         this.display = 1;
+    //       } else {
+    //         this.display = 0;
+    //       }
+    //       return;
+    //     }
+    //     if (prevDate == todayDate && lastI != '_'){
+    //       this.global.SetDatePreviousDate(todayDate);
+    //     }
+    //     if (prevDate < todayDate){
+    //       dateAppo = todayDate;
+    //       this.global.SetDatePreviousDate(todayDate);
+    //     }
+    //   }
+    // }
     if (lastI == '_') {
       event.target.complete();
       event.target.disabled = true;
@@ -370,13 +508,13 @@ export class Tab2Page implements OnInit {
         if (res.Code == 200){
           event.target.complete();
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
-          if (this.selectedTab == 1){
-            if (res.LastItem != ''){
-              this.global.SetLastItem(JSON.stringify(res.LastItem));
-            } else {
-              this.global.SetLastItem('');
-            }
-          }  
+          // if (this.selectedTab == 1){
+          //   if (res.LastItem != ''){
+          //     this.global.SetLastItem(JSON.stringify(res.LastItem));
+          //   } else {
+          //     this.global.SetLastItem('');
+          //   }
+          // }  
           if (this.lastItem == ''){
             event.target.disabled = true;
           }
@@ -484,5 +622,8 @@ export class Tab2Page implements OnInit {
     this.translate.get('ERROR').subscribe((res: string) => {
       this.textError = res;
     });
+    this.translate.get('CHECKOUTPROC').subscribe((res: string) => {
+      this.textCheckOut = res;
+    })
   }
 }

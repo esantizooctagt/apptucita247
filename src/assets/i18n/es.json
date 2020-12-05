@@ -127,5 +127,6 @@
   "SERVICE": "Servicio",
   "CANCELAR": "Cancelar",
   "OK": "Aceptar",
-  "ERROR": "Ocurrió un error, intente de nuevo"
+  "ERROR": "Ocurrió un error, intente de nuevo",
+  "CHECKOUTPROC": "Pendiente de Salida"
 }
