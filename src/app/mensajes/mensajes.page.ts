@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
@@ -14,7 +14,6 @@ import { MonitorService } from '../services/monitor.service';
   styleUrls: ['./mensajes.page.scss'],
 })
 export class MensajesPage implements OnInit {
-  
   Messages$: Observable<any[]>;
   SendMessage$: Observable<any>;
   result$: Observable<any>;
@@ -33,6 +32,7 @@ export class MensajesPage implements OnInit {
     public toast: ToastController,
     public datepipe: DatePipe,
     private translate: TranslateService,
+    private navController: NavController,
     private monitorService: MonitorService
   ) { }
 
@@ -51,10 +51,8 @@ export class MensajesPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
-
     this.result$ = this.monitorService.syncMessage.pipe(
       map((message: any) => {
-        console.log(message);
         this.syncData(message);
       })
     );
@@ -68,6 +66,10 @@ export class MensajesPage implements OnInit {
         }
       }
     }
+  }
+
+  gotoCita(){
+    this.navController.navigateBack(['/tabs/tab2']);
   }
 
   onMessage(){

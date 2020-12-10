@@ -23,6 +23,7 @@ export class GlobalService {
   Where = '';
   WhereLabel = '';
   When = '';
+  Qeue: any[]=[];
 
   Categories: any;
 

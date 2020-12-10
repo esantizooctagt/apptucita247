@@ -24,7 +24,7 @@ export class MessageService {
     this.Customer = this.global.Customer;
     this.customerId = this.Customer.CustomerId;
   }
-
+  
   public connect(cfg: { reconnect: boolean } = { reconnect: false }): void {
     if (!this.socket$ || this.socket$.closed) {
       this.socket$ = this.getNewWebSocket();

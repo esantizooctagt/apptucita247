@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, NavController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { ParamsService } from '../services/params.service';
@@ -8,7 +8,6 @@ import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from "@ngx-translate/core";
 import { MonitorService } from '../services/monitor.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -17,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class Tab2Page implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  
+
   Customer: any;
   Appos$: Observable<any[]>;
   result$: Observable<any>;
@@ -53,20 +52,28 @@ export class Tab2Page implements OnInit {
     public toast: ToastController,
     public datepipe: DatePipe,
     public loading: LoadingService,
-    private router: Router,
     private translate: TranslateService,
     private monitorService: MonitorService,
+    private navController: NavController,
     public alertController: AlertController
   ) {}
 
   ngOnInit() {
+    console.log("ngOnInit");
     this.Customer = this.global.Customer;
   }
 
   syncData(data){
     if (data != undefined){
+      console.log(data);
+      if (data.Tipo == 'MESS'){
+        if (this.global.Qeue.findIndex(x=>x.AppId==data.AppId && x.Tipo=='MESS' && x.DateFull==data.DateFull) < 0){
+          this.global.Qeue.push(data);
+        } else {
+          return;
+        }
+      }
       if (data.Tipo == 'CANCEL'){
-        console.log(data.AppId);
         this.results.forEach(function (r, i, o){
           r.Values.forEach(function(element, index, object) {
             if (element.AppointmentId == data.AppId){
@@ -198,8 +205,11 @@ export class Tab2Page implements OnInit {
           }
           this.results.forEach(function (r, i, o){
             if (r.FullDate == data.DateFull.substring(0,10)){
-              r.Values.push(newApp);
-              entro = 1;
+              let validate = r.Values.findIndex(x=>x.AppointmentId==data.AppId);
+              if (validate < 0){
+                r.Values.push(newApp);
+                entro = 1;
+              }
             }
           });
           if (entro == 0) {
@@ -236,8 +246,11 @@ export class Tab2Page implements OnInit {
         }
         this.results.forEach(function (r, i, o){
           if (r.FullDate == data.DateFull.substring(0,10)){
-            r.Values.push(newApp);
-            entro = 1;
+            let validate = r.Values.findIndex(x=>x.AppointmentId==data.AppId);
+            if (validate < 0){
+              r.Values.push(newApp);
+              entro = 1;
+            }
           }
         });
         if (entro == 0) {
@@ -264,9 +277,19 @@ export class Tab2Page implements OnInit {
     }
   }
 
+  ionViewDidEnter(){
+    console.log("ionViewDidEnter");
+  }
+
+  ionViewWillLeave(){
+    console.log("ionViewWillLeave");
+  }
+
   ionViewWillEnter(){
+    console.log("ionViewWillEnter");
     this.cargando = true;
     this.Customer = this.global.Customer;
+    this.lastItem = '';
     this.externalLoad = 1;
     this.loadAppointments(0);
     this.externalLoad = 0;
@@ -405,6 +428,9 @@ export class Tab2Page implements OnInit {
       map((res: any) => {
         if (res.Code == 200){
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
+          if (res.Appointments.length < 5 && this.lastItem != ''){
+            this.lastItem = '';
+          }
           // if (this.selectedTab == 1){
           //   if (res.LastItem != ''){
           //     this.global.SetLastItem(JSON.stringify(res.LastItem));
@@ -565,7 +591,7 @@ export class Tab2Page implements OnInit {
     );
   }
 
-  sendParams(appo: any){
+  sendParams(appo: any, link: string){
     let data = {
       AppointmentId: appo.AppointmentId,
       Name: appo.NameBusiness,
@@ -582,6 +608,7 @@ export class Tab2Page implements OnInit {
       ProvName: appo.ProvName
     };
     this.params.setParams(data);
+    this.navController.navigateForward([link]);
   }
 
   translateTerms() {
