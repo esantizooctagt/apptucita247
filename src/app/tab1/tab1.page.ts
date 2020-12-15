@@ -76,6 +76,18 @@ export class Tab1Page implements OnInit {
     this.params.setParams(params);
   }
 
+  cancelSearch(clearSearch: number){
+    if (clearSearch == 0){
+      this.isSearchBarOpened=0;
+    } else {
+      if (this.searchbar.value.length == 0) {
+        this.isSearchBarOpened=0;
+      } else {
+        this.isSearchBarOpened=1;
+      }
+    }
+  }
+
   searchResult(event: any){
     let search = event.target.value;
     this.dataSearch = search;
@@ -139,7 +151,7 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  onCancel(event){
-    this.isSearchBarOpened = 0;
-  }
+  // onCancel(event){
+  //   this.isSearchBarOpened = 0;
+  // }
 }

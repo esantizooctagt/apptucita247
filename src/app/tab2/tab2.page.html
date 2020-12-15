@@ -45,7 +45,6 @@
                   <ion-text>
                     <h4 class="title-place-suc">{{appo.Name}}</h4>
                     <h4 class="title-place-suc">{{appo.Address}}</h4>
-                    <h4 class="title-place-suc">{{appo.TimeZone}}</h4>
                     <h4 class="title-place-suc">{{(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+':00 PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':00 PM' : appo.DateAppo.substring(11, 13)+':00 AM'))}}</h4>
                     <h5 *ngIf="appo.Status > 1" [ngClass]="{'completed': (appo.Status == 3 && appo.ManualCheckIn == 1) || appo.Status == 4, 'checkoutProc': appo.Status == 3 && appo.ManualCheckIn == 0, 'process': appo.Status === 2, 'cancelappo': appo.Status === 5, 'expirada': appo.Status === 6}">{{appo.Status == 2 ? textPrecheck : (appo.Status == 5 ? textCancel : (appo.Status == 6 ? textExpired : (appo.Status == 3 && appo.ManualCheckIn == 0 ? textCheckOut : textCompleted)))}}</h5>
                     <h5 *ngIf="appo.Status == 1 && selectedTab == 1" class="expirada">{{textExpired}}</h5>
@@ -127,9 +126,6 @@
                 </h4>
                 <h4 style="margin-top: 0;">
                   <ion-skeleton-text animated style="width: 90%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
-                </h4>
-                <h4 style="margin-top: 0;">
-                  <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>
                 </h4>
                 <h4 style="margin-top: 0;">
                   <ion-skeleton-text animated style="width: 30%;font-style: normal;font-weight: normal;font-size: 20px;line-height: 20px;"></ion-skeleton-text>

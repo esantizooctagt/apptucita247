@@ -55,7 +55,7 @@
           <h5 class="title-place-suc" *ngIf="appo.ProvName"><strong>{{provText}}</strong>: {{appo.ProvName}}</h5>
           <h5 class="title-place-suc" *ngIf="appo.ServName"><strong>{{servText}}</strong>: {{appo.ServName}}</h5>
           <h5 class="title-place-suc"><strong translate>PUERTA</strong>: {{appo.Door}}</h5>
-          <h5 class="title-place-suc"><strong translate>HORA</strong>: {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) }}</h5>
+          <h5 class="title-place-suc"><strong translate>HORA</strong>: {{ (+appo.Time.substring(0, 2) > 12 ? (+appo.Time.substring(0, 2)-12 | number: '2.')+':00 PM' : (+appo.Time.substring(0, 2) == 12 ?  appo.Time.substring(0, 2)+':00 PM' : appo.Time.substring(0, 2)+':00 AM')) + ' ' + appo.TimeZone}}</h5>
           <h5 class="title-place-suc"><strong translate>NOMBRE</strong>: {{appo.UserName}}</h5>
           <h5 class="title-place-suc"><strong translate>EN_NOMBRE_DE</strong>: {{(appo.OnBehalf == 0 ? 'No': 'Yes')}}</h5>
         </ion-text>

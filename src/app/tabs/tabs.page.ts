@@ -13,6 +13,7 @@ import { MonitorService } from '../services/monitor.service';
 export class TabsPage implements OnInit {
   Customer: any;
   messages: number = 0;
+
   result$ = this.ws.messages$.pipe(
     map((res: any) => {
       console.log(res);

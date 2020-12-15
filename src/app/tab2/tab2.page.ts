@@ -45,6 +45,7 @@ export class Tab2Page implements OnInit {
   textOK: string;
   textError: string;
   textCheckOut: string;
+  currTimeZone: any;
 
   constructor(
     public global: GlobalService,
@@ -59,19 +60,21 @@ export class Tab2Page implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("ngOnInit");
     this.Customer = this.global.Customer;
+    this.currTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
   syncData(data){
     if (data != undefined){
       console.log(data);
       if (data.Tipo == 'MESS'){
+        console.log(this.global.Qeue);
         if (this.global.Qeue.findIndex(x=>x.AppId==data.AppId && x.Tipo=='MESS' && x.DateFull==data.DateFull) < 0){
           this.global.Qeue.push(data);
         } else {
           return;
         }
+        console.log(this.global.Qeue);
       }
       if (data.Tipo == 'CANCEL'){
         this.results.forEach(function (r, i, o){
@@ -184,7 +187,7 @@ export class Tab2Page implements OnInit {
             });
           });
         }
-        if (exists == 0 && crea == 1){
+        if (exists == 0 && crea == 1 && (data.To == 'CHECKIN' || data.To == 'CHECKOUT' || data.To == 'EXPIRED')){
           let entro = 0;
           let newApp = {
             AppointmentId: data.AppId,
@@ -201,7 +204,8 @@ export class Tab2Page implements OnInit {
             Door: data.Door,
             Name: data.Name,
             OnBehalf: data.OnBehalf,
-            Phone: data.Phone
+            Phone: data.Phone,
+            TimeZone: data.TimeZone
           }
           this.results.forEach(function (r, i, o){
             if (r.FullDate == data.DateFull.substring(0,10)){
@@ -242,13 +246,16 @@ export class Tab2Page implements OnInit {
           Door: data.Door,
           Name: data.Name,
           OnBehalf: data.OnBehalf,
-          Phone: data.Phone
+          Phone: data.Phone,
+          TimeZone: data.TimeZone
         }
         this.results.forEach(function (r, i, o){
           if (r.FullDate == data.DateFull.substring(0,10)){
             let validate = r.Values.findIndex(x=>x.AppointmentId==data.AppId);
             if (validate < 0){
               r.Values.push(newApp);
+              entro = 1;
+            } else {
               entro = 1;
             }
           }
@@ -262,7 +269,8 @@ export class Tab2Page implements OnInit {
             Values: res
           });
         }
-        this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+        this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+        this.global.SetSessionCitas(this.results);
       }
 
       if (data.Tipo == 'MESS'){
@@ -277,16 +285,7 @@ export class Tab2Page implements OnInit {
     }
   }
 
-  ionViewDidEnter(){
-    console.log("ionViewDidEnter");
-  }
-
-  ionViewWillLeave(){
-    console.log("ionViewWillLeave");
-  }
-
   ionViewWillEnter(){
-    console.log("ionViewWillEnter");
     this.cargando = true;
     this.Customer = this.global.Customer;
     this.lastItem = '';
@@ -298,7 +297,6 @@ export class Tab2Page implements OnInit {
     // this.ws.connect();
     this.result$ = this.monitorService.syncMessage.pipe(
       map((message: any) => {
-        console.log(message);
         this.syncData(message);
       })
     );
@@ -428,9 +426,10 @@ export class Tab2Page implements OnInit {
       map((res: any) => {
         if (res.Code == 200){
           this.lastItem = (res.LastItem != '' ? JSON.stringify(res.LastItem) : '');
-          if (res.Appointments.length < 5 && this.lastItem != ''){
-            this.lastItem = '';
-          }
+          // if (res.Appointments.length < 5 && this.lastItem != ''){
+          //   this.lastItem = '';
+          // }
+
           // if (this.selectedTab == 1){
           //   if (res.LastItem != ''){
           //     this.global.SetLastItem(JSON.stringify(res.LastItem));
@@ -453,10 +452,10 @@ export class Tab2Page implements OnInit {
             }
           ));
           if (tab == 0){
-            this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+            this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
             this.global.SetSessionCitas(this.results);
           } else {
-            this.results.sort((a, b) => (a.FullDate > b.FullDate ? -1 : 1));
+            this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) > this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
             this.global.SetSessionCitasOld(this.results);
           }
           this.connection = 1;
@@ -481,6 +480,12 @@ export class Tab2Page implements OnInit {
         return this.global.GetSessionCitas();
       })
     );
+  }
+
+  convertTZ(date, tzString) {
+    let newDate = date.substring(0,10);
+    let newHour = date.substring(11,16).replace('-',':');
+    return new Date((typeof date === "string" ? new Date(newDate + ' ' + newHour) : date).toLocaleString("en-US", {timeZone: tzString}));
   }
 
   loadData(event){
@@ -554,10 +559,10 @@ export class Tab2Page implements OnInit {
             }
           ));
           if (this.selectedTab == 0){
-            this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+            this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
             this.global.SetSessionCitas(this.results);
           } else {
-            this.results.sort((a, b) => (a.FullDate > b.FullDate ? -1 : 1));
+            this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) > this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
             this.global.SetSessionCitasOld(this.results);
           }
 
@@ -605,9 +610,13 @@ export class Tab2Page implements OnInit {
       UserName: appo.Name,
       OnBehalf: appo.OnBehalf,
       ServName: appo.ServName,
-      ProvName: appo.ProvName
+      ProvName: appo.ProvName,
+      TimeZone: appo.TimeZone
     };
     this.params.setParams(data);
+    if (link == 'mensajes'){
+      appo.UnRead = '';
+    }
     this.navController.navigateForward([link]);
   }
 

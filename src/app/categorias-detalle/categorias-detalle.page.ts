@@ -48,8 +48,11 @@ export class CategoriasDetallePage implements OnInit {
     this.resultset = -1;
     // this.translateTerms();
     this.categoryId = this.params.getParams()[0];
-    this.categoryName = this.params.getParams()[1];
+    // this.categoryName = this.params.getParams()[1];
     this.subcategoryId = (this.params.getParams()[2] != undefined ? this.params.getParams()[2] : '_');
+    if (this.subcategoryId != '_'){
+      this.subcategoryTxt = this.categoryName;
+    }
     this.getSubCategories();
     this.getBusiness();
   }
@@ -60,8 +63,12 @@ export class CategoriasDetallePage implements OnInit {
 
   getSubCategories() {
     this.global.GetSubCategories(this.categoryId)
-        .subscribe(content => {
-          this.SubCateoriesArray = content;
+        .subscribe((content: any) => {
+          this.SubCateoriesArray = content.filter(x=>x.SubCategoryId.substring(0,3)!='CAT');
+          let valName = content.filter(x=>x.SubCategoryId.substring(0,3)=='CAT');
+          if (valName != undefined){
+            this.categoryName = valName[0]['Name'];
+          }
         });
   }
 

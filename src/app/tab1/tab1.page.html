@@ -21,8 +21,8 @@
             </ion-row>
             <ion-row>
                 <ion-col>
-                    <ion-searchbar class="search-style" #searchText (ionInput)="isSearchBarOpened=1"
-                        (ionChange)="searchResult($event)" debounce="500" (ionCancel)="isSearchBarOpened=0" mode="md"
+                    <ion-searchbar class="search-style" #searchText (ionInput)="cancelSearch(1)"
+                        (ionChange)="searchResult($event)" debounce="500" (ionClear)="cancelSearch(0)" (ionCancel)="cancelSearch(0)" mode="md"
                         animated showCancelButton="focus" searchIcon="search-sharp" placeholder="{{termino}}">
                     </ion-searchbar>
                 </ion-col>
