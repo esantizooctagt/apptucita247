@@ -51,7 +51,7 @@ export class CategoriasDetallePage implements OnInit {
     // this.categoryName = this.params.getParams()[1];
     this.subcategoryId = (this.params.getParams()[2] != undefined ? this.params.getParams()[2] : '_');
     if (this.subcategoryId != '_'){
-      this.subcategoryTxt = this.categoryName;
+      this.subcategoryTxt = this.params.getParams()[1];
     }
     this.getSubCategories();
     this.getBusiness();

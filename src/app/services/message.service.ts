@@ -26,6 +26,8 @@ export class MessageService {
   }
   
   public connect(cfg: { reconnect: boolean } = { reconnect: false }): void {
+    console.log("method connect");
+    console.log(this.socket$);
     if (!this.socket$ || this.socket$.closed) {
       this.socket$ = this.getNewWebSocket();
       console.log("connect after validate");
@@ -40,6 +42,7 @@ export class MessageService {
   }
  
   private reconnect(observable: Observable<any>): Observable<any> {
+    console.log("method re-connect");
     return observable.pipe(
       retryWhen(errors => errors.pipe(
         tap(val => console.log('Try to reconnect', val)), 

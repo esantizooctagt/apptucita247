@@ -112,7 +112,7 @@ export class Tab2Page implements OnInit {
         if (data.To == 'CHECKIN'){
           this.results.forEach(function (r, i, o){
             r.Values.forEach(function(element, index, object) {
-              if (data.ManualCheckIn == 1){
+              if (data.ManualCheckOut == 1){
                 if (element.AppointmentId == data.AppId){
                   object.splice(index, 1);
                 }
@@ -157,7 +157,7 @@ export class Tab2Page implements OnInit {
         let exists = 0;
         let crea = 1;
         if (data.To == 'CHECKIN'){
-          if (data.ManualCheckIn == 0){
+          if (data.ManualCheckOut == 0){
             crea = 0;
           } else {
             this.results.forEach(function (r, i, o){
@@ -194,24 +194,29 @@ export class Tab2Page implements OnInit {
             Status: data.Status,
             Address: data.Address,
             NameBusiness: data.NameBusiness,
+            Name: data.Name,
+            Phone: data.Phone,
+            DateAppo: data.DateFull,
+            Door: data.Door,
+            OnBehalf: data.OnBehalf,
             PeopleQty: data.Guests,
-            QRCode: data.QRCode,
+            QRCode: data.QrCode,
+            Disability: data.Disability,
             UnRead: data.UnRead,
             Ready: data.Ready,
+            ServName: data.Service,
+            ManualCheckOut: data.ManualCheckOut,
             CustomerId: data.CustomerId,
-            DateAppo: data.DateFull,
-            Disability: data.Disability,
-            Door: data.Door,
-            Name: data.Name,
-            OnBehalf: data.OnBehalf,
-            Phone: data.Phone,
-            TimeZone: data.TimeZone
+            TimeZone: data.TimeZone,
+            ProvName: data.Provider
           }
           this.results.forEach(function (r, i, o){
             if (r.FullDate == data.DateFull.substring(0,10)){
               let validate = r.Values.findIndex(x=>x.AppointmentId==data.AppId);
               if (validate < 0){
                 r.Values.push(newApp);
+                entro = 1;
+              } else {
                 entro = 1;
               }
             }
@@ -225,7 +230,8 @@ export class Tab2Page implements OnInit {
               Values: res
             });
           }
-          this.results.sort((a, b) => (a.FullDate < b.FullDate ? -1 : 1));
+          this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+          this.global.SetSessionCitas(this.results);
         }
       }
 
@@ -236,18 +242,21 @@ export class Tab2Page implements OnInit {
           Status: data.Status,
           Address: data.Address,
           NameBusiness: data.NameBusiness,
+          Name: data.Name,
+          Phone: data.Phone,
+          DateAppo: data.DateFull,
+          Door: data.Door,
+          OnBehalf: data.OnBehalf,
           PeopleQty: data.Guests,
-          QRCode: data.QRCode,
+          QRCode: data.QrCode,
+          Disability: data.Disability,
           UnRead: data.UnRead,
           Ready: data.Ready,
+          ServName: data.Service,
+          ManualCheckOut: data.ManualCheckOut,
           CustomerId: data.CustomerId,
-          DateAppo: data.DateFull,
-          Disability: data.Disability,
-          Door: data.Door,
-          Name: data.Name,
-          OnBehalf: data.OnBehalf,
-          Phone: data.Phone,
-          TimeZone: data.TimeZone
+          TimeZone: data.TimeZone,
+          ProvName: data.Provider
         }
         this.results.forEach(function (r, i, o){
           if (r.FullDate == data.DateFull.substring(0,10)){
