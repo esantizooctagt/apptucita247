@@ -68,13 +68,11 @@ export class Tab2Page implements OnInit {
     if (data != undefined){
       console.log(data);
       if (data.Tipo == 'MESS'){
-        console.log(this.global.Qeue);
         if (this.global.Qeue.findIndex(x=>x.AppId==data.AppId && x.Tipo=='MESS' && x.DateFull==data.DateFull) < 0){
           this.global.Qeue.push(data);
         } else {
           return;
         }
-        console.log(this.global.Qeue);
       }
       if (data.Tipo == 'CANCEL'){
         this.results.forEach(function (r, i, o){
@@ -231,6 +229,9 @@ export class Tab2Page implements OnInit {
             });
           }
           this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+          this.results.forEach(x =>
+            x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) < this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+            );
           this.global.SetSessionCitas(this.results);
         }
       }
@@ -279,6 +280,9 @@ export class Tab2Page implements OnInit {
           });
         }
         this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+        this.results.forEach(x =>
+          x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) < this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+          );
         this.global.SetSessionCitas(this.results);
       }
 
@@ -462,9 +466,15 @@ export class Tab2Page implements OnInit {
           ));
           if (tab == 0){
             this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+            this.results.forEach(x =>
+              x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) < this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+              );
             this.global.SetSessionCitas(this.results);
           } else {
             this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) > this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+            this.results.forEach(x =>
+              x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) > this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+              );
             this.global.SetSessionCitasOld(this.results);
           }
           this.connection = 1;
@@ -569,9 +579,15 @@ export class Tab2Page implements OnInit {
           ));
           if (this.selectedTab == 0){
             this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) < this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+            this.results.forEach(x =>
+              x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) < this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+              );
             this.global.SetSessionCitas(this.results);
           } else {
             this.results.sort((a, b) => (this.convertTZ(a.FullDate, this.currTimeZone) > this.convertTZ(b.FullDate, this.currTimeZone) ? -1 : 1));
+            this.results.forEach(x =>
+              x.Values.sort((a, b) => (this.convertTZ(a.DateAppo, this.currTimeZone) > this.convertTZ(b.DateAppo, this.currTimeZone) ? -1 : 1))
+              );
             this.global.SetSessionCitasOld(this.results);
           }
 
