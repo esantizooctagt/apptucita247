@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-tab1',
@@ -40,6 +41,7 @@ export class Tab1Page implements OnInit {
     private router: Router,
     private params: ParamsService,
     private loading: LoadingService,
+    private ws: MessageService,
     private translate: TranslateService
   ) { }
 
@@ -101,6 +103,7 @@ export class Tab1Page implements OnInit {
       this.global.ApiURL = 'https://dev-apimob.tucita247.com/';
       this.global.BucketPath = 'https://s3.amazonaws.com/dev.tucita247';
     }
+    this.ws.connect();
     console.log(this.envAppps);
     console.log(this.global.ApiURL);
     console.log(this.global.BucketPath);

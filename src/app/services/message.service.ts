@@ -4,7 +4,7 @@ import { catchError, delayWhen, retryWhen, switchAll, tap } from 'rxjs/operators
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { GlobalService } from './global.service';
 
-export const WS_ENDPOINT = 'wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+// export const WS_ENDPOINT = 'wss://1wn0vx0tva.execute-api.us-east-1.amazonaws.com/prod?customerId=';
 export const RECONNECT_INTERVAL = 3000;
 
 @Injectable({
@@ -17,12 +17,18 @@ export class MessageService {
   private socket$: WebSocketSubject<any>;
   private messagesSubject$ = new Subject();
   public messages$ = this.messagesSubject$.pipe(switchAll(), catchError(e => { throw e }));
+  private WS_ENDPOINT: string = 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
  
   constructor(
     public global: GlobalService
   ) {
     this.Customer = this.global.Customer;
     this.customerId = this.Customer.CustomerId;
+    if (this.global.EnvApp == 0) {
+      this.WS_ENDPOINT = 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+    } else {
+      this.WS_ENDPOINT = 'wss://k93m5dsm4c.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+    }
   }
   
   public connect(cfg: { reconnect: boolean } = { reconnect: false }): void {
@@ -53,9 +59,9 @@ export class MessageService {
   }
 
   private getNewWebSocket() {
-    console.log(WS_ENDPOINT+this.customerId);
+    console.log(this.WS_ENDPOINT+this.customerId);
     return webSocket({
-      url: WS_ENDPOINT+this.customerId,
+      url: this.WS_ENDPOINT+this.customerId,
       openObserver: {
         next: () => {
           console.log('connection ok');
