@@ -32,6 +32,18 @@ export class AppComponent {
   initializeApp() {
     this.global.PlayerId = "";
     this.setupLanguage();
+    this.global.GetAdmPhones()
+      .subscribe(res => {
+        this.global.AdmPhones = res;
+    });
+    this.global.GetLastVersion()
+      .subscribe(content => {
+        if (content['Code'] == 200) {
+          if (content['Version'] != this.global.LocalVersion) {
+            this.openUrls();
+          }
+        }
+      });
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
@@ -39,14 +51,6 @@ export class AppComponent {
       if (this.platform.is('cordova')) {
           this.setupDeepLinks();
       }
-      this.global.GetLastVersion()
-        .subscribe(content => {
-            if (content['Code'] == 200) {
-                if (content['Version'] != this.global.LocalVersion) {
-                    this.openUrls();
-                }
-            }
-        });
     });
   }
 

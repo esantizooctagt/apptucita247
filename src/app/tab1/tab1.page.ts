@@ -16,9 +16,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class Tab1Page implements OnInit {
   dataSearch: string = '';
   result$: Observable<any[]>;
-
+  dispEnv = -1;
   termino: string;
   cargando: string;
+  envAppps = 0;
 
   @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
   @ViewChild('searchText', {static: false}) searchbar: IonSearchbar;
@@ -43,6 +44,8 @@ export class Tab1Page implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
+    this.envAppps = 0;
   }
 
   ionViewWillEnter(){
@@ -86,6 +89,21 @@ export class Tab1Page implements OnInit {
         this.isSearchBarOpened=1;
       }
     }
+  }
+
+  onEnvironment(env){
+    this.global.EnvApp = env;
+    this.envAppps = env;
+    if (env == 0){
+      this.global.ApiURL = 'https://apimob.tucita247.com/';
+      this.global.BucketPath = 'https://tucita247.s3.amazonaws.com';
+    } else {
+      this.global.ApiURL = 'https://dev-apimob.tucita247.com/';
+      this.global.BucketPath = 'https://s3.amazonaws.com/dev.tucita247';
+    }
+    console.log(this.envAppps);
+    console.log(this.global.ApiURL);
+    console.log(this.global.BucketPath);
   }
 
   searchResult(event: any){
@@ -150,8 +168,4 @@ export class Tab1Page implements OnInit {
       this.termino = res;
     });
   }
-
-  // onCancel(event){
-  //   this.isSearchBarOpened = 0;
-  // }
 }

@@ -18,7 +18,9 @@ export class GlobalService {
   Language: string;
   PlayerId: string;
   VerifcationCode: any;
-  PhoneNumber;
+  AdmPhones: any[]=[];
+  PhoneNumber: any;
+  EnvApp = 0;
   Country = 'PRI';
   Where = '';
   WhereLabel = '';
@@ -49,6 +51,12 @@ export class GlobalService {
   }
   SetDatePreviousDate(date: string){
     window.localStorage.prevDate = date;
+  }
+  GetAdmPhones(){
+    return this.http.get('https://tucita247.s3.amazonaws.com/adm_phones/adm-phones.json').pipe(
+      map((res: any) => res
+      )
+    );
   }
   GetSessionCitas(){
     let localCitas: any;
