@@ -96,10 +96,11 @@ export class ComercioLocalidadPage implements OnInit {
     let dateMin = new Date();
     let dateMax = new Date(new Date().setMonth(new Date().getMonth() + 6));
     let month:number = dateMin.getMonth()+1;
+    let maxMonth:number = dateMax.getMonth()+1;
     this.display = this.global.Language;
     
     this.minDate = dateMin.getFullYear() + '-' + month.toString().padStart(2, '0') + '-' + dateMin.getDate().toString().padStart(2, '0');
-    this.maxDate = dateMax.getFullYear() + '-' + month.toString().padStart(2, '0') + '-' + dateMax.getDate().toString().padStart(2, '0');
+    this.maxDate = dateMax.getFullYear() + '-' + maxMonth.toString().padStart(2, '0') + '-' + dateMax.getDate().toString().padStart(2, '0');
     this.loading.presentLoading(this.cargando);
     if (this.global.When == ''){
       this.dateAppo = this.minDate;

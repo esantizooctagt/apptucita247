@@ -17,23 +17,17 @@ export class MessageService {
   private socket$: WebSocketSubject<any>;
   private messagesSubject$ = new Subject();
   public messages$ = this.messagesSubject$.pipe(switchAll(), catchError(e => { throw e }));
-  private WS_ENDPOINT: string = 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
- 
+  private WS_ENDPOINT: string = ''; // 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+
   constructor(
     public global: GlobalService
   ) {
     this.Customer = this.global.Customer;
     this.customerId = this.Customer.CustomerId;
-    if (this.global.EnvApp == 0) {
-      this.WS_ENDPOINT = 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
-    } else {
-      this.WS_ENDPOINT = 'wss://k93m5dsm4c.execute-api.us-east-1.amazonaws.com/prod?customerId=';
-    }
   }
   
   public connect(cfg: { reconnect: boolean } = { reconnect: false }): void {
     console.log("method connect");
-    console.log(this.socket$);
     if (!this.socket$ || this.socket$.closed) {
       this.socket$ = this.getNewWebSocket();
       console.log("connect after validate");
@@ -75,6 +69,14 @@ export class MessageService {
         }
       },
     });
+  }
+
+  setWebSocket(env){
+    if (env == 1){
+      this.WS_ENDPOINT = 'wss://k93m5dsm4c.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+    } else {
+      this.WS_ENDPOINT = 'wss://z9m2csbl4j.execute-api.us-east-1.amazonaws.com/prod?customerId=';
+    }
   }
 
   sendMessage(msg: any) {

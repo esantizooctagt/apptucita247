@@ -144,7 +144,7 @@ export class GlobalService {
     );
   }
   GetAds() {
-    return this.http.get(this.ApiURL + 'mobile/ads').pipe(
+    return this.http.get(this.ApiURL + 'mobile/ads/' + this.Language).pipe(
       map(results => results)
     );
   }

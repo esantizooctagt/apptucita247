@@ -96,6 +96,7 @@ export class Tab1Page implements OnInit {
   onEnvironment(env){
     this.global.EnvApp = env;
     this.envAppps = env;
+    // this.ws.close();
     if (env == 0){
       this.global.ApiURL = 'https://apimob.tucita247.com/';
       this.global.BucketPath = 'https://tucita247.s3.amazonaws.com';
@@ -103,10 +104,10 @@ export class Tab1Page implements OnInit {
       this.global.ApiURL = 'https://dev-apimob.tucita247.com/';
       this.global.BucketPath = 'https://s3.amazonaws.com/dev.tucita247';
     }
-    this.ws.connect();
-    console.log(this.envAppps);
-    console.log(this.global.ApiURL);
-    console.log(this.global.BucketPath);
+    // window.location.reload();
+    this.ws.setWebSocket(env);
+    this.ws.close();
+    // this.ws.connect();
   }
 
   searchResult(event: any){
