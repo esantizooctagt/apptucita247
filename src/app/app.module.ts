@@ -27,6 +27,8 @@ import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -63,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     File,
     WebView,
     FilePath,
-    Deeplinks
+    Deeplinks,
+    GoogleAnalytics
   ],
   bootstrap: [AppComponent]
 })

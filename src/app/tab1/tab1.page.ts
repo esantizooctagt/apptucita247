@@ -46,12 +46,12 @@ export class Tab1Page implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
     this.envAppps = 0;
   }
 
   ionViewWillEnter(){
     this.isSearchBarOpened = 0;
+    this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
     this.translateTerms();
     this.loadData();
   }

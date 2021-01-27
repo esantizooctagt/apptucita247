@@ -8,6 +8,7 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { Router } from '@angular/router';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent {
     private router: Router,
     private zone: NgZone,
     private oneSignal: OneSignal,
-    private iap: InAppBrowser
+    private iap: InAppBrowser,
+    private ga: GoogleAnalytics
   ) {
     this.initializeApp();
   }
@@ -47,6 +49,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
+      this.setupGA()
       this.setupOneSignal();
       if (this.platform.is('cordova')) {
           this.setupDeepLinks();
@@ -65,6 +68,22 @@ export class AppComponent {
     }, (nomatch) => {
       console.log('Got a deeplink that didn\'t match ' + nomatch.toString());
     });
+  }
+
+  setupGA(){
+    // this.ga.startTrackerWithId('UA-XXXXXXXXXX-X')
+    //   .then(() => {
+    //     console.log('Google analytics is ready now');
+    //     this.ga.trackView('Init App')
+    //     .then(() => {
+
+    //     })
+    //     .catch(
+    //       error => console.log(error)
+    //     );  
+    //    }).catch(
+    //     error => console.log('Google Analytics Error: ' + error)
+    //   );
   }
 
   setupLanguage(){
