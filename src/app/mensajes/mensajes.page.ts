@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import { NavController, ToastController } from '@ionic/angular';
+import { IonContent, NavController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { ParamsService } from '../services/params.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,6 +14,8 @@ import { MonitorService } from '../services/monitor.service';
   styleUrls: ['./mensajes.page.scss'],
 })
 export class MensajesPage implements OnInit {
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  
   Messages$: Observable<any[]>;
   SendMessage$: Observable<any>;
   result$: Observable<any>;
@@ -45,6 +47,10 @@ export class MensajesPage implements OnInit {
           this.messages = res.Messages;
           return res.Messages;
         }
+      }),
+      delay(150),
+      tap(() => {
+        this.content.scrollToBottom(400);
       })
     );
   }
@@ -63,6 +69,7 @@ export class MensajesPage implements OnInit {
       if (data.Tipo == 'MESS'){
         if (data.AppId == this.appointmentId){
           this.messages.push(data.Message);
+          this.content.scrollToBottom(400);
         }
       }
     }
@@ -84,6 +91,12 @@ export class MensajesPage implements OnInit {
     this.messages.push(dataMess);
     messageData = this.txtMessage;
     this.txtMessage = "";
+    
+    setTimeout(() => 
+    {
+      this.content.scrollToBottom(300);
+    },
+    500);
     
     this.SendMessage$ = this.global.SendMessage(this.appointmentId, messageData).pipe(
       map(async (res: any) => {
@@ -116,6 +129,11 @@ export class MensajesPage implements OnInit {
     this.translate.get('PASO_ALGO_MAL').subscribe((res: string) => {
       this.pasoAlgoMal = res;
     });
+  }
+
+  onScrollEnd(event)
+  {
+    console.log('Scroll start');
   }
 
 }
