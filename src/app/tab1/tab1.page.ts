@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSearchbar, IonSlides, LoadingController } from '@ionic/angular';
+import { IonSearchbar, IonSlides } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { ParamsService } from '../services/params.service';
 import { LoadingService } from '../services/loading.service';
@@ -8,6 +8,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../services/message.service';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -20,7 +21,7 @@ export class Tab1Page implements OnInit {
   dispEnv = -1;
   termino: string;
   cargando: string;
-  envAppps = 0;
+  envApps = 0;
 
   @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
   @ViewChild('searchText', {static: false}) searchbar: IonSearchbar;
@@ -42,11 +43,12 @@ export class Tab1Page implements OnInit {
     private params: ParamsService,
     private loading: LoadingService,
     private ws: MessageService,
+    public backgroundMode : BackgroundMode,
     private translate: TranslateService
   ) { }
 
   ngOnInit() {
-    this.envAppps = 0;
+    this.envApps = 0;
   }
 
   ionViewWillEnter(){
@@ -95,8 +97,7 @@ export class Tab1Page implements OnInit {
 
   onEnvironment(env){
     this.global.EnvApp = env;
-    this.envAppps = env;
-    // this.ws.close();
+    this.envApps = env;
     if (env == 0){
       this.global.ApiURL = 'https://apimob.tucita247.com/';
       this.global.BucketPath = 'https://tucita247.s3.amazonaws.com';
@@ -104,10 +105,8 @@ export class Tab1Page implements OnInit {
       this.global.ApiURL = 'https://dev-apimob.tucita247.com/';
       this.global.BucketPath = 'https://s3.amazonaws.com/dev.tucita247';
     }
-    // window.location.reload();
     this.ws.setWebSocket(env);
     this.ws.close();
-    // this.ws.connect();
   }
 
   searchResult(event: any){

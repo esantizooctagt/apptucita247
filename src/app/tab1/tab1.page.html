@@ -127,10 +127,10 @@
         <ion-grid class="">
             <ion-row class="">
                 <ion-col size="6">
-                    <ion-button fill="outline" expand="block" [ngClass]="{'prod-on': envAppps === 0, 'prod-off': envAppps === 1}" (click)="onEnvironment(0)">PRO</ion-button>
+                    <ion-button fill="outline" expand="block" [ngClass]="{'prod-on': envApps === 0, 'prod-off': envApps === 1}" (click)="onEnvironment(0)">PRO</ion-button>
                 </ion-col>
                 <ion-col size="6">
-                    <ion-button fill="outline" expand="block" [ngClass]="{'prod-off': envAppps === 0, 'prod-on': envAppps === 1}" (click)="onEnvironment(1)">DEV</ion-button>
+                    <ion-button fill="outline" expand="block" [ngClass]="{'prod-off': envApps === 0, 'prod-on': envApps === 1}" (click)="onEnvironment(1)">DEV</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>

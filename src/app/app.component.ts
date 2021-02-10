@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ export class AppComponent {
     private zone: NgZone,
     private oneSignal: OneSignal,
     private iap: InAppBrowser,
-    private ga: GoogleAnalytics
+    private ga: GoogleAnalytics,
+    private backgroundMode: BackgroundMode
   ) {
     this.initializeApp();
   }
@@ -49,7 +51,9 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
-      this.setupGA()
+      this.backgroundMode.setDefaults({ silent: true});
+      this.backgroundMode.enable();
+      this.setupGA();
       this.setupOneSignal();
       if (this.platform.is('cordova')) {
           this.setupDeepLinks();

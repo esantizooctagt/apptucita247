@@ -28,6 +28,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatePicker,
     DatePipe,
     OneSignal,
+    BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     File,
