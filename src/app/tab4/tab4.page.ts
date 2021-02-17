@@ -78,7 +78,7 @@ export class Tab4Page implements OnInit {
 
     this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
     if (this.dispEnv > -1){
-      this.global.VerifyPhone(this.global.Customer.Mobile).subscribe(content => {
+      this.global.GetPhoneInfo(this.global.Customer.Mobile).subscribe(content => {
         this.global.Customer = content['Customer'];
         this.Customer = this.global.Customer;
 

@@ -110,6 +110,16 @@ export class GlobalService {
       map(results => results)
     );
   }
+  GetPhoneInfo(phoneNumber: any) {
+    this.PhoneNumber = phoneNumber;
+    let body;
+    body = {
+      PlayerId: this.PlayerId
+    };
+    return this.http.post(this.ApiURL + 'mobile/info/' + phoneNumber, body, this.HttpOptions).pipe(
+      map(results => results)
+    );
+  }
   VerifyEmail(email: any){
     return this.http.post(this.ApiURL + 'mobile/email/' + email, '', this.HttpOptions).pipe(
       map(results => results)
