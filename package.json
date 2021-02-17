@@ -41,6 +41,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@techiediaries/ngx-qrcode": "^9.0.0",
     "angular2-text-mask": "^9.0.0",
+    "cocoapods": "0.0.0",
     "cordova-android": "^8.1.0",
     "cordova-androidx-build": "^1.0.3",
     "cordova-browser": "6.0.0",
