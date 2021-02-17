@@ -75,7 +75,6 @@ export class Tab4Page implements OnInit {
 
   ionViewWillEnter(){
     this.Customer = this.global.Customer;
-
     this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
     if (this.dispEnv > -1){
       this.global.GetPhoneInfo(this.global.Customer.Mobile).subscribe(content => {
