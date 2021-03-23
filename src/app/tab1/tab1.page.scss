@@ -136,3 +136,7 @@
 .text-tags{
   font-size: 13px;
 }
+::ng-deep .searchbar-search-icon:after{
+  width: 30px;
+  height: 30px;
+}

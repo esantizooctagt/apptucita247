@@ -8,12 +8,20 @@
         <h3 class="titulo-paso" translate>PASO_1</h3>
         <p class="texto-paso" translate>PASO_1_INFO<br><span translate>PASO_1_INFO_2</span></p>
       </ion-col>
-      <ion-col size="12">
-        <ion-item lines="none">
-          <!-- appPhonenum -->
-          <ion-input class="input-telefono" appPhonenum maxlength="17" autofocus="true"  [formControl]="phoneNumber" placeholder="+1 (___) ___-____" type="tel"></ion-input>
-        </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-select (click)="loadFlags(countryList)" mode="ios" [(ngModel)]="countryCode" class="right-align" (ionChange)="onChange($event)" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+          <ion-select-option *ngFor="let country of countryList" value="{{ country.Country }}">
+            {{ country.Code  }}
+          </ion-select-option>
+        </ion-select>
       </ion-col>
+      <ion-col size="8">
+        <ion-input class="input-telefono" appPhonenum [ccode]="countryCode" maxlength="17" autofocus="true"  [formControl]="phoneNumber" [placeholder]="phCountry" type="tel"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col size="12">
         <ion-button color="primary" expand="block" class="ion-text-uppercase" (click)="verifyPhoneNumber()" translate>
           ENVIAR_CODIGO

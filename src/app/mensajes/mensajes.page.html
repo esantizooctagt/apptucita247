@@ -1,9 +1,11 @@
 <ion-header mode="ios" class="header-1">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="primary" (click)="gotoCita()">
+    <ion-buttons slot="start" class="back-button">
+      <!-- <ion-button color="primary" (click)="gotoCita()">
         <ion-icon slot="icon-only" src="assets/svg/back-tc.svg"></ion-icon>
-      </ion-button>
+      </ion-button> -->
+      <ion-back-button (click)="gotoCita()" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
     </ion-buttons>
     <ion-grid>
       <ion-row>

@@ -5,7 +5,6 @@
   line-height: 17px;
   text-align: center;
 }
-
 .card-date {
   padding: 15px 15px 15px 15px;
   color: #000000;
@@ -17,7 +16,6 @@
     color: #000000;
     margin: 0;
   }
-
   .title-place-suc {
     font-style: normal;
     font-weight: normal;
@@ -26,19 +24,16 @@
     color: #000000;
     margin: 0;
   }
-
   .date{
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
   }
-
   .icon-meta{
     width: 25px;
     height: 30px;
   }
-
   .messages{
     width: 13px;
     height: 13px;
@@ -49,7 +44,6 @@
     top: 4px;
     right: -4px;
   }
-
   .messages:after{
     content:'*';
     position: absolute;
@@ -61,7 +55,6 @@
     right:2px;
   }
 }
-
 .divisor{
   margin: 0px;
 }
@@ -72,4 +65,8 @@
 .title-door{
   margin-top: 1px;
   margin-bottom: 0px;
+}
+.back-button{
+  padding-left: 5px;
+  padding-top: 5px;
 }

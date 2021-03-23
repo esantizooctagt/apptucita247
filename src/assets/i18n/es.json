@@ -6,7 +6,7 @@
   "VER_TODAS": "Ver todas",
   "RESULTADOS_PARA": "Resultados para “{{value}}”",
   "SIN_CONEXION_A_INTERNET": "Sin conexión a Internet",
-  "TERMINO_BUSQUEDA": "Término de búsqueda",
+  "TERMINO_BUSQUEDA": "Búsqueda...",
   "BUSCAR_PLACEHOLDER": "Buscar",
   "MIS_CITAS": "Mis Citas",
   "CARGANDO_INFO": "Cargando información...",
@@ -128,5 +128,7 @@
   "CANCELAR": "Cancelar",
   "OK": "Aceptar",
   "ERROR": "Ocurrió un error, intente de nuevo",
-  "CHECKOUTPROC": "Pendiente de Salida"
+  "CHECKOUTPROC": "Pendiente de Salida",
+  "CODIGO_PAIS": "Código de País",
+  "CURR_LOC": "UBICACION ACTUAL"
 }

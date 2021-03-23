@@ -1,17 +1,19 @@
-<ion-content>
+<ion-header mode="ios">
+  <ion-toolbar *ngIf="location.Imagen" [style.--background]="'url(' + global.BucketPath + location.Imagen + ') no-repeat center center / cover'">
+    <ion-buttons slot="start" class="back-button">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="!location.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
+    <ion-buttons slot="start" class="back-button">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding>
   <!-- <ng-container *ngIf="liveData$ | async"></ng-container> -->
-  <ion-toolbar mode="ios" *ngIf="location.Imagen" [style.--background]="'url(' + global.BucketPath + location.Imagen + ') no-repeat center center / cover'">
-    <ion-buttons slot="start">
-      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
-      </ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar mode="ios" *ngIf="!location.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
-    <ion-buttons slot="start">
-      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
-      </ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
   <ng-container *ngIf="Favorite$ | async"></ng-container>
   <ng-container *ngIf="Availabity$ | async"></ng-container>
   <ng-container *ngIf="Provider$ | async"></ng-container>
