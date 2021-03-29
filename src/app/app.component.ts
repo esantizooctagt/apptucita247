@@ -78,13 +78,7 @@ export class AppComponent {
     this.ga.startTrackerWithId('259393465')
       .then(() => {
         console.log('Google analytics is ready now');
-        this.ga.trackView('Init App')
-        .then(() => {
-
-        })
-        .catch(
-          error => console.log(error)
-        );  
+        this.ga.trackView('Init App') 
        }).catch(
         error => console.log('Google Analytics Error: ' + error)
       );
