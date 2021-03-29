@@ -32,15 +32,6 @@
       <ion-col size="12">
         <ion-text  *ngIf="searchTerm != ''"  class="show-results" color="primary" [translate]="'RESULTADOS_PARA'"  [translateParams]="{value: searchTerm}">
         </ion-text>
-        <ion-list id="currentLoc">
-          <ion-item lines="none" class="card-item" (click)="setWh()">
-            <ion-img slot="start" src="./assets/svg/pin-tc.svg"></ion-img>
-            <ion-label>
-              <h2 translate>CURR_LOC</h2>
-            </ion-label>
-            <ion-img slot="end" src="./assets/svg/chevron-right-tc.svg"></ion-img>
-          </ion-item>
-        </ion-list>
         <ion-list *ngFor="let item of Places | filter:searchTerm " id="{{item.City}}">
           <ion-item lines="none" class="card-item" (click)="setWhere(item.Parent, item.City, item.Name)">
             <ion-img slot="start" src="./assets/svg/pin-tc.svg"></ion-img>

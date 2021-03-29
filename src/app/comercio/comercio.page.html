@@ -1,19 +1,17 @@
-<ng-container *ngIf="Business$ | async as bus">
-  <ion-header mode="ios">
-    <ion-toolbar *ngIf="bus.Imagen" class="toolbar-header" [style.--background]="'url(' + global.BucketPath + bus.Imagen + ') no-repeat center center / cover'">
-      <ion-buttons slot="start" class="back-button">
-        <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
-        </ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
-    <ion-toolbar *ngIf="!bus.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
-      <ion-buttons slot="start" class="back-button">
-        <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
-        </ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content no-padding>
+<ion-content>
+  <ng-container *ngIf="Business$ | async as bus">
+  <ion-toolbar mode="ios" *ngIf="bus.Imagen" class="toolbar-header" [style.--background]="'url(' + global.BucketPath + bus.Imagen + ') no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar mode="ios" *ngIf="!bus.Imagen" class="toolbar-header-02" [style.--background]="'url(./assets/svg/haz-tu-cita.svg) no-repeat center center / cover'">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="/" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
     <ion-grid class="ion-no-margin ion-no-padding">
       <ion-row class="ion-padding ion-no-margin">
         <ion-col size="12">
@@ -55,5 +53,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-content>
-</ng-container>
+  </ng-container>
+</ion-content>

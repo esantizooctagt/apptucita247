@@ -27,8 +27,6 @@ import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
@@ -70,8 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebView,
     FilePath,
     Deeplinks,
-    GoogleAnalytics,
-    Geolocation
+    GoogleAnalytics
   ],
   bootstrap: [AppComponent]
 })

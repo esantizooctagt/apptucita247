@@ -58,12 +58,6 @@ export class GlobalService {
       )
     );
   }
-  GetCurrentCity(url){
-    return this.http.get(url).pipe(
-      map((res: any) => res
-      )
-    );
-  }
   GetSessionCitas(){
     let localCitas: any;
     localCitas = JSON.parse(window.localStorage.citas || '[]');

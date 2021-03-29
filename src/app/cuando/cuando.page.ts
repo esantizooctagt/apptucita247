@@ -29,9 +29,9 @@ export class CuandoPage implements OnInit {
     let dateMin = new Date();
     let dateMax = new Date(new Date().setMonth(new Date().getMonth() + 6));
     let month:number = dateMin.getMonth()+1;
-    let monthMax:number = dateMax.getMonth()+1;
+    
     this.minDate = dateMin.getFullYear() + '-' + month.toString().padStart(2, '0') + '-' + dateMin.getDate().toString().padStart(2, '0');
-    this.maxDate = dateMax.getFullYear() + '-' + monthMax.toString().padStart(2, '0') + '-' + dateMax.getDate().toString().padStart(2, '0');
+    this.maxDate = dateMax.getFullYear() + '-' + month.toString().padStart(2, '0') + '-' + dateMax.getDate().toString().padStart(2, '0');
   }
 
   ionViewWillEnter(){

@@ -1,10 +1,7 @@
 ion-header{
   background: white !important;
 }
-.back-button{
-  padding-left: 5px;
-  padding-top: 5px;
-}
+
 .title-card-date{
   font-style: normal;
   font-weight: normal;
@@ -12,6 +9,7 @@ ion-header{
   line-height: 17px;
   text-align: center;
 }
+
 .card-date {
   padding: 15px 15px 15px 15px;
   color: #000000;
@@ -23,6 +21,7 @@ ion-header{
     color: #000000;
     margin: 0;
   }
+
   .title-place-suc {
     font-style: normal;
     font-weight: normal;
@@ -31,16 +30,19 @@ ion-header{
     color: #000000;
     margin: 0;
   }
+
   .date{
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
   }
+
   .icon-meta{
     width: 25px;
     height: 30px;
   }
+
   .messages{
     width: 13px;
     height: 13px;
@@ -51,6 +53,7 @@ ion-header{
     top: 4px;
     right: -4px;
   }
+
   .messages:after{
     content:'*';
     position: absolute;
@@ -62,9 +65,11 @@ ion-header{
     right:2px;
   }
 }
+
 .divisor{
   margin: 0px;
 }
+
 .burbuja{
   background: #D7D7D7;
   border-radius: 4px;
@@ -88,9 +93,11 @@ ion-header{
     margin: 0px;
   }
 }
+
 .burbuja.par{
   background: #EEEEEE;
 }
+
 .content-mensajes{
   background: #F9F7F7;
   padding:10px !important;
