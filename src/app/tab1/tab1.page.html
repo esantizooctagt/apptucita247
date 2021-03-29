@@ -7,7 +7,7 @@
                         <ion-label class="label-wrap">{{global.WhereLabel}}</ion-label>
                         <ion-icon src="./assets/svg/quitar-tc.svg" (click)="global.Where=''"></ion-icon>
                     </ion-chip>
-                    <ion-button *ngIf="global.Where == ''" mode="ios" expand="block" color="primary" fill="outline"
+                    <ion-button *ngIf="global.Where == ''" mode="ios" expand="block" color="primary" fill="solid" class="tool-button"
                         [routerLink]="['/donde']">{{ 'DONDE' | translate }}</ion-button>
                 </ion-col>
                 <ion-col size="6">
@@ -15,7 +15,7 @@
                         <ion-label class="label-wrap">{{global.When | date:'MMM d, y'}}</ion-label>
                         <ion-icon src="./assets/svg/quitar-tc.svg" (click)="global.When=''"></ion-icon>
                     </ion-chip>
-                    <ion-button *ngIf="global.When == ''" mode="ios" expand="block" color="primary" fill="outline"
+                    <ion-button *ngIf="global.When == ''" mode="ios" expand="block" color="primary" fill="solid" class="tool-button"
                         [routerLink]="['/cuando']">{{ 'CUANDO' | translate }}</ion-button>
                 </ion-col>
             </ion-row>

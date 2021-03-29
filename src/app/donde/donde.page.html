@@ -7,14 +7,14 @@
             <ion-label class="label-wrap">{{global.WhereLabel}}</ion-label>
             <ion-icon src="./assets/svg/quitar-tc.svg" (click)="global.Where=''"></ion-icon>
           </ion-chip>
-          <ion-button *ngIf="global.Where == ''" mode="ios" expand="block" color="primary" fill="outline" disabled="true" translate>DONDE</ion-button>
+          <ion-button *ngIf="global.Where == ''" mode="ios" expand="block" color="primary" fill="solid" class="tool-button" disabled="true" translate>DONDE</ion-button>
         </ion-col>
         <ion-col>
           <ion-chip *ngIf="global.When != ''" class="chip-filter">
             <ion-label class="label-wrap">{{global.When}}</ion-label>
             <ion-icon src="./assets/svg/quitar-tc.svg" (click)="global.When=''"></ion-icon>
           </ion-chip>
-          <ion-button *ngIf="global.When == ''" mode="ios" expand="block" color="primary" fill="outline" [routerLink]="['/cuando']" translate>CUANDO</ion-button>
+          <ion-button *ngIf="global.When == ''" mode="ios" expand="block" color="primary" fill="solid" class="tool-button" [routerLink]="['/cuando']" translate>CUANDO</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -57,6 +57,14 @@
   </ion-grid>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" expand="block" fill="solid" class="ion-text-uppercase"  [routerLink]="['/tabs/tab1']" translate>
+      VOLVER
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
 <!-- <ion-footer>
   <ion-toolbar>
     <ion-button color="primary" expand="block" fill="outline" class="ion-text-uppercase" [routerLink]="['/tabs/tab1']" translate>
