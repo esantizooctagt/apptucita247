@@ -1,3 +1,6 @@
+ion-grid{
+  background: var(--ion-background-color);
+}
 .title-card-date{
   font-style: normal;
   font-weight: normal;
@@ -15,7 +18,7 @@
   color: red;
 }
 .expirada{
-  color: blue;
+  color: #34A8FC;
 }
 .checkoutProc{
   color: brown; 
@@ -23,15 +26,19 @@
 .add-margin{
   margin: 15px 15px 0px 15px;
 }
+ion-icon{
+  stroke-width: 2;
+}
 .card-date {
   padding: 0;
-  color: #000000;
+  color: var(--ion-text-color);
+  border: 1px solid lightgray;
   .title-place-com {
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
     line-height: 24px;
-    color: #000000;
+    color: var(--ion-text-color);
     margin: 0;
   }
 
@@ -40,7 +47,7 @@
     font-weight: normal;
     font-size: 20px;
     line-height: 24px;
-    color: #000000;
+    color: var(--ion-text-color);
     margin: 0;
   }
 

@@ -17,9 +17,9 @@
   margin-top: 30px;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 15px;
-  color: #000000;
+  font-size: 18px;
+  line-height: 17px;
+  color: var(--ion-text-color);
 }
 .input-code{
   text-align: left !important;
@@ -32,8 +32,8 @@
   width: 100%;
   height: 80px;
 }
-.native-input sc-ion-input-ios{
-  padding-right: 0px;
+::ng-deep ion-input{
+  --padding-end: 0px !important;
 }
 .otp-box{
   margin-top: 23px;
@@ -45,13 +45,13 @@
   }
   ion-input{
       // text-align: center;
-      border: 2px solid #f44f00;
+      border: 2px solid #34A8FC;
       border-radius: 5px;
       margin-top: 8px;
       font-size: 28px;
       padding: 3px !important;
       padding-left: 3px !important;
-      color: rgb(0, 0, 0);
+      color: var(--ion-text-color);
       font-weight: 600;
       --padding-start: 0;
   }

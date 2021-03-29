@@ -6,7 +6,7 @@
   "VER_TODAS": "View All",
   "RESULTADOS_PARA": "Results for “{{value}}”",
   "SIN_CONEXION_A_INTERNET": "No Internet Connection",
-  "TERMINO_BUSQUEDA": "Search term",
+  "TERMINO_BUSQUEDA": "Search...",
   "MIS_CITAS": "Bookings",
   "CARGANDO_INFO": "Loading info...",
   "TIME_MESSAGE": "Booking held for 15 minutes. Please confirm or add more services",
@@ -85,7 +85,7 @@
   "PASO_4_ADD": "You chose to create a new account",
   "PASO_4_ADD02": "We need to associate an email to this account",
   "CONTINUE": "Continue",
-  "REENVIAR_SMS": "Resend SMS",
+  "REENVIAR_SMS": "RESEND SMS",
   "VALIDAR_CODIGO": "Validate",
   "CODIGO_DE_VERIFICACION": "Verification code",
   "CODIGO_INCORRECTO": "Invalid code",
@@ -127,5 +127,7 @@
   "CANCELAR": "Cancel",
   "OK": "OK",
   "ERROR": "Something goes wrong, try again",
-  "CHECKOUTPROC": "Checkout Pending"
+  "CHECKOUTPROC": "Checkout Pending",
+  "CODIGO_PAIS": "Country Code",
+  "CURR_LOC": "CURRENT LOCATION"
 }

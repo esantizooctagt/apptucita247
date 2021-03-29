@@ -24,13 +24,26 @@
   margin-top: 30px;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 15px;
-  color: #000000;
+  font-size: 18px;
+  line-height: 17px;
+  color: var(--ion-text-color);
 }
 
 .input-telefono{
-  font-size: 30px;
+  font-size: 26px;
   --padding-end: 0px !important;
   --padding-start: 0px !important;
+}
+ion-select{
+  font-size: 26px;
+}
+.right-align{
+  text-align: right;
+}
+::ng-deep .alert-radio-label{
+  font-size: unset;
+  font-size: 22px !important;
+}
+.hidde-name{
+  display: none;
 }

@@ -25,147 +25,125 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
   src: url('./assets/fonts/Montserrat/Montserrat-ExtraBold.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
   src: url('./assets/fonts/Montserrat/Montserrat-Bold.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
   src: url('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
   src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 300;
   src: url('./assets/fonts/Montserrat/Montserrat-Medium.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 200;
   src: url('./assets/fonts/Montserrat/Montserrat-Light.ttf');
 }
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 200;
   src: url('./assets/fonts/Montserrat/Montserrat-ExtraLight.ttf');
 }
-
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   src: url('./assets/fonts/Roboto/RobotoMono-Regular.ttf');
 }
-
 /* SEARCH */
 .searchbar-input{
-  background: #F9F8F8 !important;
+  background: var(--ion-background-color) !important;
   border-radius: 2px !important;
-  border: 1px solid #34A8FC !important;
+  border: 1px solid var(--ion-color-primary) !important;
   box-shadow: none !important;
   font-size: 12px !important;
 }
-
 .searchbar-search-icon{
   position:relative;
   width: 25px !important;
   height: 25px !important;
 }
-
 .sc-ion-searchbar-ios{
   height: 35px;
   background:red;
 }
-
 .searchbar-search-icon:after{
   position:absolute;
   content: '';
   display: block;
   width: 60px;
   height: 90px;
-  background: #F9F8F8;
+  background: var(--ion-background-color);
   background-image: url('./assets/svg/zoom-tc.svg');
   background-repeat: no-repeat;
   top:0;
   left:0;
 }
-
 .searchbar-clear-icon,
 .searchbar-cancel-button{
   color: #F64D02 !important;
 }
-
 /* SLIDER */
 .swiper-pagination-bullet{
   background: transparent !important;
   border: 1px solid #ffffff;
   width: 15px;
   height: 15px;
-  background: #000;
+  background: var(--ion-background-color);
   opacity: 1;
 }
-
 .swiper-pagination-bullet-active {
   background: transparent !important;
   border: 2px solid #ffffff;
   width: 15px;
   height: 15px;
-  background: #000;
+  background: var(--ion-background-color);
   opacity: 1;
 }
-
 .comercios-destacados{
   position:relative;
   padding-top: 25px;
   margin-top:20px;
 }
-
 .title-feat-com{
   position: absolute;
   top: 25px;
-
 }
-
 .comercios-destacados .swiper-pagination-bullet{
   border: 1px solid #898989 !important;
 }
-
 .comercios-destacados .swiper-pagination-bullet-active {
   border: 1px solid #F64D03 !important;
 }
-
 .comercios-destacados .swiper-pagination-bullets{
   position: absolute;
   top: 0;
   height: 16px;
   text-align: right;
 }
-
 .divisor {
   height: 1px !important;
   width: 100% !important;
@@ -173,7 +151,6 @@
   display: block !important;
   margin: 20px 0px 20px;
 }
-
 /* PAGES TITLES */
 .title-pages{
   font-style: normal;
@@ -185,9 +162,7 @@
   padding: 0px;
   line-height: 52px;
 }
-
 /* FILTROS  CABECERA */
-
 .label-wrap{
   width: 100%;
   vertical-align: middle;
@@ -195,16 +170,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .chip-filter{
-  background: #f4f4f4;
+  background: var(--ion-background-color);
   color: #F64D03;
   width: 100%;
   height: 45px;
   margin: 4px 0px;
   border-radius: 0;
 }
-
 /* RESULTADOS DE BUSQUEDA */
 .show-results{
   width: calc(100% - 20px);
@@ -212,12 +185,62 @@
   margin:0px 10px;
   border-bottom: 1px solid #F64D03;
 }
-
 .picker-col{
   max-width: 85px !important;
   min-width: 80px !important;
 }
-
 .picker-opts { 
   max-width: 85px !important; 
 }
+.alert-wrapper{
+  max-width: unset !important;
+  width: 95% !important;
+}
+.alert-button{
+  color: #34A8FC !important;
+}
+.alert-radio-label{
+  font-size: 12px;
+}
+[aria-checked=true].sc-ion-alert-ios .alert-radio-label.sc-ion-alert-ios{
+  color: #34A8FC !important;
+}
+.alert-radio-inner{
+  border-color: #34A8FC !important;
+}
+.color-icons{
+  fill: var(--ion-svg-color);
+}
+// .picker-wrapper.sc-ion-picker-ios {
+//   color: var(--ion-color-dark);
+//   background: var(--ion-color-danger);
+//   --background: var(--ion-color-dark);
+//   border-top: 0.5px solid var(--ion-color-danger);
+// }
+
+// .picker-ios .picker-prefix,
+// .picker-ios .picker-suffix,
+// .picker-ios .picker-opt.picker-opt-selected {
+//   border-radius: 10px;
+//   font-family: Montserrat-bold;
+//   color: var(--ion-color-dark);
+// }
+
+// .picker-ios .picker-opt {
+//   color: var(--ion-color-dark);
+//   font-family: Montserrat-bold;  
+// }
+
+// .picker-ios .picker-button,
+// .picker-ios .picker-button.activated {
+//   color: var(--ion-color-danger);
+//   font-family: Montserrat-bold;
+//   --background: var(--ion-color-dark);
+//   background: var(--ion-color-dark);    
+// }
+
+// .picker-toolbar.sc-ion-picker-ios {
+//   background: var(--ion-color-dark);
+//   border-bottom: 0px solid transparent;
+//   border-top: 0.5px solid var(--ion-color-danger);
+// }

@@ -5,17 +5,20 @@
   height: 210px;
 }
 ion-grid{
-  background: #F4F4F4;
+  background: var(--ion-background-grid-color);
 }
 ion-row{
-  background: #ffffff;
+  background: var(--ion-background-color);
+}
+.back-map{
+  background: var(--ion-background-color);
 }
 .titulo-comercio{
   font-style: normal;
   font-weight: 600;
   font-size: 25px;
   line-height: 30px;
-  color: #000000;
+  color: var(--ion-text-color);
   margin:0;
 }
 .texto-comercio{
@@ -23,7 +26,7 @@ ion-row{
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  color: #000000;
+  color: var(--ion-text-color);
 }
 .label-localidad{
   font-style: normal;
@@ -31,7 +34,7 @@ ion-row{
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #000000;
+  color: var(--ion-text-color);
 }
 .favorites-icon{
   zoom: 1.5;
@@ -39,4 +42,12 @@ ion-row{
 #map_canvas {
   width: 100%;
   height: 400px;
+}
+.toolbar-container{
+  margin-left: 7px;
+  margin-top: 7px;
+}
+.back-button{
+  padding-left: 5px;
+  padding-top: 5px;
 }

@@ -389,16 +389,16 @@ export class Tab2Page implements OnInit {
     this.selectedTab = tab;
     if (this.externalLoad == 0){
       this.cargando = true;
-      if (tab == 0 && this.newAppo == 'primary') {return;}
-      if (tab == 1 && this.oldAppo == 'primary') {return;}
+      if (tab == 0 && this.newAppo == 'secondary') {return;}
+      if (tab == 1 && this.oldAppo == 'secondary') {return;}
     }
 
     if (tab == 0){
-      this.newAppo = 'primary';
-      this.oldAppo = 'secondary';
-    } else {
       this.newAppo = 'secondary';
       this.oldAppo = 'primary';
+    } else {
+      this.newAppo = 'primary';
+      this.oldAppo = 'secondary';
     }
     this.connection = 0;
     this.results = [];

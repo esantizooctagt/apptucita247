@@ -27,6 +27,21 @@ export class TelefonoPage implements OnInit {
   number;
   enviandoSMS: string;
   ingreseSuNumero: string;
+  seleccionar: string;
+  cerrar: string;
+
+  phCountry: string = '(___) ___-____';
+  countryList: any = [
+    {Country: 'PRI', Name: 'Puerto Rico', Code: '+1', Flag: './assets/svg/pur.svg', PlaceHolder: '(___) ___-____'},
+    {Country: 'DEU', Name: 'Alemania', Code: '+49', Flag: './assets/svg/ger.svg', PlaceHolder: '___ ________'},
+    {Country: 'GTM', Name: 'Guatemala', Code: '+502', Flag: './assets/svg/gua.svg', PlaceHolder: '____-____'},
+    {Country: 'DOM', Name: 'República Dominicana', Code: '+1', Flag: './assets/svg/rep.svg', PlaceHolder: '(___) ___-____'},
+    {Country: 'ESP', Name: 'España', Code: '+34', Flag: './assets/svg/spa.svg', PlaceHolder: '___ ___ ___'},
+    {Country: 'USA', Name: 'United States', Code: '+1', Flag: './assets/svg/usa.svg', PlaceHolder: '(___) ___-____'}
+  ];
+  //Flag: '🇵🇷', Flag: '🇩🇪', Flag: '🇬🇹', Flag: '🇩🇴', Flag: '🇪🇸', Flag: '🇺🇸', 
+  countryCode: string = 'PRI';
+  code: string = '+1';
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +53,21 @@ export class TelefonoPage implements OnInit {
   ngOnInit() {
   }
 
+  loadFlags(lstCountry){
+    setTimeout(function(){ 
+      let radios=document.getElementsByClassName('alert-radio-label');
+      for (let index = 0; index <= radios.length-1; index++) {
+          let element = radios[index];
+          element.innerHTML='<img class="country-image" style="width: 25px;height: 20px;margin-right: 20px;padding-top: 5px;" src="'+lstCountry[index].Flag+'" /><span>'+lstCountry[index].Name+'</span>'+element.innerHTML;
+        }
+    }, 200);
+  }
+
+  onChange($event){
+    this.phCountry = this.countryList.filter(x=>x.Country==$event.target.value)[0]['PlaceHolder'];
+    this.code = this.countryList.filter(x=>x.Country==$event.target.value)[0]['Code'];
+  }
+
   ionViewWillEnter(){
     this.translateTerms();
   }
@@ -46,11 +76,8 @@ export class TelefonoPage implements OnInit {
     this.loading.presentLoading(this.enviandoSMS);
     let phoneNum: string = '';
     phoneNum = this.phoneNumber.value.replace( /\D+/g, '');
-    if (phoneNum.length > 10 && phoneNum.substring(0,1) == "1"){
-      phoneNum = phoneNum.substring(1,11);
-    }
-    phoneNum = '1'+phoneNum;
-
+    phoneNum = this.code.replace( /\D+/g, '')+phoneNum;
+    this.global.CountryCode = this.countryCode;
     this.global.VerifyPhone(phoneNum).subscribe(content => {
       this.global.VerifcationCode = content['VerifcationCode'];
       this.global.Customer = content['Customer'];
@@ -64,9 +91,14 @@ export class TelefonoPage implements OnInit {
     this.translate.get('ENVIANDO_SMS').subscribe((res: string) => {
       this.enviandoSMS = res;
     });
-
     this.translate.get('INGRESE_NUMERO').subscribe((res: string) => {
       this.ingreseSuNumero = res;
+    });
+    this.translate.get('CERRAR').subscribe((res: string) => {
+      this.cerrar = res;
+    });
+    this.translate.get('SELECCIONAR').subscribe((res: string) => {
+      this.seleccionar = res;
     });
   }
 

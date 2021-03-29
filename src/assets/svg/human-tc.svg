@@ -1,4 +1,26 @@
 <svg width="11" height="33" viewBox="0 0 11 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="5.56565" cy="2.60886" r="2.60886" fill="black"/>
-<path d="M0 20.0014H2.95671V32.0021H7.65265V20.0014H10.7833V11.3051C10.7833 5.04381 0 5.04382 0 11.3051V20.0014Z" fill="black"/>
+<style>
+    circle {
+      fill: black;
+      stroke: white;
+      stroke-width: 2px;
+    }
+    path {
+      fill: black;
+      stroke: white;
+      stroke-width: 2px;
+    }
+    @media (prefers-color-scheme: dark) {
+      circle {
+        fill: white;
+        stroke: black;
+      }
+      path {
+        fill: white;
+        stroke: black;
+      }
+    }
+</style>
+<circle cx="5.56565" cy="2.60886" r="2.60886"/>
+<path d="M0 20.0014H2.95671V32.0021H7.65265V20.0014H10.7833V11.3051C10.7833 5.04381 0 5.04382 0 11.3051V20.0014Z"/>
 </svg>

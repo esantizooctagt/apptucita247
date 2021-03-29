@@ -1,9 +1,11 @@
 <ion-header mode="ios">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="primary" [routerLink]="['/tabs/tab2']" routerDirection="backward">
+    <ion-buttons slot="start" class="back-button">
+      <!-- <ion-button color="primary" [routerLink]="['/tabs/tab2']" routerDirection="backward">
         <ion-icon slot="icon-only" src="assets/svg/back-tc.svg" ></ion-icon>
-      </ion-button>
+      </ion-button> -->
+      <ion-back-button defaultHref="/tabs/tab2" icon="./assets/svg/back2-tc.svg" text="">
+      </ion-back-button>
     </ion-buttons>
     <ion-grid>
       <ion-row>

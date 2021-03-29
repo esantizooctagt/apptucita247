@@ -22,6 +22,7 @@ export class GlobalService {
   PhoneNumber: any;
   EnvApp = 0;
   Country = 'PRI';
+  CountryCode = 'PRI';
   Where = '';
   WhereLabel = '';
   When = '';
@@ -54,6 +55,12 @@ export class GlobalService {
   }
   GetAdmPhones(){
     return this.http.get('https://tucita247.s3.amazonaws.com/adm_phones/adm-phones.json').pipe(
+      map((res: any) => res
+      )
+    );
+  }
+  GetCurrentCity(url){
+    return this.http.get(url).pipe(
       map((res: any) => res
       )
     );
@@ -142,8 +149,10 @@ export class GlobalService {
       Disability: '',
       CustId: custId,
       PlayerId: this.PlayerId,
+      Country: this.CountryCode,
       Language: (this.Language == '' ? 'en' : this.Language)
     };
+    console.log(body);
     return this.http.post(this.ApiURL + 'mobile', body, this.HttpOptions).pipe(
       map(results => results)
     );

@@ -15,7 +15,8 @@
         <p color="medium" *ngIf="fav == 0" class="ion-text-center ion-padding" translate>SIN_FAVORITOS</p>
         <ion-card *ngFor="let item of favorites" class="card-com-featured">
           <ion-card-header class="header-card-featured-com">
-            <ion-img class="img-display" [src]="global.BucketPath+item.Imagen" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']"></ion-img>
+            <ion-img *ngIf="item.Imagen != ''" class="img-display" [src]="global.BucketPath+item.Imagen" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']"></ion-img>
+            <ion-img *ngIf="item.Imagen == ''" class="img-display" src='./assets/svg/haz-tu-cita.svg' (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']"></ion-img>
             <ion-img class="set-favorite" src="/assets/svg/favorite-circle-tc.svg"
               (click)="DeleteFavorite(item.LocationId)"></ion-img>
             <ion-card-title class="card-title" (click)="onParams(item.Locations, item)" [routerLink]="['/comercio-localidad']">
@@ -34,8 +35,9 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-list style="background:#f4f5f8; padding:0;">
-          <ion-item style="--background:#f4f5f8" lines="none" *ngFor="let item of [1, 2, 3, 4, 5]">
+        <ion-list style="padding:0;">
+          <!-- style="--background:#f4f5f8" -->
+          <ion-item lines="none" *ngFor="let item of [1, 2, 3, 4, 5]">
             <ion-card class="card-com-featured" style="width:100%">
               <ion-thumbnail slot="start">
                 <ion-skeleton-text animated></ion-skeleton-text>
