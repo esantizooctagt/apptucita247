@@ -69,9 +69,10 @@ export class AppComponent {
       .then((res: ThemeDetectionResponse) => {
         if(res.value) {
           this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
-            console.log("theme detection");
             console.log(res);
-            document.body.classList.toggle('dark');
+            if (res.value){
+              document.body.classList.toggle('dark');
+            }
           })
           .catch((error: any) => console.error(error));
         }
