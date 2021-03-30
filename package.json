@@ -129,9 +129,7 @@
       "cordova-plugin-background-mode": {},
       "cordova-plugin-app-version": {},
       "cordova-plugin-googlemaps": {},
-      "cordova-plugin-geolocation": {
-        "GPS_REQUIRED": "true"
-      }
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "browser",
