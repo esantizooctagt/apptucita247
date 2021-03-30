@@ -29,6 +29,8 @@ export class PhonePipe implements PipeTransform {
         newStr = newStr.replace(/^(\d{0,4})/, '$1');
       } else if (newStr.length <= 8) {
         newStr = newStr.replace(/^(\d{0,4})(\d{0,4})/, '$1-$2');
+      } else if (newStr.length <= 11) {
+        newStr = newStr.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})/, '+$1 $2-$3');
       }
       return newStr;
     }
@@ -37,6 +39,8 @@ export class PhonePipe implements PipeTransform {
         newStr = newStr.replace(/^(\d{0,3})/, '$1');
       } else if (newStr.length <= 11) {
         newStr = newStr.replace(/^(\d{0,3})(\d{0,8})/, '$1 $2');
+      } else if (newStr.length <= 13) {
+        newStr = newStr.replace(/^(\d{0,2})(\d{0,3})(\d{0,8})/, '+$1 $2 $3');
       }
       return newStr;
     }
@@ -47,6 +51,8 @@ export class PhonePipe implements PipeTransform {
         newStr = newStr.replace(/^(\d{0,3})(\d{0,3})/, '$1 $2');
       } else if (newStr.length <= 9) {
         newStr = newStr.replace(/^(\d{0,3})(\d{0,3})(\d{0,3})/, '$1 $2 $3');
+      } else if (newStr.length <= 11) {
+        newStr = newStr.replace(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,3})/, '+$1 $2 $3 $4');
       }
       return newStr;
     }

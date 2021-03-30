@@ -10,6 +10,16 @@ ion-grid{
 ion-row{
   background: var(--ion-background-color);
 }
+ion-toolbar{
+  --background: var(--ion-background-color);
+  --opacity: 100%;
+}
+ion-item{
+  --background: var(--ion-background-color);
+}
+ion-list{
+  background-color: var(--ion-background-color);
+}
 .back-map{
   background: var(--ion-background-color);
 }

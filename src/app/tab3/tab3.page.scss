@@ -1,6 +1,13 @@
 /* COMERCIOS FAVORITOS */
 ion-grid{
   background: var(--ion-background-color);
+  height: 100%; 
+  display: flex; 
+  flex-flow: column;
+}
+ion-toolbar{
+  --background: var(--ion-background-color);
+  --opacity: 100%;
 }
 ion-list{
   background: var(--ion-background-color);

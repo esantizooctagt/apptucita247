@@ -2,3 +2,10 @@
     border: 1px solid #f44f00;
     --ion-color-base: #000 !important;
   }
+  ion-toolbar{
+    --background: var(--ion-background-color);
+    --opacity: 100%;
+  }
+  ion-item{
+    --background: var(--ion-background-color);
+  }

@@ -31,6 +31,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,7 +72,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FilePath,
     Deeplinks,
     GoogleAnalytics,
-    Geolocation
+    Geolocation,
+    ThemeDetection
   ],
   bootstrap: [AppComponent]
 })

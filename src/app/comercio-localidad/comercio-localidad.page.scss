@@ -1,11 +1,16 @@
 ion-toolbar{
   height: 280px;
+  --background: var(--ion-background-color);
+  --opacity: 100%;
 }
 ion-grid{
   background: var(--ion-background-grid-color);
 }
 ion-row{
   background: var(--ion-background-color);
+}
+ion-item{
+  --background: var(--ion-background-color);
 }
 .titulo-comercio{
   font-style: normal;

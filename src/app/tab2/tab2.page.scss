@@ -1,5 +1,12 @@
 ion-grid{
   background: var(--ion-background-color);
+  height: 100%; 
+  display: flex; 
+  flex-flow: column;
+}
+ion-toolbar{
+  --background: var(--ion-background-color);
+  --opacity: 100%;
 }
 .title-card-date{
   font-style: normal;
@@ -33,6 +40,7 @@ ion-icon{
   padding: 0;
   color: var(--ion-text-color);
   border: 1px solid lightgray;
+  --background: var(--ion-background-color);
   .title-place-com {
     font-style: normal;
     font-weight: bold;
@@ -73,7 +81,6 @@ ion-icon{
     right: -7px;
   }
 }
-
 .button-citas{
   z-index: 1001;
 }

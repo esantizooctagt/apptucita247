@@ -10,6 +10,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent {
     private oneSignal: OneSignal,
     private iap: InAppBrowser,
     private ga: GoogleAnalytics,
-    private backgroundMode: BackgroundMode
+    private backgroundMode: BackgroundMode,
+    private themeDetection: ThemeDetection
   ) {
     this.initializeApp();
   }
@@ -51,6 +53,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
+      this.setTheme();
       this.backgroundMode.setDefaults({ silent: true});
       this.backgroundMode.enable();
       this.setupGA();
@@ -59,6 +62,21 @@ export class AppComponent {
           this.setupDeepLinks();
       }
     });
+  }
+
+  setTheme(){
+    this.themeDetection.isAvailable()
+      .then((res: ThemeDetectionResponse) => {
+        if(res.value) {
+          this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+            console.log("theme detection");
+            console.log(res);
+            document.body.classList.toggle('dark');
+          })
+          .catch((error: any) => console.error(error));
+        }
+      })
+      .catch((error: any) => console.error(error));
   }
 
   setupDeepLinks(){
@@ -75,7 +93,7 @@ export class AppComponent {
   }
 
   setupGA(){
-    this.ga.startTrackerWithId('259393465')
+    this.ga.startTrackerWithId('238400442')
       .then(() => {
         console.log('Google analytics is ready now');
         this.ga.trackView('Init App') 

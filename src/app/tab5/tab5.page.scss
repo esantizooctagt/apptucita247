@@ -74,4 +74,14 @@
     font-size: 14px;
     line-height: 17px;
     color: var(--ion-text-color);
-  }
+}
+ion-grid{
+    background: var(--ion-background-color);
+    height: 100%; 
+    display: flex; 
+    flex-flow: column;
+}
+ion-toolbar{
+    --background: var(--ion-background-color);
+    --opacity: 100%;
+}
