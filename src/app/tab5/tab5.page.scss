@@ -64,9 +64,15 @@
 }
 .title-message{
     padding-left:15px;
+    padding-right: 15px;
+    padding-top: 15px;
 }
 .center-text{
     text-align: center;
+}
+.center-btn{
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .label2-detalle-comercio{
     font-style: normal;
@@ -74,6 +80,9 @@
     font-size: 14px;
     line-height: 17px;
     color: var(--ion-text-color);
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 ion-grid{
     background: var(--ion-background-color);

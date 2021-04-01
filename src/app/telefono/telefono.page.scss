@@ -36,14 +36,54 @@
 }
 ion-select{
   font-size: 26px;
-}
-.right-align{
   text-align: right;
 }
-::ng-deep .alert-radio-label{
+.alert-telefono-label{
   font-size: unset;
   font-size: 22px !important;
 }
 .hidde-name{
   display: none;
+}
+.PRI{
+  background: url("../../assets/svg/pur.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
+}
+.GTM{
+  background: url("../../assets/svg/gua.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
+}
+.DEU{
+  background: url("../../assets/svg/ger.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
+}
+.DOM{
+  background: url("../../assets/svg/rep.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
+}
+.ESP{
+  background: url("../../assets/svg/spa.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
+}
+.USA{
+  background: url("../../assets/svg/usa.svg") left / contain no-repeat;
+  white-space: nowrap;
+  background-size: 40px;
+  display: flex;
+  margin-left:10px;
 }

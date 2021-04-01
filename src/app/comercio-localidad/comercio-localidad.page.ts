@@ -213,12 +213,12 @@ export class ComercioLocalidadPage implements OnInit {
     let hr = "";
     if (this.hourAppo.substring(6) == "PM"){
       if (+this.hourAppo.substring(0,2) == 12){
-        hr="12:00"
+        hr=this.hourAppo.substring(0,5);
       }else{
-        hr=(+this.hourAppo.substring(0,2)+12).toString()+":00"
+        hr=(+this.hourAppo.substring(0,2)+12).toString()+":"+this.hourAppo.substring(3,5);
       }
     }else{
-      hr=this.hourAppo.substring(0,5)
+      hr=this.hourAppo.substring(0,5);
     }
     let dataForm = {
       BusinessId: this.businessId,
@@ -254,12 +254,12 @@ export class ComercioLocalidadPage implements OnInit {
     let hr = "";
     if (this.hourAppo.substring(6) == "PM"){
       if (+this.hourAppo.substring(0,2) == 12){
-        hr="12:00"
+        hr=this.hourAppo.substring(0,5);
       }else{
-        hr=(+this.hourAppo.substring(0,2)+12).toString()+":00"
+        hr=(+this.hourAppo.substring(0,2)+12).toString()+":"+this.hourAppo.substring(3,5);
       }
     }else{
-      hr=this.hourAppo.substring(0,5)
+      hr=this.hourAppo.substring(0,5);
     }
     let dataForm = {
       BusinessId: this.businessId,
@@ -286,13 +286,7 @@ export class ComercioLocalidadPage implements OnInit {
     this.NewAppointment$ = this.global.PostAppointment(dataForm).pipe(
       map((res: any)=>{
         if (res.Code == 200){
-          // console.log("send mess page");
-          // this.messageService.sendMsg({"action":"sendMessage", "msg": JSON.stringify(res.Appointment)});
-          // this.messageService.sendMessage({"action":"sendMessage", "msg": JSON.stringify(res.Appointment)});
-          // setTimeout(() =>{
           this.router.navigate(['/tabs/tab2']);
-            // this.messageService.close();
-          // },1000);
           return res;
         }
         this.loading.dismissLoading();

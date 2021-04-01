@@ -10,14 +10,14 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="4">
-        <ion-select (click)="loadFlags(countryList)" mode="ios" [(ngModel)]="countryCode" class="right-align" (ionChange)="onChange($event)" cancelText="{{cerrar}}" okText="{{seleccionar}}">
+      <ion-col size="5">
+        <ion-select (click)="loadFlags(countryList)" mode="ios" [(ngModel)]="countryCode" [ngClass]="countryCode" (ionChange)="onChange($event)" cancelText="{{cerrar}}" okText="{{seleccionar}}">
           <ion-select-option *ngFor="let country of countryList" value="{{ country.Country }}">
             {{ country.Code  }}
           </ion-select-option>
         </ion-select>
       </ion-col>
-      <ion-col size="8">
+      <ion-col size="7">
         <ion-input class="input-telefono" appPhonenum [ccode]="countryCode" maxlength="17" autofocus="true"  [formControl]="phoneNumber" [placeholder]="phCountry" type="tel"></ion-input>
       </ion-col>
     </ion-row>

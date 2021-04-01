@@ -39,10 +39,12 @@ export class DondePage implements OnInit {
   }
 
   setWhere(parent: string, whereValue: any, whereLabel){
-     this.global.Where = (parent != '' ? parent + ',' + whereValue : whereValue + ',');
-     this.global.WhereLabel = whereLabel;
-     this.searchTerm = '';
-     this.router.navigateByUrl('/tabs/tab1');
+    this.global.Where = (parent != '' ? parent + ',' + whereValue : whereValue + ',');
+    this.global.WhereLabel = whereLabel;
+    console.log(this.global.Where);
+    console.log(this.global.WhereLabel);
+    this.searchTerm = '';
+    this.router.navigateByUrl('/tabs/tab1');
   }
 
   setWh(){
@@ -54,12 +56,43 @@ export class DondePage implements OnInit {
       this.global.GetCurrentCity(url)
         .subscribe(res => {
           this.loading.dismissLoading();
-          let city = res['results'][0]['address_components'][2]['long_name'];
-          let sector = res['results'][0]['address_components'][1]['long_name'];
-          let result = this.Places.filter(x => x.Name === sector.toUpperCase() && x.ParentName === city.toUpperCase());
+
+          let city = '';
+          let region = '';
+          let country = '';
+          let sector = '';
+          for (var i=0; i<res['results'][0].address_components.length; i++){
+            if (res['results'][0].address_components[i].types[1] == "sublocality") {
+              if (res['results'][0].address_components[i] != undefined || res['results'][0].address_components[i] != null){
+                sector = res['results'][0].address_components[i]['long_name'];
+              }
+            }
+            if (res['results'][0].address_components[i].types[0] == "locality") {
+              city = res['results'][0].address_components[i]['long_name'];
+            }
+            if (res['results'][0].address_components[i].types[0] == "administrative_area_level_1") {
+              region = res['results'][0].address_components[i]['long_name'];
+            }
+            if (res['results'][0].address_components[i].types[0] == "country") {
+              country = res['results'][0].address_components[i]['long_name'];
+            }
+          }
+          let result;
+          if (sector != '') {
+            result = this.Places.filter(x => x.Name === sector.toUpperCase() && x.ParentName === city.toUpperCase());
+          } else {
+            result = this.Places.filter(x => x.Name === city.toUpperCase());
+          }
           if (result.length >= 0){
-            this.global.Where = result[0].Parent + ',' + result[0].City;
-            this.global.WhereLabel = sector.toUpperCase();
+            if (result[0].Parent != ''){
+              this.global.Where = result[0].Parent + ',' + result[0].City;
+              this.global.WhereLabel = sector.toUpperCase();
+            } else {
+              this.global.Where = result[0].City + ',';
+              this.global.WhereLabel = city.toUpperCase();
+            }
+            console.log(this.global.Where);
+            console.log(this.global.WhereLabel);
             this.searchTerm = '';
             this.router.navigateByUrl('/tabs/tab1');
           }

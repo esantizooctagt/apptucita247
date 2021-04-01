@@ -58,7 +58,7 @@ export class TelefonoPage implements OnInit {
       let radios=document.getElementsByClassName('alert-radio-label');
       for (let index = 0; index <= radios.length-1; index++) {
           let element = radios[index];
-          element.innerHTML='<img class="country-image" style="width: 25px;height: 20px;margin-right: 20px;padding-top: 5px;" src="'+lstCountry[index].Flag+'" /><span>'+lstCountry[index].Name+'</span>'+element.innerHTML;
+          element.innerHTML='<img class="country-image" style="width: 25px;height: 20px;margin-right: 20px;padding-top: 5px;" src="'+lstCountry[index].Flag+'" /><span style="font-size:20px !important;">'+lstCountry[index].Name+' '+lstCountry[index].Code+'</span>';
         }
     }, 200);
   }
@@ -66,6 +66,7 @@ export class TelefonoPage implements OnInit {
   onChange($event){
     this.phCountry = this.countryList.filter(x=>x.Country==$event.target.value)[0]['PlaceHolder'];
     this.code = this.countryList.filter(x=>x.Country==$event.target.value)[0]['Code'];
+    this.form.patchValue({phoneNumber: ''});
   }
 
   ionViewWillEnter(){

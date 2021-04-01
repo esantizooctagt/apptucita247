@@ -8,87 +8,80 @@
 <ng-container *ngIf="CancelAppo$ | async"></ng-container>
 <ng-container *ngIf="NewAppointment$ | async"></ng-container>
 <ion-content [fullscreen]="true" *ngIf="conection == 0 && display != 0">
-  <ion-grid>
-    <ion-row>
-      <ng-container *ngIf="display == -1">
-      </ng-container>
-      <ion-text class="title-message" *ngIf="display == 1" translate>TIME_MESSAGE</ion-text>
-      <ion-card class="card-date" *ngFor="let appo of Appos$ | async">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-text>
-                <h4 class="title-place-com">{{appo.NameBusiness}}</h4>
-                <h4 class="date">{{appo.Address}}</h4>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12" *ngIf="appo.ProviderName != ''">
-              <ion-text>
-                <span class="date"><span class="title-bold" translate>PROVEEDOR</span>{{': '+appo.ProviderName}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12" *ngIf="appo.ServiceName != ''">
-              <ion-text>
-                <span class="date"><span class="title-bold" translate>SERVICIO</span>{{': '+appo.ServiceName}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text>
-                <span class="date"><span class="title-bold" translate>NOMBRE</span>{{': '+appo.Name}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text>
-                <span class="date"><span class="title-bold" translate>EN_NOMBRE_DE</span>{{': '+(appo.OnBehalf == 0 ? 'No': yesStr)}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text>
-                <span class="title-place-suc"><span class="title-bold" translate>PUERTA_</span>{{' '+appo.Door}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text>
-                <span class="title-place-suc"><span class="title-bold" translate>FECHA</span>{{': '+(appo.DateAppo.substring(0,10) | date:'MMM d, y')}}</span>
-              </ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text>
-                <span class="title-place-suc"><span class="title-bold" translate>HORA_</span>{{' '+(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+ ':00 PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':00 PM' : appo.DateAppo.substring(11, 13)+':00 AM'))}}</span>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="8" class="ion-text-start">
-              <ion-icon *ngIf="appo.Disability == 1" class="icon-meta" src="assets/svg/elder-tc.svg"></ion-icon>
-              <ion-icon *ngIf="appo.Disability == 3" class="icon-meta" src="assets/svg/handicap-tc.svg"></ion-icon>
-              <ion-icon *ngIf="appo.Disability == 2" class="icon-meta" src="assets/svg/pregnant-tc.svg"></ion-icon>
-              <ion-icon class="icon-meta" src="assets/svg/human-tc.svg"></ion-icon>
-              <ion-text>
-                x {{appo.PeopleQty}}
-              </ion-text>
-            </ion-col>
-            <ion-col size="4" class="ion-text-end">
-              <ion-button fill="clear" size="small" (click)="onCancel(appo)">
-                <ion-icon slot="icon-only" src="assets/svg/trash.svg"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
-      <ng-container *ngIf="display == 1">
-        <ion-col size="12" class="ion-no-padding">
-          <ion-button class="ion-no-margin" color="primary" expand="block" fill="solid" class="ion-text-uppercase" (click) = "saveAppos()" translate>TU_CITA</ion-button>
+  <ng-container *ngIf="display == -1"></ng-container>
+  <div class="title-message ion-text-left" *ngIf="display == 1" translate>TIME_MESSAGE</div>
+  <ion-card class="card-date" *ngFor="let appo of Appos$ | async">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text>
+            <h4 class="title-place-com">{{appo.NameBusiness}}</h4>
+            <h4 class="date">{{appo.Address}}</h4>
+          </ion-text>
         </ion-col>
-        <ion-col size="12" class="center-text">
-          <ion-label class="label2-detalle-comercio" translate>OPCION</ion-label>
+        <ion-col size="12" *ngIf="appo.ProviderName != ''">
+          <ion-text>
+            <span class="date"><span class="title-bold" translate>PROVEEDOR</span>{{': '+appo.ProviderName}}</span>
+          </ion-text>
         </ion-col>
-        <ion-col size="12" class="ion-no-padding">
-          <ion-button class="ion-no-margin" color="secondary" expand="block" fill="solid" class="ion-text-uppercase" [routerLink]="['/tabs/tab1']" translate>MAS_SERVICIOS</ion-button>
+        <ion-col size="12" *ngIf="appo.ServiceName != ''">
+          <ion-text>
+            <span class="date"><span class="title-bold" translate>SERVICIO</span>{{': '+appo.ServiceName}}</span>
+          </ion-text>
         </ion-col>
-      </ng-container>
-    </ion-row>
-  </ion-grid>
+        <ion-col size="12">
+          <ion-text>
+            <span class="date"><span class="title-bold" translate>NOMBRE</span>{{': '+appo.Name}}</span>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text>
+            <span class="date"><span class="title-bold" translate>EN_NOMBRE_DE</span>{{': '+(appo.OnBehalf == 0 ? 'No': yesStr)}}</span>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text>
+            <span class="title-place-suc"><span class="title-bold" translate>PUERTA_</span>{{' '+appo.Door}}</span>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text>
+            <span class="title-place-suc"><span class="title-bold" translate>FECHA</span>{{': '+(appo.DateAppo.substring(0,10) | date:'MMM d, y')}}</span>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text>
+            <span class="title-place-suc"><span class="title-bold" translate>HORA_</span>{{' '+(+appo.DateAppo.substring(11, 13) > 12 ? (+appo.DateAppo.substring(11, 13)-12 | number: '2.')+ ':'+appo.DateAppo.substring(14, 16)+' PM' : (+appo.DateAppo.substring(11, 13) == 12 ?  appo.DateAppo.substring(11, 13)+':'+appo.DateAppo.substring(14, 16)+' PM' : appo.DateAppo.substring(11, 13)+':'+appo.DateAppo.substring(14, 16)+' AM'))}}</span>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8" class="ion-text-start">
+          <ion-icon *ngIf="appo.Disability == 1" class="icon-meta" src="assets/svg/elder-tc.svg"></ion-icon>
+          <ion-icon *ngIf="appo.Disability == 3" class="icon-meta" src="assets/svg/handicap-tc.svg"></ion-icon>
+          <ion-icon *ngIf="appo.Disability == 2" class="icon-meta" src="assets/svg/pregnant-tc.svg"></ion-icon>
+          <ion-icon class="icon-meta" src="assets/svg/human-tc.svg"></ion-icon>
+          <ion-text>
+            x {{appo.PeopleQty}}
+          </ion-text>
+        </ion-col>
+        <ion-col size="4" class="ion-text-end">
+          <ion-button fill="clear" size="small" (click)="onCancel(appo)">
+            <ion-icon slot="icon-only" src="assets/svg/trash.svg"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ng-container *ngIf="display == 1">
+    <ion-col size="12" class="ion-no-padding">
+      <ion-button class="ion-no-margin" color="primary" expand="block" fill="solid" class="ion-text-uppercase center-btn" (click) = "saveAppos()" translate>TU_CITA</ion-button>
+    </ion-col>
+    <div class="label2-detalle-comercio" translate>OPCION</div>
+    <ion-col size="12" class="ion-no-padding">
+      <ion-button class="ion-no-margin" color="secondary" expand="block" fill="solid" class="ion-text-uppercase center-btn" [routerLink]="['/tabs/tab1']" translate>MAS_SERVICIOS</ion-button>
+    </ion-col>
+  </ng-container>
 </ion-content>
 <ion-content [fullscreen]="true" color="light" *ngIf="conection == 0 && display == 0">
   <ion-grid>
