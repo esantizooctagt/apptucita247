@@ -82,7 +82,7 @@ export class AppComponent {
         })
         .catch((error: any) => console.error(error));
     } else {
-      if (this.global.GetMode()){
+      if (this.global.GetMode().toString() == "true"){
         document.body.classList.toggle('dark');
       }
     }
