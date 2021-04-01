@@ -107,12 +107,9 @@ export class Tab4Page implements OnInit {
   }
 
   setMode(event){
-    console.log(this.dark);
-    this.global.SetMode(this.dark);
-    if (this.dark){
+    if (this.dark.toString() != this.global.GetMode().toString()){
+      this.global.SetMode(this.dark);
       document.body.classList.toggle('dark');
-    } else {
-      document.body.classList.toggle('');
     }
   }
 

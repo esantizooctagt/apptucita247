@@ -64,7 +64,13 @@ export class CategoriasDetallePage implements OnInit {
   getSubCategories() {
     this.global.GetSubCategories(this.categoryId)
         .subscribe((content: any) => {
-          this.SubCateoriesArray = content.filter(x=>x.SubCategoryId.substring(0,3)!='CAT').sort((a, b) => (a.Name>b.Name)?1:-1);
+          var collator = new Intl.Collator(undefined, {
+            numeric: true,
+            sensitivity: 'base'
+          });
+          this.SubCateoriesArray = content.filter(x=>x.SubCategoryId.substring(0,3)!='CAT').sort(function(a, b) {
+            return collator.compare(a.Name, b.Name)
+          });
           let valName = content.filter(x=>x.SubCategoryId.substring(0,3)=='CAT');
           if (valName != undefined){
             this.categoryName = valName[0]['Name'];

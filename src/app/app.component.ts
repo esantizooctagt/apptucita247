@@ -70,7 +70,6 @@ export class AppComponent {
         .then((res: ThemeDetectionResponse) => {
           if(res.value) {
             this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
-              console.log(res);
               if (res.value){
                 document.body.classList.toggle('dark');
                 this.global.SetMode(true);
@@ -85,8 +84,6 @@ export class AppComponent {
     } else {
       if (this.global.GetMode()){
         document.body.classList.toggle('dark');
-      } else {
-        document.body.classList.toggle('');
       }
     }
   }

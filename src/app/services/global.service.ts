@@ -45,7 +45,6 @@ export class GlobalService {
   }
 
   GetMode(){
-    console.log(window.localStorage.darkMode);
     return window.localStorage.darkMode;
   }
 
