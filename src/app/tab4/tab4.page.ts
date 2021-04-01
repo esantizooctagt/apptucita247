@@ -34,7 +34,7 @@ export class Tab4Page implements OnInit {
   disability: string = '';
   newImage: string = '';
   dispEnv: number = -1;
-
+  dark: boolean;
   seleccione: string;
 
   fileName: string= '';
@@ -96,13 +96,24 @@ export class Tab4Page implements OnInit {
       this.DOB = (this.Customer.DOB != '' ? this.Customer.DOB.substring(0,4)+'-'+this.Customer.DOB.substring(5,7)+'-'+this.Customer.DOB.substring(8,10) : '');
       this.gender = this.Customer.Gender;
       this.preferences = this.Customer.Preferences.toString();
-      this.disability = this.Customer.Disability.toString();
+      this.disability = this.Customer.Disability.toString(); 
     }
+    this.dark = this.global.GetMode();
 
     this.plt.ready().then(() => {
       this.loadStoredImages();
     });
     this.translateTerms();
+  }
+
+  setMode(event){
+    console.log(this.dark);
+    this.global.SetMode(this.dark);
+    if (this.dark){
+      document.body.classList.toggle('dark');
+    } else {
+      document.body.classList.toggle('');
+    }
   }
 
   onSubmit(){

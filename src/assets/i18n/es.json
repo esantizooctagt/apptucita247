@@ -130,5 +130,6 @@
   "ERROR": "Ocurrió un error, intente de nuevo",
   "CHECKOUTPROC": "Pendiente de Salida",
   "CODIGO_PAIS": "Código de País",
-  "CURR_LOC": "CERCA DE MI"
+  "CURR_LOC": "CERCA DE MI",
+  "DARKMODE": "Modo oscuro"
 }

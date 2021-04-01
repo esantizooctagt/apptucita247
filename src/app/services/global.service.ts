@@ -40,6 +40,15 @@ export class GlobalService {
     private http: HttpClient
   ) { }
 
+  SetMode(dark){
+    window.localStorage.darkMode = dark;
+  }
+
+  GetMode(){
+    console.log(window.localStorage.darkMode);
+    return window.localStorage.darkMode;
+  }
+
   SetSessionInfo(customer: any) {
     this.Customer = customer;
     window.localStorage.customer = JSON.stringify(this.Customer);

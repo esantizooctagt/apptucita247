@@ -65,19 +65,30 @@ export class AppComponent {
   }
 
   setTheme(){
-    this.themeDetection.isAvailable()
-      .then((res: ThemeDetectionResponse) => {
-        if(res.value) {
-          this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
-            console.log(res);
-            if (res.value){
-              document.body.classList.toggle('dark');
-            }
-          })
-          .catch((error: any) => console.error(error));
-        }
-      })
-      .catch((error: any) => console.error(error));
+    if (this.global.GetMode() == undefined){
+      this.themeDetection.isAvailable()
+        .then((res: ThemeDetectionResponse) => {
+          if(res.value) {
+            this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+              console.log(res);
+              if (res.value){
+                document.body.classList.toggle('dark');
+                this.global.SetMode(true);
+              } else {
+                this.global.SetMode(false);
+              }
+            })
+            .catch((error: any) => console.error(error));
+          }
+        })
+        .catch((error: any) => console.error(error));
+    } else {
+      if (this.global.GetMode()){
+        document.body.classList.toggle('dark');
+      } else {
+        document.body.classList.toggle('');
+      }
+    }
   }
 
   setupDeepLinks(){
