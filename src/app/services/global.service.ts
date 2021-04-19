@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 export class GlobalService {
 
   RemoteVersionStatus;
-  LocalVersion = 100;
+  LocalVersion = 129;
   NewSession;
   ApiURL = 'https://apimob.tucita247.com/';
   BucketPath = 'https://tucita247.s3.amazonaws.com';

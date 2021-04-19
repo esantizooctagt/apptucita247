@@ -157,9 +157,9 @@ export class AppComponent {
 
   openUrls(){
       if (this.platform.is('ios')) {
-          this.iap.create('https://www.apple.com/la/ios/app-store/');
+          this.iap.create('https://apps.apple.com/gt/app/tu-cita-24-7/id1524650476?l=en');
       } else if (this.platform.is('android')) {
-          this.iap.create('https://play.google.com/store');
+          this.iap.create('https://play.google.com/store/apps/details?id=com.tucita247.app');
       }
   }
 }
