@@ -11,6 +11,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
+import { Market } from '@ionic-native/market/ngx';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent {
     private iap: InAppBrowser,
     private ga: GoogleAnalytics,
     private backgroundMode: BackgroundMode,
-    private themeDetection: ThemeDetection
+    private themeDetection: ThemeDetection,
+    private market: Market
   ) {
     this.initializeApp();
   }
@@ -39,19 +41,20 @@ export class AppComponent {
     this.global.PlayerId = "";
     this.setupLanguage();
     this.global.GetAdmPhones()
-      .subscribe(res => {
-        this.global.AdmPhones = res;
-    });
-    // console.log('Setup version');
-    // this.global.GetLastVersion()
-    //   .subscribe(content => {
-    //     if (content['Code'] == 200) {
-    //       console.log('Validate version');
-    //       if (content['Version'] != this.global.LocalVersion) {
-    //         this.openUrls();
-    //       }
-    //     }
-    //   });
+        .subscribe(res => {
+          this.global.AdmPhones = res;
+      });
+    console.log('Setup version');
+    this.global.GetLastVersion()
+      .subscribe(content => {
+        if (content['Code'] == 200) {
+          console.log('Validate version');
+          if (content['Version'] != this.global.LocalVersion) {
+            this.openUrls();
+            return;
+          }
+        }
+      });
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
@@ -68,9 +71,7 @@ export class AppComponent {
 
   setTheme(){
     console.log('Search theme detection');
-    console.log(this.global.GetMode());
     if (this.global.GetMode() == undefined){
-      console.log("entro get mode");
       this.themeDetection.isAvailable()
         .then((res: ThemeDetectionResponse) => {
           if(res.value) {
@@ -127,13 +128,11 @@ export class AppComponent {
     } else {
       this.global.Language = 'en';
     }
-    console.log('Setup language');
     let user = this.global.GetCustomerInfo();
     if (user != undefined){
       if (user.Language != this.global.Language){
         this.global.SetLanguage(user.Mobile, user.CustomerId, this.global.Language)
           .subscribe((content: any) => {
-            console.log('language ready now');
             if (content.Code == 200){
               user.Language = this.global.Language;
               window.localStorage.customer = JSON.stringify(user);
@@ -166,9 +165,13 @@ export class AppComponent {
 
   openUrls(){
       if (this.platform.is('ios')) {
-          this.iap.create('https://apps.apple.com/gt/app/tu-cita-24-7/id1524650476?l=en');
+        this.market.open('id1524650476');
+        // window.open('itms-apps://itunes.apple.com/app/id1524650476'); 
+        //https://apps.apple.com/gt/app/tu-cita-24-7/id1524650476?l=en');
       } else if (this.platform.is('android')) {
-          this.iap.create('https://play.google.com/store/apps/details?id=com.tucita247.app');
+        this.market.open('com.tucita247.app');
+        // window.open('market://details?id=com.tucita247.app'); 
+        //https://play.google.com/store/apps/details?id=com.tucita247.app');
       }
   }
 }
