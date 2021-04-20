@@ -42,14 +42,16 @@ export class AppComponent {
       .subscribe(res => {
         this.global.AdmPhones = res;
     });
-    this.global.GetLastVersion()
-      .subscribe(content => {
-        if (content['Code'] == 200) {
-          if (content['Version'] != this.global.LocalVersion) {
-            this.openUrls();
-          }
-        }
-      });
+    // console.log('Setup version');
+    // this.global.GetLastVersion()
+    //   .subscribe(content => {
+    //     if (content['Code'] == 200) {
+    //       console.log('Validate version');
+    //       if (content['Version'] != this.global.LocalVersion) {
+    //         this.openUrls();
+    //       }
+    //     }
+    //   });
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
@@ -65,11 +67,15 @@ export class AppComponent {
   }
 
   setTheme(){
+    console.log('Search theme detection');
+    console.log(this.global.GetMode());
     if (this.global.GetMode() == undefined){
+      console.log("entro get mode");
       this.themeDetection.isAvailable()
         .then((res: ThemeDetectionResponse) => {
           if(res.value) {
             this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+              console.log('Theme detection is ready now');
               if (res.value){
                 document.body.classList.toggle('dark');
                 this.global.SetMode(true);
@@ -121,11 +127,13 @@ export class AppComponent {
     } else {
       this.global.Language = 'en';
     }
+    console.log('Setup language');
     let user = this.global.GetCustomerInfo();
     if (user != undefined){
       if (user.Language != this.global.Language){
         this.global.SetLanguage(user.Mobile, user.CustomerId, this.global.Language)
           .subscribe((content: any) => {
+            console.log('language ready now');
             if (content.Code == 200){
               user.Language = this.global.Language;
               window.localStorage.customer = JSON.stringify(user);
@@ -138,6 +146,7 @@ export class AppComponent {
 
   setupOneSignal(){
     this.oneSignal.startInit('476a02bb-38ed-43e2-bc7b-1ded4d42597f', '325907828603');
+    console.log('Setup OneSignal');
     // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
     this.oneSignal.handleNotificationReceived().subscribe(() => {
