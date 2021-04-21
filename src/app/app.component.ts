@@ -11,7 +11,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
-import { Market } from '@ionic-native/market/ngx';
 
 @Component({
   selector: 'app-root',
@@ -31,8 +30,7 @@ export class AppComponent {
     private iap: InAppBrowser,
     private ga: GoogleAnalytics,
     private backgroundMode: BackgroundMode,
-    private themeDetection: ThemeDetection,
-    private market: Market
+    private themeDetection: ThemeDetection
   ) {
     this.initializeApp();
   }
@@ -51,7 +49,7 @@ export class AppComponent {
           console.log('Validate version');
           if (content['Version'] != this.global.LocalVersion) {
             this.openUrls();
-            return;
+            window.close();
           }
         }
       });
@@ -165,13 +163,9 @@ export class AppComponent {
 
   openUrls(){
       if (this.platform.is('ios')) {
-        this.market.open('id1524650476');
-        // window.open('itms-apps://itunes.apple.com/app/id1524650476'); 
-        //https://apps.apple.com/gt/app/tu-cita-24-7/id1524650476?l=en');
+        window.open('itms-apps://itunes.apple.com/app/id1524650476','_system'); 
       } else if (this.platform.is('android')) {
-        this.market.open('com.tucita247.app');
-        // window.open('market://details?id=com.tucita247.app'); 
-        //https://play.google.com/store/apps/details?id=com.tucita247.app');
+        window.open('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system'); 
       }
   }
 }
