@@ -18,6 +18,9 @@ import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-dete
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  lastTimeBackPress = 0;
+  timePerionToExit = 2000;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -31,28 +34,15 @@ export class AppComponent {
     private ga: GoogleAnalytics,
     private backgroundMode: BackgroundMode,
     private themeDetection: ThemeDetection
-  ) {
+  ) { 
     this.initializeApp();
   }
 
   initializeApp() {
     this.global.PlayerId = "";
     this.setupLanguage();
-    this.global.GetAdmPhones()
-        .subscribe(res => {
-          this.global.AdmPhones = res;
-      });
-    console.log('Setup version');
-    this.global.GetLastVersion()
-      .subscribe(content => {
-        if (content['Code'] == 200) {
-          console.log('Validate version');
-          if (content['Version'] != this.global.LocalVersion) {
-            this.openUrls();
-            window.close();
-          }
-        }
-      });
+    this.getAdmPhones();
+    this.checkVersion();
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
@@ -104,6 +94,36 @@ export class AppComponent {
     }, (nomatch) => {
       console.log('Got a deeplink that didn\'t match ' + nomatch.toString());
     });
+  }
+
+  getAdmPhones(){
+    this.global.GetAdmPhones()
+        .subscribe(res => {
+          this.global.AdmPhones = res;
+      });
+  }
+
+  checkVersion(){
+    console.log('Setup version');
+    
+    this.global.GetLastVersion()
+      .subscribe(content => {
+        if (content['Code'] == 200) {
+          if (content['Version'].toString() != this.global.LocalVersion.toString()) {
+            if (this.platform.is('android')) {
+              console.log("execute window.open android");
+              this.iap.create('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system');
+              // window.open('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system'); 
+            } else {
+              console.log("execute window.open ios");
+              this.iap.create('itms-apps://itunes.apple.com/app/id1524650476','_system');
+              // window.open('itms-apps://itunes.apple.com/app/id1524650476','_system'); 
+            }
+            console.log("exit app after store");
+            navigator['app'].exitApp();     //Exit the application
+          }
+        }
+      });
   }
 
   setupGA(){
@@ -161,11 +181,4 @@ export class AppComponent {
     });
   }
 
-  openUrls(){
-      if (this.platform.is('ios')) {
-        window.open('itms-apps://itunes.apple.com/app/id1524650476','_system'); 
-      } else if (this.platform.is('android')) {
-        window.open('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system'); 
-      }
-  }
 }
