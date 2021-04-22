@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 const STORAGE_KEY = 'tucita247_profile';
 
@@ -63,7 +64,8 @@ export class Tab4Page implements OnInit {
     private plt: Platform, 
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef, 
-    private filePath: FilePath
+    private filePath: FilePath,
+    private ga: GoogleAnalytics
   ) {}
 
   avatarForm = this.fb.group({
@@ -76,6 +78,11 @@ export class Tab4Page implements OnInit {
   ionViewWillEnter(){
     this.Customer = this.global.Customer;
     this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
+    this.ga.trackView('Profile Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
+    
     if (this.dispEnv > -1){
       this.global.GetPhoneInfo(this.global.Customer.Mobile).subscribe(content => {
         this.global.Customer = content['Customer'];

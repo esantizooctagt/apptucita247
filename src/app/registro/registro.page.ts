@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-registro',
@@ -28,7 +29,9 @@ export class RegistroPage implements OnInit {
               private navCtrl: NavController,
               private route: ActivatedRoute,
               private translate: TranslateService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private ga: GoogleAnalytics
+  ) { }
 
   ngOnInit() {
     // this.translateTerms();
@@ -37,6 +40,10 @@ export class RegistroPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Registro Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   RegisterNewUser() {

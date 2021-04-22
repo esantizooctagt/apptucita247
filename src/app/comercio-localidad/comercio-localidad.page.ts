@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 // import { MessageService } from '../services/message.service';
 
 @Component({
@@ -81,7 +82,8 @@ export class ComercioLocalidadPage implements OnInit {
     public global: GlobalService,
     private loading: LoadingService,
     public toastController: ToastController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
     // private messageService: MessageService
   ) {}
 
@@ -92,6 +94,10 @@ export class ComercioLocalidadPage implements OnInit {
 
   ionViewWillEnter(){
     // this.messageService.connect();
+    this.ga.trackView('Hacer Cita Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
 
     let dateMin = new Date();
     let dateMax = new Date(new Date().setMonth(new Date().getMonth() + 6));

@@ -4,6 +4,7 @@ import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-verifemail',
@@ -29,7 +30,8 @@ export class VerifemailPage implements OnInit {
     private navCtrl: NavController,
     private loading: LoadingService,
     private route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,10 @@ export class VerifemailPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Verificar Email Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   SendCode(){

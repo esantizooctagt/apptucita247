@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {GlobalService} from '../services/global.service';
 import {ParamsService} from '../services/params.service';
 import {TranslateService} from '@ngx-translate/core';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-categorias',
@@ -10,9 +11,12 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class CategoriasPage implements OnInit {
   categos: any[]=[];
-  constructor(public global: GlobalService,
-              private params: ParamsService,
-              private translate: TranslateService) { }
+  constructor(
+    public global: GlobalService,
+    private params: ParamsService,
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
+  ) { }
 
   ngOnInit() {
     this.global.Categories.forEach(val => this.categos.push(Object.assign({}, val)));
@@ -22,6 +26,10 @@ export class CategoriasPage implements OnInit {
   
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Categoria Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   onCategory(CategoryId: string, CategoryName: string){

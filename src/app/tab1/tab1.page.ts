@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from '../services/message.service';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -44,7 +45,8 @@ export class Tab1Page implements OnInit {
     private loading: LoadingService,
     private ws: MessageService,
     public backgroundMode : BackgroundMode,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
@@ -56,6 +58,10 @@ export class Tab1Page implements OnInit {
     this.dispEnv = this.global.AdmPhones.indexOf(this.global.Customer.Mobile);
     this.translateTerms();
     this.loadData();
+    this.ga.trackView('Main Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   loadData(){

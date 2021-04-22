@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ParamsService } from '../services/params.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MonitorService } from '../services/monitor.service';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-mensajes',
@@ -35,7 +36,8 @@ export class MensajesPage implements OnInit {
     public datepipe: DatePipe,
     private translate: TranslateService,
     private navController: NavController,
-    private monitorService: MonitorService
+    private monitorService: MonitorService,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
@@ -57,6 +59,11 @@ export class MensajesPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Mensajes Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
+
     this.result$ = this.monitorService.syncMessage.pipe(
       map((message: any) => {
         this.syncData(message);

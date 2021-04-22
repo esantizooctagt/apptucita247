@@ -3,6 +3,7 @@ import { GlobalService } from '../services/global.service';
 import { ParamsService } from '../services/params.service';
 import { NgxQrcodeElementTypes } from '@techiediaries/ngx-qrcode';
 import {TranslateService} from "@ngx-translate/core";
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-cita',
@@ -19,7 +20,8 @@ export class CitaPage implements OnInit {
   constructor(
     public global: GlobalService,
     private params: ParamsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
@@ -28,6 +30,10 @@ export class CitaPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Info cita Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   translateTerms() {

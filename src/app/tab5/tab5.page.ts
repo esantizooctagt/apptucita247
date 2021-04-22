@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { LoadingService } from "../services/loading.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Router } from '@angular/router';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-tab5',
@@ -35,6 +36,7 @@ export class Tab5Page implements OnInit {
     public datepipe: DatePipe,
     public loading: LoadingService,
     private translate: TranslateService,
+    private ga: GoogleAnalytics
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,10 @@ export class Tab5Page implements OnInit {
     this.yesStr = (lang == 'en' ? 'Yes' : 'Si'); 
     this.loadAppointments();
     this.translateTerms();
+    this.ga.trackView('On hold Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   loadAppointments(){

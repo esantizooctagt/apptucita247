@@ -4,6 +4,7 @@ import { ParamsService } from '../services/params.service';
 import { GlobalService } from '../services/global.service';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-categorias-detalle',
@@ -13,11 +14,14 @@ import { TranslateService } from '@ngx-translate/core';
 export class CategoriasDetallePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(public actionSheetController: ActionSheetController,
-              public params: ParamsService,
-              public global: GlobalService,
-              public loading: LoadingService,
-              private translate: TranslateService) { }
+  constructor(
+    public actionSheetController: ActionSheetController,
+    public params: ParamsService,
+    public global: GlobalService,
+    public loading: LoadingService,
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
+  ) { }
 
   Business: any[]=[];
   businessId = '_';
@@ -59,6 +63,10 @@ export class CategoriasDetallePage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Categoria Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));  
   }
 
   getSubCategories() {

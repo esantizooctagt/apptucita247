@@ -15,6 +15,7 @@ import { LoadingService } from '../services/loading.service';
 import { Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from "@ngx-translate/core";
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-comercio',
@@ -36,7 +37,8 @@ export class ComercioPage implements OnInit {
       private route: ActivatedRoute,
       private loading: LoadingService,
       private router: Router,
-      private translate: TranslateService
+      private translate: TranslateService,
+      private ga: GoogleAnalytics
   ) {}
 
   ngOnInit(){
@@ -46,6 +48,11 @@ export class ComercioPage implements OnInit {
   ionViewWillEnter(){
     this.type = 'lista';
     this.translateTerms();
+    this.ga.trackView('Comercios Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
+    
     if (this.route.snapshot.paramMap.get('businessId') != null){
       this.businessId = this.route.snapshot.paramMap.get('businessId');
     } else {

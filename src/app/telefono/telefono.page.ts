@@ -9,6 +9,7 @@ import {
 import {GlobalService} from '../services/global.service';
 import {LoadingService} from '../services/loading.service';
 import {TranslateService} from '@ngx-translate/core';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-telefono',
@@ -48,7 +49,9 @@ export class TelefonoPage implements OnInit {
     public global: GlobalService,
     private navCtrl: NavController,
     private loading: LoadingService,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
+  ) { }
   
   ngOnInit() {
   }
@@ -71,6 +74,10 @@ export class TelefonoPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Telefono Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   verifyPhoneNumber(){

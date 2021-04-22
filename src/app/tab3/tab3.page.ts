@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ParamsService } from '../services/params.service';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-tab3',
@@ -28,6 +29,7 @@ export class Tab3Page implements OnInit {
     public loading: LoadingService,
     private params: ParamsService,
     private translate: TranslateService,
+    private ga: GoogleAnalytics
   ) {}
 
   ngOnInit() {
@@ -37,6 +39,10 @@ export class Tab3Page implements OnInit {
     this.lan = this.global.Language;
     this.translateTerms();
     this.GetFavorites();
+    this.ga.trackView('Favoritos Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   onParams(item: any, bus: any){

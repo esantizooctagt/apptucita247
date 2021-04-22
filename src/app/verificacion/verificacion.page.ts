@@ -4,6 +4,7 @@ import {IonInput, LoadingController, NavController, ToastController} from '@ioni
 import {TranslateService} from "@ngx-translate/core";
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-verificacion',
@@ -36,7 +37,9 @@ export class VerificacionPage implements OnInit {
     public toast: ToastController,
     private route: ActivatedRoute,
     private navCtrl: NavController,
-    private translate: TranslateService) {}
+    private translate: TranslateService,
+    private ga: GoogleAnalytics
+  ) {}
 
   ngOnInit() {
     // this.translateTerms();
@@ -47,6 +50,10 @@ export class VerificacionPage implements OnInit {
 
   ionViewWillEnter(){
     this.translateTerms();
+    this.ga.trackView('Verificar Phone Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
   }
 
   ReVerifyPhoneNumber(){

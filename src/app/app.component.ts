@@ -110,14 +110,12 @@ export class AppComponent {
       .subscribe(content => {
         if (content['Code'] == 200) {
           if (content['Version'].toString() != this.global.LocalVersion.toString()) {
-            if (this.platform.is('android')) {
-              console.log("execute window.open android");
-              this.iap.create('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system');
-              // window.open('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system'); 
-            } else {
+            if (this.platform.is('ipad') || this.platform.is('iphone') || this.platform.is('ios')) {
               console.log("execute window.open ios");
               this.iap.create('itms-apps://itunes.apple.com/app/id1524650476','_system');
-              // window.open('itms-apps://itunes.apple.com/app/id1524650476','_system'); 
+            } else {
+              console.log("execute window.open android");
+              this.iap.create('https://play.google.com/store/apps/details?id=com.tucita247.app&hl=en','_system');
             }
             console.log("exit app after store");
             navigator['app'].exitApp();     //Exit the application
@@ -127,10 +125,11 @@ export class AppComponent {
   }
 
   setupGA(){
-    this.ga.startTrackerWithId('238400442')
+    this.ga.startTrackerWithId('UA-171453178-1')
       .then(() => {
         console.log('Google analytics is ready now');
-        this.ga.trackView('Init App') 
+        this.ga.trackView('Home Page');
+        console.log(this.ga);
        }).catch(
         error => console.log('Google Analytics Error: ' + error)
       );

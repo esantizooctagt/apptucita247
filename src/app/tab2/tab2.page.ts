@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from "@ngx-translate/core";
 import { MonitorService } from '../services/monitor.service';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -56,7 +57,8 @@ export class Tab2Page implements OnInit {
     private translate: TranslateService,
     private monitorService: MonitorService,
     private navController: NavController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private ga: GoogleAnalytics
   ) {}
 
   ngOnInit() {
@@ -306,6 +308,10 @@ export class Tab2Page implements OnInit {
     this.loadAppointments(0);
     this.externalLoad = 0;
     this.translateTerms();
+    this.ga.trackView('Citas Page').then(res => {
+      console.log("Registro Page");
+    })
+    .catch(e => console.log(e));
 
     // this.ws.connect();
     this.result$ = this.monitorService.syncMessage.pipe(
