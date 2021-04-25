@@ -130,5 +130,6 @@
   "CHECKOUTPROC": "Checkout Pending",
   "CODIGO_PAIS": "Country Code",
   "CURR_LOC": "NEAR ME",
-  "DARKMODE": "Dark mode"
+  "DARKMODE": "Dark mode",
+  "NOTANSWER": "Doesn't want to answer"
 }
