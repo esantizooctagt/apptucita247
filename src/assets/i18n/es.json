@@ -49,8 +49,8 @@
   "LISTA": "Lista",
   "MAPA": "Mapa",
   "NUMERO_DE_PERSONAS": "Número de visitantes",
-  "EN_NOMBRE_DE": "A nombre de",
-  "EN_NOMBRE_DE_": "A nombre de:",
+  "EN_NOMBRE_DE": "Nombre",
+  "EN_NOMBRE_DE_": "Nombre:",
   "PUERTA": "Entrada",
   "PUERTA_": "Entrada:",
   "PROVEEDOR_SERVICIO": "Proveedor de Servicio",
@@ -132,5 +132,8 @@
   "CODIGO_PAIS": "Código de País",
   "CURR_LOC": "CERCA DE MI",
   "DARKMODE": "Modo oscuro",
-  "NOTANSWER": "Prefiero no contestar"
+  "NOTANSWER": "Prefiero no contestar",
+  "COMENTARIO": "Comentario",
+  "COMENTARIO_": "Comentario:",
+  "PERSONALIZADO": "Personalizado"
 }

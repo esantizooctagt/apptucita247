@@ -555,6 +555,7 @@ export class Tab2Page implements OnInit {
       Door: appo.Door,
       UserName: appo.Name,
       OnBehalf: appo.OnBehalf,
+      Comments: appo.Comments,
       ServName: appo.ServName,
       ProvName: appo.ProvName,
       TimeZone: appo.TimeZone

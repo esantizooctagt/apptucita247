@@ -31,6 +31,7 @@ export class Tab4Page implements OnInit {
   email: string = '';
   DOB: string = '';
   gender: string = '';
+  customGender: string = '';
   preferences: string = '';
   disability: string = '';
   newImage: string = '';
@@ -93,6 +94,9 @@ export class Tab4Page implements OnInit {
         this.email = this.Customer.Email;
         this.DOB = (this.Customer.DOB != '' ? this.Customer.DOB.substring(0,4)+'-'+this.Customer.DOB.substring(5,7)+'-'+this.Customer.DOB.substring(8,10) : '');
         this.gender = this.Customer.Gender;
+        if (this.gender == 'C'){
+          this.customGender = this.Customer.Custom;
+        }
         this.preferences = this.Customer.Preferences.toString();
         this.disability = this.Customer.Disability.toString();
       });
@@ -102,6 +106,9 @@ export class Tab4Page implements OnInit {
       this.email = this.Customer.Email;
       this.DOB = (this.Customer.DOB != '' ? this.Customer.DOB.substring(0,4)+'-'+this.Customer.DOB.substring(5,7)+'-'+this.Customer.DOB.substring(8,10) : '');
       this.gender = this.Customer.Gender;
+      if (this.gender == 'C'){
+        this.customGender = this.Customer.Custom;
+      }
       this.preferences = this.Customer.Preferences.toString();
       this.disability = this.Customer.Disability.toString(); 
     }
@@ -126,7 +133,7 @@ export class Tab4Page implements OnInit {
   onSubmit(){
     let dobShort = (this.DOB != '' ? this.DOB.substring(0,4) + '-' + this.DOB.substring(5,7) + '-' + this.DOB.substring(8,10) : '');
     this.loading.presentLoading('Cargando Información...');
-    this.Profile$ = this.global.UpdateProfile(this.name, this.gender, this.email, dobShort, this.preferences, this.disability).pipe(
+    this.Profile$ = this.global.UpdateProfile(this.name, this.gender, this.email, dobShort, this.preferences, this.disability, this.customGender).pipe(
       map(async (res: any) => {
         if (res.Code == 200){
           let dataForm = {
@@ -135,6 +142,7 @@ export class Tab4Page implements OnInit {
             Disability: this.disability,
             Email: this.email,
             Gender: this.gender,
+            Custom: this.customGender,
             Mobile: this.mobile,
             Name: this.name,
             Preferences: this.preferences,

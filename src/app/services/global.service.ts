@@ -264,7 +264,7 @@ export class GlobalService {
       map(results => results)
     );
   }
-  UpdateProfile(name: string, gender: string, email: string, birthDate: string, preferences: string, disability: string){
+  UpdateProfile(name: string, gender: string, email: string, birthDate: string, preferences: string, disability: string, custom: string){
     let mobile;
     let customerId;
     mobile = this.Customer.Mobile;
@@ -277,7 +277,8 @@ export class GlobalService {
       Email: email,
       DOB: birthDate,
       Preferences: preferences,
-      Disability: disability
+      Disability: disability,
+      Custom: custom
     };
     return this.http.put(this.ApiURL + 'mobile/profile/' + mobile + '/' + customerId, body, this.HttpOptions).pipe(
       map(results => results)

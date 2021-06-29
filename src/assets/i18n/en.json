@@ -48,8 +48,8 @@
   "LISTA": "List",
   "MAPA": "Map",
   "NUMERO_DE_PERSONAS": "Number of guests",
-  "EN_NOMBRE_DE": "On behalf of",
-  "EN_NOMBRE_DE_": "On behalf of:",
+  "EN_NOMBRE_DE": "Name",
+  "EN_NOMBRE_DE_": "Name:",
   "PUERTA": "Entrance",
   "PUERTA_": "Entrance:",
   "PROVEEDOR_SERVICIO": "Service Provider",
@@ -131,5 +131,8 @@
   "CODIGO_PAIS": "Country Code",
   "CURR_LOC": "NEAR ME",
   "DARKMODE": "Dark mode",
-  "NOTANSWER": "Doesn't want to answer"
+  "NOTANSWER": "Doesn't want to answer",
+  "COMENTARIO": "Comments",
+  "COMENTARIO_": "Comments:",
+  "PERSONALIZADO": "Custom"
 }

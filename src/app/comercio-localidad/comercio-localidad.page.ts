@@ -31,6 +31,7 @@ export class ComercioLocalidadPage implements OnInit {
   minDate: string = '';
   maxDate: string = '';
   noResult: number = 0;
+  comments: string = '';
   public custPerBooking: number = 1;
 
   services: any[]= [];
@@ -62,7 +63,7 @@ export class ComercioLocalidadPage implements OnInit {
   cerrar: string;
   City: string;
   LocName: string;
-
+  Customer: any;
   // liveData$ = this.messageService.messages$.pipe(
   //   map((res: any) => {
   //     console.log(res);
@@ -93,6 +94,7 @@ export class ComercioLocalidadPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.Customer = this.global.Customer;
     // this.messageService.connect();
     this.ga.trackView('Hacer Cita Page').then(res => {
       console.log("Registro Page");
@@ -104,7 +106,7 @@ export class ComercioLocalidadPage implements OnInit {
     let month:number = dateMin.getMonth()+1;
     let maxMonth:number = dateMax.getMonth()+1;
     this.display = this.global.Language;
-    
+    this.onbehalf = this.Customer.Name;
     this.minDate = dateMin.getFullYear() + '-' + month.toString().padStart(2, '0') + '-' + dateMin.getDate().toString().padStart(2, '0');
     this.maxDate = dateMax.getFullYear() + '-' + maxMonth.toString().padStart(2, '0') + '-' + dateMax.getDate().toString().padStart(2, '0');
     this.loading.presentLoading(this.cargando);
@@ -240,6 +242,7 @@ export class ComercioLocalidadPage implements OnInit {
       Guests: this.guests,
       Disability: this.disability,
       CustomerId: customer.CustomerId,
+      Comments: this.comments,
       AppoDate: this.datepipe.transform(this.dateAppo, 'MM-dd-yyyy'),
       AppoHour: hr
     };
@@ -280,6 +283,7 @@ export class ComercioLocalidadPage implements OnInit {
       Guests: this.guests,
       Disability: this.disability,
       CustomerId: customer.CustomerId,
+      Comments: this.comments,
       AppoDate: this.datepipe.transform(this.dateAppo, 'MM-dd-yyyy'),
       AppoHour: hr,
       Language: this.global.Language.toLowerCase()

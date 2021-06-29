@@ -53,12 +53,20 @@
             <ion-select mode="ios" placeholder="{{seleccione}}" [(ngModel)]="gender">
               <ion-select-option value="F" translate>FEMENINO</ion-select-option>
               <ion-select-option value="M" translate>MASCULINO</ion-select-option>
+              <ion-select-option value="C" translate>PERSONALIZADO</ion-select-option>
               <ion-select-option value="NA" translate>NOTANSWER</ion-select-option>
             </ion-select>
           </ion-item>
+          <ng-container *ngIf="gender == 'C'">
+            <ion-item>
+              <ion-label translate>PERSONALIZADO</ion-label>
+              <ion-input type="text" class="" [(ngModel)]="customGender"></ion-input>
+            </ion-item>
+          </ng-container>
           <ion-item>
             <ion-label translate>COMUNICACION</ion-label>
             <ion-select mode="ios" placeholder="{{seleccione}}" [(ngModel)]="preferences">
+              <ion-select-option value="" translate>NONE</ion-select-option>
               <ion-select-option value="1" translate>SMS</ion-select-option>
               <ion-select-option value="2" translate>CORREO</ion-select-option>
             </ion-select>
@@ -66,6 +74,7 @@
           <ion-item lines="none">
             <ion-label translate>SERVICIOS_ESPECIALES</ion-label>
             <ion-select mode="ios" placeholder="{{seleccione}}" [(ngModel)]="disability">
+              <ion-select-option value="" translate>NONE</ion-select-option>
               <ion-select-option value="1" translate>SENIOR</ion-select-option>
               <ion-select-option value="3" translate>CON_DISCAPACIDAD</ion-select-option>
               <ion-select-option value="2" translate>EMBARAZADA</ion-select-option>
