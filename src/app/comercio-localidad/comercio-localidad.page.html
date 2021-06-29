@@ -42,24 +42,12 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col size="12" *ngIf="providers.length == 1">
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-label class="label2-detalle-comercio" translate>PROVEEDOR_SERVICIO</ion-label>
-          <ion-label class="label-default">{{provName}}</ion-label>
-        </ion-item>
-      </ion-col>
       <ion-col size="12" *ngIf="services.length > 1">
         <ion-item lines="none" class="ion-no-padding">
           <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
           <ion-select mode="ios" [(ngModel)]="serviceId" #serv class="right-align" cancelText="{{cerrar}}" okText="{{seleccionar}}" (ionChange)="selectService(serv.value)">
             <ion-select-option *ngFor="let row of services" [value]="row.ServiceId">{{row.Name}}</ion-select-option>
           </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12" *ngIf="services.length == 1 && providers.length > 1">
-        <ion-item lines="none" class="ion-no-padding">
-          <ion-label class="label2-detalle-comercio" translate>SERVICIOS</ion-label>
-          <ion-label class="label-default">{{servName}}</ion-label>
         </ion-item>
       </ion-col>
       <ion-col size="7">

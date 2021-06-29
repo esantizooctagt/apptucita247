@@ -134,6 +134,7 @@ export class ComercioLocalidadPage implements OnInit {
       map((res: any) => {
         if (res.Code == 200){
           if (res.Providers.length == 1){
+            console.log("provide --1 ");
             this.provName = res.Providers[0].Name;
             this.providerId = res.Providers[0].ProviderId;
             this.selectProvider(this.providerId);
@@ -347,8 +348,10 @@ export class ComercioLocalidadPage implements OnInit {
       map((res: any) => {
         if (res.Code == 200){
           if (res.Services.length == 1){
+            console.log("service --1 ");
             if (this.providers.length == 1){
               this.hideProvider = 1;
+              console.log("hide provider --1 ");
             }
             this.hideService = 1;
             this.serviceId = res.Services[0].ServiceId; 
