@@ -10,8 +10,7 @@ describe('CitaPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [CitaPage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(CitaPage);

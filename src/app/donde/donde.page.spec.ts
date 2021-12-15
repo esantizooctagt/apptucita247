@@ -10,8 +10,7 @@ describe('DondePage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [DondePage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(DondePage);

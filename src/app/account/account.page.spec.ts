@@ -10,8 +10,7 @@ describe('AccountPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [AccountPage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(AccountPage);

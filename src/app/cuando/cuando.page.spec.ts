@@ -10,8 +10,7 @@ describe('CuandoPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [CuandoPage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(CuandoPage);

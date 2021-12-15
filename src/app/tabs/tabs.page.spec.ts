@@ -10,8 +10,7 @@ describe('TabsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [TabsPage],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    teardown: { destroyAfterEach: false }
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 }).compileComponents();
   }));
 

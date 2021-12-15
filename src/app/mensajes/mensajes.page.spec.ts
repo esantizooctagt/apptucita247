@@ -10,8 +10,7 @@ describe('MensajesPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [MensajesPage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(MensajesPage);

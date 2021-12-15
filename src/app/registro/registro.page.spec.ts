@@ -10,8 +10,7 @@ describe('RegistroPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [RegistroPage],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(RegistroPage);

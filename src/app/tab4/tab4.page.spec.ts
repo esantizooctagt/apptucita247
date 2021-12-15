@@ -10,8 +10,7 @@ describe('Tab4Page', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
     declarations: [Tab4Page],
-    imports: [IonicModule.forRoot()],
-    teardown: { destroyAfterEach: false }
+    imports: [IonicModule.forRoot()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(Tab4Page);

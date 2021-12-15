@@ -24,8 +24,7 @@ describe('AppComponent', () => {
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
-    ],
-    teardown: { destroyAfterEach: false }
+    ]
 }).compileComponents();
   }));
 
