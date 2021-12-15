@@ -9,9 +9,9 @@ describe('CuandoPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CuandoPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    declarations: [CuandoPage],
+    imports: [IonicModule.forRoot()]
+}).compileComponents();
 
     fixture = TestBed.createComponent(CuandoPage);
     component = fixture.componentInstance;
