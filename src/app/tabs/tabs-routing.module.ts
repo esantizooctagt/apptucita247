@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        loadChildren: '../comercio/comercio.module'
+        loadChildren: () => import('../comercio/comercio.module').then(m => m.ComercioPageModule)
       },
       {
         path: '',
