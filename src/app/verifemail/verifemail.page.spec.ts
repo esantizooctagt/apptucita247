@@ -9,9 +9,10 @@ describe('VerifemailPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerifemailPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    declarations: [VerifemailPage],
+    imports: [IonicModule.forRoot()],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
 
     fixture = TestBed.createComponent(VerifemailPage);
     component = fixture.componentInstance;

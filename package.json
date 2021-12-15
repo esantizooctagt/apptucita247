@@ -13,12 +13,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "~12.2.14",
-    "@angular/core": "~12.2.14",
-    "@angular/forms": "~12.2.14",
-    "@angular/platform-browser": "~12.2.14",
-    "@angular/platform-browser-dynamic": "~12.2.14",
-    "@angular/router": "~12.2.14",
+    "@angular/common": "~13.1.0",
+    "@angular/core": "~13.1.0",
+    "@angular/forms": "~13.1.0",
+    "@angular/platform-browser": "~13.1.0",
+    "@angular/platform-browser-dynamic": "~13.1.0",
+    "@angular/router": "~13.1.0",
     "@ionic-native/background-mode": "^5.31.1",
     "@ionic-native/camera": "^5.28.0",
     "@ionic-native/core": "^5.22.0-beta-1",
@@ -67,10 +67,10 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.1.1",
-    "@angular/cli": "~12.2.14",
-    "@angular/compiler": "~12.2.14",
-    "@angular/compiler-cli": "~12.2.14",
-    "@angular/language-service": "~12.2.14",
+    "@angular/cli": "~13.1.1",
+    "@angular/compiler": "~13.1.0",
+    "@angular/compiler-cli": "~13.1.0",
+    "@angular/language-service": "~13.1.0",
     "@ionic/angular-toolkit": "^5.0.0",
     "@ionic/lab": "3.1.7",
     "@types/jasmine": "~3.6.0",
@@ -97,7 +97,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.5.4"
   },
   "description": "La forma más fácil y segura de visitar tus comercios favoritos.",
   "cordova": {

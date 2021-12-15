@@ -38,42 +38,41 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicStorageModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    NgxQRCodeModule,
-    Ng2SearchPipeModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [
-    InAppBrowser,
-    StatusBar,
-    SplashScreen,
-    DatePicker,
-    DatePipe,
-    OneSignal,
-    BackgroundMode,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Camera,
-    File,
-    WebView,
-    FilePath,
-    Deeplinks,
-    GoogleAnalytics,
-    Geolocation,
-    ThemeDetection
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicStorageModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        NgxQRCodeModule,
+        Ng2SearchPipeModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule
+    ],
+    providers: [
+        InAppBrowser,
+        StatusBar,
+        SplashScreen,
+        DatePicker,
+        DatePipe,
+        OneSignal,
+        BackgroundMode,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        Camera,
+        File,
+        WebView,
+        FilePath,
+        Deeplinks,
+        GoogleAnalytics,
+        Geolocation,
+        ThemeDetection
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
